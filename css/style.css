@@ -1,0 +1,1427 @@
+/* ==========================================================================
+   Attention to Detail — Interior Auto Detailing
+   Standard tier mockup · stylesheet
+
+   Direction: warm sand ground, espresso bands, brand cyan off Ava's card,
+   Archivo throughout — built with the craft discipline of a marque site
+   (BMW, Porsche, Lamborghini):
+
+     · sharp geometry — 2px radii, square buttons, no soft blobs
+     · no drop shadows — elevation comes from hairlines and ground contrast
+     · hairline-divided columns instead of floating cards
+     · calm headline weights, wide-tracked uppercase labels
+     · photography given room, with hairline gaps so grids read as one wall
+     · slow, restrained transitions
+
+   Every text/ground pairing here is checked at 4.5:1 or better.
+   ========================================================================== */
+
+/* --- 1. Tokens ----------------------------------------------------------- */
+:root {
+  /* Sand is the GROUND, white is a SURFACE that sits on it. The ground is
+     deliberately deep enough that white reads as raised — a near-white ground
+     would put cream on cream and lose the surface entirely. */
+  --paper:         #F0E9DE;  /* ground */
+  --paper-alt:     #E6DCCA;  /* deeper ground slab */
+  --paper-alt-end: #DFD4C0;
+  --ink:           #151110;
+  --ink-soft:      #241E19;
+  --on-ink:        #F8F4EE;  /* text on the espresso bands — never the ground */
+
+  --bg:            var(--paper);
+  --surface:       #FFFFFF;
+  --surface-2:     #FFFDFA;
+  /* One step down from white, for hovering a card that already sits on white.
+     Kept lighter than --paper so a hovered card still reads as a surface
+     rather than dropping into the ground. */
+  --surface-sunk:  #F5EFE5;
+
+  --line:          rgba(26, 22, 19, 0.16);
+  --line-soft:     rgba(26, 22, 19, 0.10);
+  --line-strong:   rgba(26, 22, 19, 0.30);
+
+  --text:          #1A1613;
+  /* On the light grounds, small type is black — hierarchy comes from size,
+     weight and tracking, not from fading the text out.
+       muted      body-scale secondary copy · 10.4:1 on sand
+       muted-dim  the little uppercase labels, hints and captions · black */
+  --muted:         #3A322C;
+  --muted-dim:     #1A1613;
+  /* Field placeholders are the one thing that must stay lighter — black
+     placeholder text reads as an already-filled value. */
+  --placeholder:   #615850;
+
+  /* Brand cyan, sampled off the business card (#7FDFE4 card, #8CDCDC banner).
+     A light aqua made for dark grounds, so it works two ways:
+       --accent-bright  the literal card colour — fills carrying dark text, and
+                        all accent type on the espresso bands
+       --accent         the same hue deepened, for type/rules on sand, where
+                        the light aqua would be unreadable */
+  --accent-bright:      #7FDFE4;
+  --accent-bright-deep: #6ACFD6;
+  --accent:             #096068;
+  --accent-deep:        #07474E;
+  --accent-tint:        #DFF3F5;
+  --accent-ink:         #06282C;
+
+  /* Form validation. Deep brick rather than a signal red — it has to sit on
+     the sand ground next to the cyan without shouting over it. */
+  --danger:             #9C2B16;
+
+  --font-display:  'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-body:     'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  --radius:        2px;
+  --radius-lg:     2px;
+  --shell:         1280px;
+  --shell-narrow:  840px;
+
+  /* Marque sites breathe. This is deliberately generous. */
+  --pad-section:   clamp(5.5rem, 11vw, 10rem);
+  --ease:          cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* --- 2. Reset ------------------------------------------------------------ */
+*, *::before, *::after { box-sizing: border-box; }
+/* The UA's [hidden] rule is a bare attribute selector, so any class that sets
+   display beats it — .btn and .form-foot both do. The stepped form toggles
+   real elements with the hidden property, so this has to win outright. */
+[hidden] { display: none !important; }
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  color-scheme: light;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; cursor: pointer; }
+ul { margin: 0; padding: 0; list-style: none; }
+
+/* Large and calm, never shouty — marque headlines don't use heavy weights. */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.022em;
+  margin: 0;
+}
+h1 { font-size: clamp(2.4rem, 5.4vw, 3.9rem); }
+h2 { font-size: clamp(1.85rem, 3.6vw, 2.7rem); }
+h3 { font-size: clamp(1.05rem, 1.5vw, 1.2rem); letter-spacing: -0.01em; }
+p  { margin: 0 0 1.1em; }
+p:last-child { margin-bottom: 0; }
+
+/* --- 3. Layout helpers -------------------------------------------------- */
+.shell {
+  width: 100%;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 5vw, 3.5rem);
+}
+.shell--narrow { max-width: var(--shell-narrow); }
+.section { padding-block: var(--pad-section); }
+
+.section--alt {
+  background: linear-gradient(180deg, var(--paper-alt) 0%, var(--paper-alt-end) 100%);
+  border-block: 1px solid var(--line);
+}
+
+/* Espresso band. Redefining the tokens on the section flips the whole subtree
+   — rules, muted text, accents — with no per-element overrides. */
+.section--ink {
+  /* The ground flips too. Without this, anything painting var(--bg) in here
+     (cards, photo frames) keeps the light sand ground while its text flips to
+     cream — which put the before/after captions at 1.1:1. */
+  --bg:            var(--ink);
+  --surface:       #241E19;
+  --surface-2:     #2C251E;
+  --line:          rgba(248, 244, 238, 0.20);
+  --line-soft:     rgba(248, 244, 238, 0.12);
+  --line-strong:   rgba(248, 244, 238, 0.34);
+  --text:          var(--on-ink);
+  --muted:         #B7ABA0;
+  --muted-dim:     #968B80;
+  --accent:        var(--accent-bright);
+  --accent-deep:   var(--accent-bright);
+  --accent-tint:   rgba(127, 223, 228, 0.16);
+  background: var(--ink);
+  color: var(--text);
+}
+
+.section--tight { padding-block: clamp(3.5rem, 6vw, 5.5rem); }
+.hr { height: 1px; background: var(--line); border: 0; margin: 0; }
+
+/* Wide-tracked uppercase label with a long hairline — the spec-sheet tic that
+   opens every section. */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 1.4rem;
+}
+.eyebrow::before {
+  content: "";
+  width: 42px; height: 1px; flex: none;
+  background: currentColor;
+}
+.lede { font-size: clamp(1.02rem, 1.35vw, 1.14rem); color: var(--muted); max-width: 56ch; }
+.section-head { max-width: 60ch; margin-bottom: clamp(2.75rem, 5vw, 4rem); }
+.section-head--center { margin-inline: auto; text-align: center; }
+.section-head--center .lede { margin-inline: auto; }
+.section-head--center .eyebrow { justify-content: center; }
+
+/* --- 4. Buttons --------------------------------------------------------- */
+/* Rectangular, uppercase, wide-tracked. Pills read friendly; marques don't. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 1.15rem 2.3rem;
+  border: 1px solid transparent;
+  border-radius: 0;
+  font-family: var(--font-display);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: center;
+  transition: background 0.45s var(--ease), border-color 0.45s var(--ease), color 0.45s var(--ease);
+}
+.btn--primary {
+  background: var(--accent-bright);
+  border-color: var(--accent-bright);
+  color: var(--accent-ink);
+}
+.btn--primary:hover { background: var(--accent-bright-deep); border-color: var(--accent-bright-deep); }
+.btn--ghost { border-color: var(--line-strong); color: var(--text); background: transparent; }
+/* Hover inverts the button, so the label has to come from the ground token,
+   not the literal sand. --paper never flips, which made a ghost button on an
+   espresso band hover to cream-on-cream; --bg flips with the section. */
+.btn--ghost:hover { border-color: var(--text); background: var(--text); color: var(--bg); }
+.btn--sm { padding: 0.78rem 1.4rem; font-size: 0.68rem; letter-spacing: 0.12em; }
+.btn--block { width: 100%; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+
+.textlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid currentColor;
+  transition: gap 0.45s var(--ease);
+}
+.textlink:hover { gap: 0.85rem; }
+
+/* --- 5. Header / nav ---------------------------------------------------- */
+/* Espresso bar — always darker than whatever sits beneath it, on every page.
+   Same token flip as .section--ink, so the whole subtree inverts. */
+.site-header {
+  --line:          rgba(248, 244, 238, 0.18);
+  --line-soft:     rgba(248, 244, 238, 0.12);
+  --line-strong:   rgba(248, 244, 238, 0.34);
+  --text:          var(--on-ink);
+  --muted:         #B7ABA0;
+  --muted-dim:     #968B80;
+  --accent:        var(--accent-bright);
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: rgba(21, 17, 16, 0.96);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(248, 244, 238, 0.14);
+  color: var(--text);
+}
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  min-height: 88px;
+}
+
+.brand { display: flex; align-items: center; gap: 0.85rem; margin-right: auto; }
+.brand__mark { width: 44px; height: 24px; flex: none; color: var(--accent); }
+.brand__text { display: flex; flex-direction: column; line-height: 1; }
+.brand__name {
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  font-weight: 600;
+  letter-spacing: 0.19em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--text);
+}
+.brand__tag {
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--muted-dim);
+  margin-top: 0.5rem;
+}
+
+.nav { display: flex; align-items: center; gap: 1.4rem; }
+.nav a {
+  position: relative;
+  padding: 0.4rem 0;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--muted);
+  transition: color 0.45s var(--ease);
+}
+.nav a::after {
+  content: "";
+  position: absolute; left: 0; right: 0; bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s var(--ease);
+}
+.nav a:hover { color: var(--text); }
+.nav a:hover::after { transform: scaleX(1); }
+.nav a[aria-current="page"] { color: var(--text); }
+.nav a[aria-current="page"]::after { transform: scaleX(1); background: var(--accent); }
+/* The nav's quote button is for the mobile drawer only. */
+.nav .btn { display: none; }
+
+.header__cta { display: flex; align-items: center; gap: 1.25rem; }
+/* The bar is a single nowrap row; if it ever runs short the CTA must not
+   collapse into a stack of words. The drawer breakpoint below is set to hand
+   off before that can happen. */
+.header__cta .btn { white-space: nowrap; }
+.header__phone {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--text);
+  white-space: nowrap;
+  transition: color 0.45s var(--ease);
+}
+.header__phone:hover { color: var(--accent); }
+
+.nav-toggle {
+  display: none;
+  width: 46px; height: 46px;
+  align-items: center; justify-content: center;
+  background: none;
+  border: 1px solid var(--line-strong);
+  border-radius: 0;
+}
+.nav-toggle svg { width: 20px; height: 20px; }
+
+/* Brand + 5 links + phone + CTA need ~1100px of nowrap content plus the
+   shell's 112px of padding. Below that the row has nowhere to go, so the
+   drawer takes over here rather than at a width the bar can't actually hold.
+   Keep this number in sync with the resize handler in js/nav.js. */
+@media (max-width: 1259px) {
+  .nav-toggle { display: inline-flex; }
+  .header__cta { display: none; }
+  .nav {
+    position: absolute;
+    inset: 88px 0 auto;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0.5rem clamp(1.25rem, 5vw, 3.5rem) 2rem;
+    background: var(--ink);
+    border-bottom: 1px solid var(--line);
+    display: none;
+  }
+  .nav[data-open="true"] { display: flex; }
+  .nav a { padding: 1.05rem 0; font-size: 0.82rem; border-bottom: 1px solid var(--line-soft); }
+  .nav a::after { display: none; }
+  .nav .btn { display: inline-flex; margin-top: 1.5rem; }
+}
+
+/* --- 6. Hero ------------------------------------------------------------ */
+.hero { position: relative; overflow: hidden; background: var(--bg); }
+
+/* Thin concentric arc — reads as a technical mark, not decoration. */
+.hero__arc {
+  position: absolute;
+  top: 4%; right: -10%;
+  width: min(50rem, 78vw);
+  aspect-ratio: 1;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  opacity: 0.22;
+  pointer-events: none;
+}
+.hero__arc::after {
+  content: "";
+  position: absolute;
+  inset: 15%;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+}
+
+.hero__grid {
+  position: relative;
+  display: grid;
+  gap: clamp(3rem, 6vw, 5.5rem);
+  align-items: center;
+  padding-block: clamp(4rem, 9vw, 7.5rem) clamp(4rem, 9vw, 7rem);
+}
+@media (min-width: 1000px) { .hero__grid { grid-template-columns: 1.05fr 0.95fr; } }
+
+.hero__badge {
+  display: inline-flex; align-items: center; gap: 0.85rem;
+  margin-bottom: 2rem;
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.hero__badge i {
+  width: 5px; height: 5px; flex: none;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.hero h1 {
+  font-size: clamp(2.6rem, 5vw, 4.2rem);
+  line-height: 1.03;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.6rem;
+  text-wrap: balance;
+}
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero__sub {
+  font-size: clamp(1.02rem, 1.35vw, 1.14rem);
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 32rem;
+  margin-bottom: 2.6rem;
+}
+.hero .btn-row { margin-bottom: 3.25rem; }
+
+/* Spec strip — hairline-divided figures, the way a marque lists performance. */
+.hero__facts {
+  display: grid;
+  gap: 1px;
+  background: var(--line);
+  border-block: 1px solid var(--line);
+}
+@media (min-width: 560px) { .hero__facts { grid-template-columns: repeat(3, 1fr); } }
+.hero__fact {
+  display: flex; align-items: flex-start; gap: 0.7rem;
+  padding: 1.4rem 1.25rem 1.4rem 0;
+  background: var(--bg);
+  font-size: 0.84rem;
+  color: var(--muted);
+}
+@media (min-width: 560px) {
+  .hero__fact { padding-inline: 1.25rem; }
+  .hero__fact:first-child { padding-left: 0; }
+}
+.hero__fact svg { width: 17px; height: 17px; flex: none; margin-top: 0.25rem; color: var(--accent); }
+.hero__fact strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.94rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  color: var(--text);
+  margin-bottom: 0.3rem;
+}
+.hero__fact em {
+  display: block;
+  font-style: normal;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+/* --- showcase: a real before/after pair, above the fold ------------------ */
+.hero__showcase { position: relative; }
+.showcase-card {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+.showcase-card img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+.showcase-card figcaption {
+  position: absolute; top: 0; left: 0;
+  padding: 0.6rem 1.1rem;
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  background: var(--paper);
+  color: var(--muted);
+}
+.showcase-card--after figcaption { background: var(--accent-bright); color: var(--accent-ink); }
+
+.showcase-chip {
+  display: inline-flex; align-items: baseline; gap: 0.65rem;
+  padding: 1.05rem 1.6rem;
+  background: var(--ink);
+  color: var(--on-ink);
+  font-family: var(--font-display);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+.showcase-chip b { font-size: 1.5rem; font-weight: 500; letter-spacing: -0.03em; }
+
+@media (min-width: 1000px) {
+  .hero__showcase { aspect-ratio: 1 / 1.02; }
+  .showcase-card { position: absolute; }
+  .showcase-card--before { width: 54%; top: 0; left: 0; z-index: 1; }
+  .showcase-card--after { width: 63%; right: 0; bottom: 0; z-index: 2; }
+  .showcase-chip { position: absolute; z-index: 3; left: 0; bottom: 15%; }
+}
+@media (max-width: 999px) {
+  .hero__showcase { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); }
+  .showcase-card { border: 0; }
+  .showcase-chip { display: none; }
+  .hero__arc { display: none; }
+}
+
+/* --- 7. Marquee --------------------------------------------------------- */
+/* The stuff she actually pulls out of cars — her voice, set as a quiet spec
+   strip rather than a joke ticker. */
+.marquee {
+  overflow: hidden;
+  padding-block: 1.4rem;
+  background: var(--ink);
+  color: var(--on-ink);
+  /* The band it runs into is also espresso, so it needs its own closing
+     hairline or the ticker reads as the top line of that section. */
+  border-bottom: 1px solid rgba(248, 244, 238, 0.14);
+}
+.marquee__track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 64s linear infinite;
+}
+.marquee__group { display: flex; align-items: center; gap: 3.5rem; padding-right: 3.5rem; }
+.marquee__group li {
+  display: flex;
+  align-items: center;
+  gap: 3.5rem;
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: rgba(248, 244, 238, 0.66);
+}
+.marquee__group li::after {
+  content: "";
+  width: 4px; height: 4px; flex: none;
+  border-radius: 50%;
+  background: var(--accent-bright);
+}
+@keyframes marquee-scroll { to { transform: translateX(-50%); } }
+
+/* --- 8. Before / after -------------------------------------------------- */
+.ba-grid { display: grid; gap: 1px; background: var(--line); }
+@media (min-width: 900px) { .ba-grid { grid-template-columns: 1fr 1fr; } }
+.ba-card { background: var(--bg); overflow: hidden; }
+.ba-card img { width: 100%; }
+.ba-card__foot {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+  padding: 1.5rem 1.5rem 1.6rem;
+}
+.ba-card__foot h3 { font-size: 1rem; }
+.ba-card__foot span {
+  font-family: var(--font-display);
+  font-size: 0.66rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted-dim);
+  white-space: nowrap;
+}
+
+/* --- 8b. What's included ------------------------------------------------ */
+/* One photograph carries the band and the six items list out on hairlines
+   beside it. Per-item photography is the Premium treatment; here the list
+   does the work and a single image supplies the proof. */
+.band-grid { display: grid; gap: clamp(2.5rem, 5vw, 4.5rem); align-items: center; }
+@media (min-width: 900px) { .band-grid { grid-template-columns: 1fr 1fr; } }
+.band-media { overflow: hidden; }
+.band-media img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+.band-list { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.band-list li {
+  display: grid; grid-template-columns: 2.1rem 1fr; gap: 0.25rem 1rem;
+  padding-block: 1.35rem;
+  border-bottom: 1px solid var(--line);
+}
+/* The index sits at the size of the title it labels, not shrunk to a caption. */
+.band-list b {
+  font-family: var(--font-display);
+  font-size: 0.92rem; font-weight: 600; letter-spacing: 0.04em;
+  line-height: 1.4;
+  color: var(--accent);
+}
+/* Title in the display face at full strength — otherwise it inherits the muted
+   colour off the wrapper and name and description read as one grey block. */
+.band-list strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.06rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.35;
+  color: var(--text);
+  margin-bottom: 0.3rem;
+}
+.band-list span { color: var(--muted); font-size: 0.88rem; line-height: 1.55; }
+/* On the espresso bands the same list flips to cream. */
+.section--ink .band-list strong { color: var(--on-ink); }
+
+.proof-row {
+  display: grid;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
+  padding-block: clamp(2.25rem, 4vw, 3.25rem);
+  border-bottom: 1px solid var(--line);
+  align-items: center;
+}
+.proof-row:first-of-type { border-top: 1px solid var(--line); }
+@media (min-width: 800px) {
+  .proof-row { grid-template-columns: 0.85fr 1.15fr; }
+  /* Photo leads on alternate rows. Set per row with a modifier rather than
+     nth-child, which counts the section head and flips the whole rhythm.
+     The track widths swap too — reordering alone would drop the photo into
+     the narrow column and make every other image smaller. */
+  .proof-row--flip { grid-template-columns: 1.15fr 0.85fr; }
+  .proof-row--flip .proof-row__media { order: -1; }
+}
+
+/* The copy side is only three lines, so at this row height it was floating in
+   dead space. An oversized index number gives each row an anchor and turns the
+   run of six into a visible sequence. */
+.proof-row__text { max-width: 34ch; }
+.proof-row__index {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 5vw, 3.6rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--accent);
+  margin-bottom: 0.4rem;
+}
+.proof-row__num {
+  display: flex; align-items: center; gap: 0.85rem;
+  margin-bottom: 1.1rem;
+  font-family: var(--font-display);
+  font-size: 0.64rem; font-weight: 600;
+  letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--muted-dim);
+}
+.proof-row__num::before {
+  content: "";
+  width: 28px; height: 1px; flex: none;
+  background: var(--accent);
+}
+.proof-row h3 {
+  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin-bottom: 0.8rem;
+}
+.proof-row p { color: var(--muted); margin: 0; }
+
+/* Photo gets a caption chip naming the vehicle — the same espresso tag the
+   hero and gallery use, and one more small proof that these are real cars.
+   margin:0 because the photo rows are <figure> and the placeholder rows are
+   <div>; the UA's 40px figure margin made every real photo narrower than the
+   two empty slots. */
+.proof-row__media { position: relative; overflow: hidden; margin: 0; }
+.proof-row__media img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+}
+.proof-row__chip {
+  position: absolute; left: 0; bottom: 0;
+  margin: 0;
+  padding: 0.6rem 1rem;
+  background: var(--ink);
+  color: var(--on-ink);
+  font-family: var(--font-display);
+  font-size: 0.6rem; font-weight: 600;
+  letter-spacing: 0.22em; text-transform: uppercase;
+}
+
+/* Awaiting a photo. Same dashed convention as the portrait and map slots, so
+   it's obvious at a glance what still needs shooting before launch. */
+.photo-placeholder {
+  aspect-ratio: 3 / 2;
+  display: grid; place-items: center;
+  text-align: center;
+  padding: 1.5rem;
+  border: 1px dashed var(--line-strong);
+}
+.photo-placeholder svg { width: 28px; height: 28px; color: var(--muted-dim); margin-bottom: 0.9rem; }
+.photo-placeholder p { font-size: 0.86rem; color: var(--muted-dim); max-width: 26ch; margin: 0; }
+
+/* --- 9. Split ------------------------------------------------------------ */
+.split { display: grid; gap: clamp(2.5rem, 6vw, 5rem); align-items: start; }
+@media (min-width: 900px) { .split { grid-template-columns: 0.95fr 1.05fr; } }
+.split--reverse > :first-child { order: 2; }
+@media (max-width: 899px) { .split--reverse > :first-child { order: 0; } }
+
+.frame { overflow: hidden; }
+.frame img { width: 100%; }
+.frame--tall img { aspect-ratio: 4 / 5; object-fit: cover; }
+
+/* --- 10. Pricing -------------------------------------------------------- */
+/* A spec sheet, not a set of cards: hairline columns, oversized figures. */
+.price-grid { display: grid; gap: 1px; background: var(--line); border-block: 1px solid var(--line); }
+@media (min-width: 860px) { .price-grid { grid-template-columns: repeat(3, 1fr); } }
+/* Every package sits on white — the three are the same offer at three sizes,
+   so singling one out with a lighter ground implied a recommendation the copy
+   never made. Hover drops a step instead. */
+.price-card {
+  position: relative;
+  display: flex; flex-direction: column;
+  padding: clamp(2.25rem, 3.5vw, 3rem) clamp(1.5rem, 2.5vw, 2.25rem);
+  background: var(--surface);
+  transition: background 0.5s var(--ease);
+}
+.price-card:hover { background: var(--surface-sunk); }
+.price-card__tag {
+  position: absolute; top: clamp(2.25rem, 3.5vw, 3rem); right: clamp(1.5rem, 2.5vw, 2.25rem);
+  font-family: var(--font-display);
+  font-size: 0.58rem; font-weight: 600;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--accent-deep);
+}
+.price-card__icon { width: 52px; height: 30px; color: var(--muted-dim); margin-bottom: 2rem; }
+.price-card h3 {
+  font-size: 0.76rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 0.65rem;
+}
+.price-card__fits { font-size: 0.89rem; color: var(--muted-dim); margin-bottom: 1.75rem; min-height: 2.9em; }
+.price-card__price { display: flex; align-items: baseline; gap: 0.6rem; margin-bottom: 2rem; }
+.price-card__price b {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 5vw, 3.9rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 1;
+}
+.price-card__price span {
+  font-family: var(--font-display);
+  font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--muted-dim);
+}
+.price-card .btn { margin-top: auto; }
+
+.addons { display: grid; gap: 1px; background: var(--line); border-bottom: 1px solid var(--line); }
+@media (min-width: 700px) { .addons { grid-template-columns: repeat(3, 1fr); } }
+/* These sit inside an espresso band, where --text is cream and --surface is
+   near-black. A white card there needs the light tokens declared back on the
+   row, or the copy (which reads var(--text) inline) turns cream-on-white. */
+.addon {
+  --surface:    #FFFFFF;
+  --text:       #1A1613;
+  --muted:      #3A322C;
+  --muted-dim:  #1A1613;
+  --accent:     #096068;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding: 1.4rem clamp(1.25rem, 2.5vw, 2.25rem);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.94rem;
+  transition: background 0.5s var(--ease);
+}
+.addon:hover { background: var(--surface-sunk); }
+.addon b { font-family: var(--font-display); color: var(--accent); font-weight: 600; }
+.price-note { margin-top: 1.5rem; font-size: 0.88rem; color: var(--muted-dim); }
+
+/* --- 11. Gallery -------------------------------------------------------- */
+/* Hairline gaps so the grid reads as one continuous photographic wall. */
+.gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); }
+@media (min-width: 760px) { .gallery { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1060px) { .gallery { grid-template-columns: repeat(4, 1fr); } }
+.gallery figure { margin: 0; position: relative; overflow: hidden; background: var(--bg); }
+.gallery img { width: 100%; aspect-ratio: 1; object-fit: cover; transition: transform 1.1s var(--ease); }
+.gallery figure:hover img { transform: scale(1.06); }
+.gallery figcaption {
+  position: absolute; inset: auto 0 0 0;
+  padding: 2.5rem 1.1rem 1rem;
+  font-family: var(--font-display);
+  font-size: 0.64rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--on-ink);
+  background: linear-gradient(180deg, transparent, rgba(15, 11, 9, 0.88));
+}
+.gallery--tall img { aspect-ratio: 3 / 4; }
+
+@media (min-width: 760px) {
+  .gallery--feature > figure:first-child { grid-column: span 2; grid-row: span 2; aspect-ratio: 1; }
+  .gallery--feature > figure:first-child img { aspect-ratio: auto; height: 100%; }
+  .gallery--feature > figure:first-child figcaption { font-size: 0.7rem; padding: 3rem 1.5rem 1.35rem; }
+}
+
+/* --- 12. Reviews -------------------------------------------------------- */
+.reviews { display: grid; gap: 1px; background: var(--line); border-block: 1px solid var(--line); }
+@media (min-width: 860px) { .reviews { grid-template-columns: repeat(3, 1fr); } }
+.review {
+  display: flex; flex-direction: column;
+  padding: clamp(2rem, 3vw, 2.5rem) clamp(1.5rem, 2.5vw, 2rem);
+  background: var(--bg);
+  transition: background 0.5s var(--ease);
+}
+.review:hover { background: var(--surface); }
+.stars { display: flex; gap: 0.22rem; color: var(--accent); margin-bottom: 1.4rem; }
+.stars svg { width: 14px; height: 14px; }
+.review blockquote { margin: 0 0 1.75rem; font-size: 1rem; line-height: 1.65; color: var(--text); }
+.review__who { margin-top: auto; display: flex; align-items: center; gap: 0.9rem; }
+.review__avatar {
+  width: 40px; height: 40px; flex: none;
+  display: grid; place-items: center;
+  border: 1px solid var(--line-strong);
+  font-family: var(--font-display); font-weight: 600; font-size: 0.8rem;
+  color: var(--muted);
+}
+.review__name {
+  font-family: var(--font-display);
+  font-size: 0.76rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+}
+.review__meta { font-size: 0.8rem; color: var(--muted-dim); }
+
+/* Placeholder styling — deliberately obvious, swapped for real reviews. */
+.is-placeholder { background: transparent; }
+.is-placeholder blockquote { color: var(--muted-dim); font-style: italic; }
+.placeholder-flag {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 0.6rem; font-weight: 600;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--muted-dim);
+  border: 1px dashed var(--line-strong);
+  padding: 0.3rem 0.6rem;
+  margin-bottom: 1.4rem;
+}
+
+.google-bar {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 1.25rem 2rem;
+  padding: 1.85rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.google-bar__score { display: flex; align-items: center; gap: 0.9rem; }
+.google-bar__score b { font-family: var(--font-display); font-size: 1.5rem; font-weight: 500; }
+.google-bar p { font-size: 0.9rem; color: var(--muted); margin: 0; }
+.google-bar .btn { margin-left: auto; }
+
+/* --- 13. Service area --------------------------------------------------- */
+.area-grid { display: grid; gap: clamp(2.5rem, 5vw, 4.5rem); align-items: center; }
+@media (min-width: 900px) { .area-grid { grid-template-columns: 1fr 1fr; } }
+.city-list { display: grid; gap: 0; margin: 2.25rem 0; border-top: 1px solid var(--line); }
+.city-list li {
+  display: flex; align-items: center; gap: 0.85rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-display);
+  font-size: 0.86rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.city-list svg { width: 14px; height: 14px; color: var(--accent); }
+
+.map-placeholder {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  display: grid; place-items: center;
+  text-align: center;
+  padding: 2rem;
+  border: 1px dashed var(--line-strong);
+}
+.map-placeholder svg { width: 30px; height: 30px; color: var(--accent); margin-bottom: 1rem; }
+.map-placeholder p { font-size: 0.9rem; color: var(--muted-dim); max-width: 26ch; margin: 0; }
+
+/* --- 14. CTA band ------------------------------------------------------- */
+.cta-band {
+  --line: rgba(248, 244, 238, 0.2);
+  --accent: var(--accent-bright);
+  background: var(--ink-soft);
+  color: var(--on-ink);
+  text-align: center;
+}
+.cta-band .shell { padding-block: clamp(5rem, 10vw, 8rem); }
+.cta-band h2 { margin-bottom: 1.4rem; }
+.cta-band .lede { color: rgba(248, 244, 238, 0.68); margin-inline: auto; margin-bottom: 2.75rem; }
+.cta-band .btn-row { justify-content: center; }
+.cta-band .btn--ghost { border-color: rgba(248, 244, 238, 0.4); color: var(--on-ink); }
+.cta-band .btn--ghost:hover { background: var(--on-ink); border-color: var(--on-ink); color: var(--ink); }
+
+/* --- 15. Forms ---------------------------------------------------------- */
+.form-layout { display: grid; gap: clamp(2.5rem, 5vw, 4.5rem); align-items: start; }
+@media (min-width: 1000px) { .form-layout { grid-template-columns: 1.4fr 0.6fr; } }
+
+.form-card { padding: 0; background: transparent; }
+.field-grid { display: grid; gap: 2.25rem; }
+@media (min-width: 640px) { .field-grid--2 { grid-template-columns: 1fr 1fr; } }
+
+/* Numbered groups replace the old <hr> dividers, which were the same weight as
+   the field underlines and so read as stray lines. The group rule is darker and
+   full-strength, which makes the hierarchy obvious at a glance. */
+.form-group + .form-group { margin-top: clamp(3rem, 5vw, 4rem); }
+.form-group__title {
+  display: flex; align-items: baseline; gap: 1rem;
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--text);
+  padding-bottom: 1rem;
+  margin-bottom: 2.25rem;
+  border-bottom: 1px solid var(--text);
+}
+.form-group__title span { color: var(--accent); }
+
+.field { display: flex; flex-direction: column; gap: 0.55rem; }
+.field > label, .fieldset__legend {
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted-dim);
+}
+.req { color: var(--accent); }
+.hint { font-size: 0.83rem; color: var(--muted-dim); }
+
+/* Filled fields — a bare underline is a weak "type here" signal, so each field
+   is a filled block on the sand ground. No outer panel: the layout stays open
+   and editorial, the inputs just stop being invisible. Square corners and a
+   hairline base keep it inside the house style. */
+.input, .select, .textarea {
+  width: 100%;
+  padding: 0.9rem 0.95rem;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid transparent;
+  border-bottom-color: var(--line);
+  border-radius: var(--radius);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  transition: border-color 0.45s var(--ease), background 0.45s var(--ease);
+}
+.textarea { min-height: 110px; resize: vertical; line-height: 1.6; }
+.input::placeholder, .textarea::placeholder { color: var(--placeholder); }
+.input:focus, .select:focus, .textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--surface-2);
+}
+/* appearance:none strips the native arrow, and a filled select with no arrow is
+   indistinguishable from a text input — so draw one back on. */
+.select {
+  appearance: none;
+  padding-right: 2.6rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none' stroke='%23096068' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m1 1.5 5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.95rem center;
+  background-size: 12px 8px;
+}
+
+fieldset { margin: 0; padding: 0; border: 0; }
+.fieldset__legend { display: block; margin-bottom: 1.1rem; }
+
+/* Three-across boxes. The 1px grid gap shows the background through as the
+   internal dividers, and the border closes the block on all four sides so it
+   reads as one framed unit rather than a floating table. */
+.option-grid {
+  display: grid;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+@media (min-width: 560px) { .option-grid--3 { grid-template-columns: repeat(3, 1fr); } }
+.option {
+  display: flex; align-items: stretch; gap: 0.9rem;
+  padding: 1.35rem 1.25rem;
+  background: var(--bg);
+  cursor: pointer;
+  transition: background 0.45s var(--ease);
+}
+.option:hover { background: var(--surface); }
+.option input {
+  align-self: flex-start;
+  margin: 0.25rem 0 0;
+  accent-color: var(--accent);
+  width: 18px; height: 18px; flex: none;
+}
+/* Label to the top, price to the bottom — so the prices stay on one line
+   across all three boxes even when a longer label wraps. */
+.option__body {
+  flex: 1;
+  display: flex; flex-direction: column; justify-content: space-between;
+  gap: 0.5rem;
+}
+.option__label { font-size: 1.05rem; line-height: 1.4; }
+.option__price {
+  font-family: var(--font-display);
+  font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent); font-weight: 600;
+}
+.option:has(input:checked) { background: var(--surface); }
+.option:has(input:checked) .option__label { font-weight: 600; }
+
+/* Photo upload — the real input sits inside the label, so the whole panel is
+   the click target. Wired to storage at build; inert in the mockup. */
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+  padding: clamp(2rem, 4vw, 2.75rem) 1.25rem;
+  border: 1px dashed var(--line-strong);
+  cursor: pointer;
+  transition: border-color 0.45s var(--ease), background 0.45s var(--ease);
+}
+.dropzone:hover { border-color: var(--accent); background: var(--surface); }
+.dropzone:focus-within { border-color: var(--accent); }
+.dropzone input[type="file"] {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+.dropzone__icon { color: var(--accent); margin-bottom: 0.75rem; }
+.dropzone__icon svg { width: 26px; height: 26px; }
+.dropzone__title {
+  font-family: var(--font-display);
+  font-size: 0.74rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+}
+.dropzone__title u { color: var(--accent); text-decoration: none; border-bottom: 1px solid currentColor; }
+.dropzone__meta { font-size: 0.83rem; color: var(--muted-dim); }
+
+.form-foot {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem;
+  margin-top: 3rem;
+  padding-top: 2.25rem;
+  border-top: 1px solid var(--line);
+}
+.form-foot p { font-size: 0.87rem; color: var(--muted-dim); margin: 0; max-width: 34ch; }
+
+
+/* Success state after the form posts. Replaces the form outright — leaving the
+   fields on screen after a send reads as "did that work?" */
+.form-sent { padding: clamp(2rem, 4vw, 3rem) 0; }
+.form-sent__label {
+  font-family: var(--font-display);
+  font-size: 0.62rem; font-weight: 600;
+  letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+.form-sent h2 { margin-bottom: 1rem; }
+.form-sent p { color: var(--muted); max-width: 52ch; }
+.form-sent__note { font-size: 0.83rem; color: var(--muted-dim); margin-top: 1.5rem; }
+
+/* --- Stepped form ------------------------------------------------------- */
+/* The stepper is a progress read-out first and a control second: it shows
+   where you are in three, and lets you go back to a step you've already
+   cleared. Steps you haven't reached stay inert — offering them would just
+   bounce you back on validation. */
+.stepper {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  margin: 0 0 clamp(2.25rem, 4vw, 3rem);
+  padding: 0;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.stepper__item {
+  display: flex; align-items: baseline; gap: 0.7rem;
+  padding: 1rem 1.15rem;
+  background: var(--bg);
+  font-family: var(--font-display);
+  font-size: 0.66rem; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--muted-dim);
+  transition: background 0.45s var(--ease), color 0.45s var(--ease);
+}
+.stepper__num { color: var(--muted-dim); }
+.stepper__item.is-available { cursor: pointer; }
+.stepper__item.is-available:hover { background: var(--surface); }
+.stepper__item.is-done .stepper__num { color: var(--accent); }
+.stepper__item.is-current {
+  background: var(--ink);
+  color: var(--on-ink);
+}
+.stepper__item.is-current .stepper__num { color: var(--accent-bright); }
+/* Steps not yet reached aren't clickable, but they still tell you what's
+   coming — so they stay legible. Fading them to 0.5 dropped the label to
+   ~3.2:1. The filled current step carries the emphasis instead. */
+.stepper__item:not(.is-available) .stepper__label { color: var(--muted); }
+.stepper__item:not(.is-available) .stepper__num { color: var(--placeholder); }
+@media (max-width: 560px) {
+  .stepper { grid-template-columns: 1fr; }
+  .stepper__label { font-size: 0.62rem; }
+}
+
+.step-status {
+  margin: -1.25rem 0 1.75rem;
+  font-size: 0.83rem;
+  color: var(--muted-dim);
+}
+.step-status:empty { display: none; }
+
+.step-nav {
+  display: flex; flex-wrap: wrap; gap: 0.75rem;
+  margin-top: 3rem;
+  padding-top: 2.25rem;
+  border-top: 1px solid var(--line);
+}
+/* Next carries the flow, so it leads; Back sits after it and stays quiet. */
+.step-nav #step-next { order: -1; }
+@media (max-width: 480px) {
+  .step-nav { flex-direction: column; }
+  .step-nav .btn { width: 100%; }
+}
+
+/* Error state. The palette had no failure colour — this is the one addition,
+   a deep brick that holds 4.5:1 on both the sand ground and white fields. */
+.field--invalid .input,
+.field--invalid .select,
+.field--invalid .textarea { border-color: var(--danger); }
+.field--invalid .option-grid { border-color: var(--danger); }
+.field__error {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.83rem;
+  font-weight: 500;
+  color: var(--danger);
+}
+
+/* Contact side rail */
+.rail { display: grid; gap: 3rem; }
+.rail-card { padding: 0; }
+.rail-card h3 {
+  font-size: 0.68rem;
+  letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--muted);
+  padding-bottom: 1.1rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid var(--line);
+}
+.contact-list { display: grid; gap: 1.5rem; }
+.contact-list li { display: flex; gap: 0.9rem; align-items: flex-start; }
+.contact-list svg { width: 17px; height: 17px; flex: none; margin-top: 0.3rem; color: var(--accent); }
+.contact-list span {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.62rem; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--muted-dim);
+  margin-bottom: 0.35rem;
+}
+.contact-list a, .contact-list p { font-size: 0.98rem; margin: 0; }
+.contact-list a:hover { color: var(--accent); }
+
+.hours { display: grid; gap: 0; }
+.hours li {
+  display: flex; justify-content: space-between; gap: 1rem;
+  font-size: 0.92rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.hours span { color: var(--muted); }
+
+/* --- 16. About ---------------------------------------------------------- */
+.about-hero { display: grid; gap: clamp(2.5rem, 6vw, 5rem); align-items: center; }
+@media (min-width: 900px) { .about-hero { grid-template-columns: 0.85fr 1.15fr; } }
+.portrait-placeholder {
+  aspect-ratio: 4 / 5;
+  display: grid; place-items: center;
+  text-align: center;
+  padding: 2rem;
+  border: 1px dashed var(--line-strong);
+}
+.portrait-placeholder svg { width: 34px; height: 34px; color: var(--muted-dim); margin-bottom: 1rem; }
+.portrait-placeholder p { font-size: 0.89rem; color: var(--muted-dim); max-width: 24ch; margin: 0; }
+
+.stat-row { display: grid; gap: 1px; background: var(--line); border-block: 1px solid var(--line); }
+@media (min-width: 640px) { .stat-row { grid-template-columns: repeat(3, 1fr); } }
+.stat { background: var(--bg); padding: 1.85rem 1.5rem 1.85rem 0; }
+@media (min-width: 640px) {
+  .stat { padding-inline: 1.5rem; }
+  .stat:first-child { padding-left: 0; }
+}
+.stat b {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 2.1rem; font-weight: 500; letter-spacing: -0.035em;
+  color: var(--accent);
+  margin-bottom: 0.35rem;
+}
+.stat span {
+  font-family: var(--font-display);
+  font-size: 0.64rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--muted-dim);
+}
+
+/* --- 17. Footer --------------------------------------------------------- */
+.site-footer {
+  --line: rgba(248, 244, 238, 0.16);
+  --muted: #B7ABA0;
+  --muted-dim: #968B80;
+  --accent: var(--accent-bright);
+  background: var(--ink);
+  color: var(--on-ink);
+}
+.footer-grid {
+  display: grid; gap: clamp(2.5rem, 4vw, 3.5rem);
+  padding-block: clamp(4rem, 7vw, 5.5rem);
+}
+@media (min-width: 860px) { .footer-grid { grid-template-columns: 1.6fr 1fr 1fr 1.2fr; } }
+.footer-col h4 {
+  font-family: var(--font-display);
+  font-size: 0.62rem; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--muted-dim); font-weight: 600; margin-bottom: 1.5rem;
+}
+.footer-col ul { display: grid; gap: 0.85rem; }
+.footer-col a, .footer-col p { font-size: 0.92rem; color: var(--muted); }
+.footer-col a { transition: color 0.45s var(--ease); }
+.footer-col a:hover { color: var(--accent); }
+.site-footer .brand__name { color: var(--on-ink); }
+.footer-brand p { margin-top: 1.5rem; max-width: 32ch; font-size: 0.92rem; }
+.footer-bottom {
+  display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; align-items: center;
+  padding-block: 1.85rem;
+  border-top: 1px solid var(--line);
+  font-family: var(--font-display);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted-dim);
+}
+.footer-bottom p { margin: 0; }
+.footer-bottom .spacer { margin-left: auto; }
+
+/* --- 18. Page banner (interior pages) ---------------------------------- */
+/* Same technical vocabulary as the hero — concentric arc, two-tone headline,
+   hairline spec strip — so an interior page opens like the home page does
+   instead of dropping the reader onto a bare title slab. */
+.page-banner {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--paper-alt) 0%, var(--paper-alt-end) 100%);
+  border-bottom: 1px solid var(--line);
+}
+/* Short accent tick sitting on the closing hairline. */
+.page-banner::after {
+  content: "";
+  position: absolute; left: 0; bottom: -1px;
+  width: clamp(88px, 16vw, 200px); height: 2px;
+  background: var(--accent);
+}
+.page-banner__arc {
+  position: absolute;
+  top: -62%; right: -10%;
+  width: min(34rem, 62vw);
+  aspect-ratio: 1;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+  opacity: 0.17;
+  pointer-events: none;
+}
+.page-banner__arc::after {
+  content: "";
+  position: absolute;
+  inset: 16%;
+  border: 1px solid var(--accent);
+  border-radius: 50%;
+}
+.page-banner .shell {
+  position: relative;
+  padding-block: clamp(3.5rem, 7vw, 6rem);
+}
+.page-banner__grid { display: grid; gap: clamp(2.25rem, 5vw, 4.5rem); }
+@media (min-width: 900px) {
+  .page-banner__grid {
+    grid-template-columns: minmax(0, 1.4fr) minmax(14rem, 0.6fr);
+    align-items: end;
+  }
+  /* The card is a photograph, not a spec list — it needs room to read. The
+     About headline is the shortest of the four, so the column can give it up. */
+  .page-banner__grid:has(.page-banner__card) {
+    grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.9fr);
+  }
+}
+.page-banner h1 {
+  font-size: clamp(2.1rem, 4.2vw, 3.2rem);
+  margin-bottom: 1.25rem;
+  text-wrap: balance;
+}
+.page-banner h1 em { font-style: normal; color: var(--accent); }
+
+/* Each page fills the banner's second column with whatever that page is
+   actually about — figures on pricing, frames on the gallery, a voice on
+   about, the next three steps on contact. Same hairline grammar throughout. */
+
+/* Services — spec strip, the hairline-listed figures the hero uses. */
+.page-banner__spec { list-style: none; margin: 0; padding: 0; }
+.page-banner__spec li {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 1.25rem;
+  padding-block: 0.9rem;
+  border-top: 1px solid var(--line);
+}
+.page-banner__spec li:last-child { border-bottom: 1px solid var(--line); }
+.page-banner__spec span {
+  font-family: var(--font-display);
+  font-size: 0.62rem; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--muted-dim);
+  flex: none;
+}
+.page-banner__spec strong {
+  font-family: var(--font-display);
+  font-size: 1rem; font-weight: 600; letter-spacing: -0.01em;
+  color: var(--text);
+  text-align: right;
+}
+
+/* Gallery — a contact sheet. The page is photographs, so the banner is too.
+   Frames repeat below with full alt text, so these are decorative. */
+.page-banner__sheet { margin: 0; }
+.page-banner__sheet-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.page-banner__sheet-grid img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+/* Full width, a 2x2 of 4:3 frames would be half a phone screen tall and push
+   the actual gallery under the fold — so below the split it runs as a strip. */
+@media (max-width: 899px) {
+  .page-banner__sheet-grid { grid-template-columns: repeat(4, 1fr); }
+  .page-banner__sheet-grid img { aspect-ratio: 1; }
+}
+.page-banner__sheet figcaption {
+  display: flex; align-items: center; gap: 0.7rem;
+  margin-top: 0.9rem;
+  font-family: var(--font-display);
+  font-size: 0.62rem; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--muted-dim);
+}
+.page-banner__sheet figcaption i {
+  width: 5px; height: 5px; flex: none;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* About — her actual business card. It carries the name, the number and the
+   service area in one object, which is more of an introduction than any line
+   of copy would be. */
+.page-banner__card { align-self: center; max-width: 33rem; }
+.page-banner__card img { display: block; }
+
+/* Contact — what happens after the form. Answering that above the fold is
+   what gets it filled in. Arrows rather than 01/02/03: the form below numbers
+   its own groups, and two numbered sequences on one screen read as one. */
+.page-banner__next-label {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-display);
+  font-size: 0.62rem; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase;
+  color: var(--accent);
+}
+.page-banner__steps { list-style: none; margin: 0; padding: 0; }
+.page-banner__steps li {
+  display: flex; align-items: baseline; gap: 1rem;
+  padding-block: 0.9rem;
+  border-top: 1px solid var(--line);
+}
+.page-banner__steps li:last-child { border-bottom: 1px solid var(--line); }
+.page-banner__steps b {
+  flex: none;
+  font-size: 0.9rem; font-weight: 400;
+  color: var(--accent);
+}
+.page-banner__steps p {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 0.95rem; font-weight: 600; letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+
+/* --- 19. Misc ----------------------------------------------------------- */
+.skip-link {
+  position: absolute; left: -9999px; top: 0; z-index: 100;
+  padding: 0.75rem 1.25rem; background: var(--accent-bright); color: var(--accent-ink);
+  font-weight: 600;
+}
+.skip-link:focus { left: 0; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+@media (max-width: 480px) {
+  .brand__mark { width: 34px; height: 19px; }
+  .brand__name { font-size: 0.8rem; letter-spacing: 0.14em; }
+  .brand__tag  { font-size: 0.54rem; letter-spacing: 0.2em; }
+  .hero .btn-row .btn,
+  .cta-band .btn-row .btn { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
