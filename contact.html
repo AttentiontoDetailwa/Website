@@ -4,19 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Request a Quote | Attention to Detail — Interior Auto Detailing</title>
-<meta name="description" content="Request an interior detailing appointment in Bonney Lake, Buckley or Enumclaw, WA. Ava confirms every request within 24 hours with a final quote.">
-<meta name="theme-color" content="#F0E9DE">
+<meta name="description" content="Request an interior detailing appointment anywhere in Pierce County, WA. A short form, or the long one if you'd rather. Confirmed within 24 hours.">
+<meta name="theme-color" content="#0A0D0E">
 <link rel="canonical" href="https://attentiontodetailwa.com/contact">
 
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="Attention to Detail">
+<meta property="og:url" content="https://attentiontodetailwa.com/contact">
 <meta property="og:title" content="Request a Quote | Attention to Detail">
 <meta property="og:description" content="Two minutes to request an appointment. Confirmation and final quote within 24 hours.">
-<meta property="og:image" content="assets/work-f150-rear.jpg">
+<meta property="og:image" content="https://attentiontodetailwa.com/assets/work-f150-rear.jpg">
+<meta property="og:image:alt" content="Detailed rear leather seats and mats in a Ford F-150">
+<meta name="twitter:card" content="summary_large_image">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/quote-form.css">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -93,6 +98,33 @@
       <input type="hidden" name="_subject" value="New quote request from the website">
       <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
 
+      <!-- Length switch. Simple is the default and covers what Ava needs to
+           price the job and book it; Detailed opens the long stepped form for
+           people who'd rather answer everything up front. With JS off this
+           does nothing and everyone gets the long form. -->
+      <fieldset class="form-mode">
+        <legend class="fieldset__legend">How much do you want to fill out?</legend>
+        <div class="option-grid option-grid--2">
+          <label class="option">
+            <input type="radio" name="form-length" value="simple" checked>
+            <span class="option__body">
+              <span class="option__label">Keep it simple</span>
+              <span class="option__price">The short version</span>
+            </span>
+          </label>
+          <label class="option">
+            <input type="radio" name="form-length" value="detailed">
+            <span class="option__body">
+              <span class="option__label">Give me the details</span>
+              <span class="option__price">A few more questions</span>
+            </span>
+          </label>
+        </div>
+        <span class="hint" style="display:block;margin-top:.7rem">
+          Either one reaches me the same way. On the short version I'll ask about the rest when I call.
+        </span>
+      </fieldset>
+
       <!-- Progress. Hidden until the script takes over, so with JS off the form
            is simply one long page that still submits. -->
       <ol class="stepper" id="stepper" hidden>
@@ -112,39 +144,61 @@
       <div class="form-group" data-step="1">
         <h2 class="form-group__title" tabindex="-1"><span>01</span> Your details</h2>
         <div class="field-grid">
-        <div class="field-grid field-grid--2">
-          <div class="field">
-            <label for="name">Full name <span class="req">*</span></label>
-            <input class="input" id="name" name="name" type="text" autocomplete="name" placeholder="Jane Miller" required>
-          </div>
-          <div class="field">
-            <label for="phone">Phone number <span class="req">*</span></label>
-            <input class="input" id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(206) 555-0148" required>
-          </div>
+
+        <!-- Name is asked for outright on both lengths, so it carries a plain
+             required and sits on its own row. -->
+        <div class="field">
+          <label for="name">Full name <span class="req">*</span></label>
+          <input class="input" id="name" name="name" type="text" autocomplete="name" placeholder="Jane Miller" required>
         </div>
 
-        <div class="field-grid field-grid--2">
-          <div class="field">
-            <label for="email">Email</label>
-            <input class="input" id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@email.com">
-            <span class="hint">Optional — I'll text unless you'd rather I email.</span>
+        <!-- Phone and email are one requirement on the short form: either one
+             is enough for Ava to get back to them. No single required
+             attribute can say "one of these two", so they share a wrapper and
+             form-steps.js checks them as a pair, with the message hanging on
+             the wrapper rather than on whichever field was blamed. They sit
+             side by side so the choice is visible before anyone reads the
+             hint. The required attribute on phone is the long-form rule, and
+             what a browser with JS off enforces. -->
+        <div class="contact-group" data-contact-group>
+          <div class="field-grid field-grid--2">
+            <div class="field">
+              <label for="phone">Phone number <span class="req" data-detail-only>*</span></label>
+              <input class="input" id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(206) 555-0148" data-detail-required required>
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input class="input" id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@email.com">
+            </div>
           </div>
-          <div class="field">
-            <label for="city">City <span class="req">*</span></label>
-            <select class="select" id="city" name="city" required>
-              <option value="">Select your city…</option>
-              <option>Bonney Lake</option>
-              <option>Buckley</option>
-              <option>Enumclaw</option>
-              <option>Somewhere else nearby</option>
-            </select>
-          </div>
+          <span class="hint" data-simple-only>One of these two is enough — whichever you'd rather I use.</span>
+          <span class="hint" data-detail-only>Email is optional. I'll text unless you'd rather I email.</span>
         </div>
 
         <div class="field">
-          <label for="address">Where will the vehicle be? <span class="req">*</span></label>
-          <input class="input" id="address" name="address" type="text" autocomplete="street-address" placeholder="Street address — home, work, wherever it's parked" required>
-          <span class="hint">I come to you, so I need to know where "you" is. Driveway, apartment lot, work parking — all fine.</span>
+          <label for="address">Where will the vehicle be? <span class="req" data-detail-only>*</span></label>
+          <input class="input" id="address" name="address" type="text" autocomplete="street-address" placeholder="Street address — home, work, wherever it's parked" data-detail-required required>
+          <span class="hint" data-simple-only>Optional — don't know it offhand? We can figure it out over the phone.</span>
+          <span class="hint" data-detail-only>I come to you, so I need to know where "you" is. Driveway, apartment lot, work parking — all fine.</span>
+        </div>
+
+        <div class="field">
+          <label for="city">City or town <span class="req">*</span></label>
+          <select class="select" id="city" name="city" required>
+            <option value="">Select your city…</option>
+            <option>Bonney Lake</option>
+            <option>Sumner</option>
+            <option>Puyallup</option>
+            <option>Tacoma</option>
+            <option>Lakewood</option>
+            <option>Orting</option>
+            <option>Graham</option>
+            <option>Spanaway</option>
+            <option>Buckley</option>
+            <option>Enumclaw</option>
+            <option>Somewhere else in Pierce County</option>
+            <option>Somewhere else nearby</option>
+          </select>
         </div>
 
         </div>
@@ -155,18 +209,46 @@
         <h2 class="form-group__title" tabindex="-1"><span>02</span> The vehicle</h2>
         <div class="field-grid">
         <div class="field">
-          <label for="vehicle">Vehicle year, make and model <span class="req">*</span></label>
-          <input class="input" id="vehicle" name="vehicle" type="text" placeholder="2018 Chrysler 300" required>
+          <label for="vehicle">Vehicle year, make and model</label>
+          <input class="input" id="vehicle" name="vehicle" type="text" placeholder="2018 Chrysler 300">
+          <span class="hint">Optional. It helps me plan, but I can ask when I call.</span>
         </div>
 
         <fieldset>
+          <legend class="fieldset__legend">What do you need? <span class="req">*</span></legend>
+          <div class="option-grid option-grid--3">
+            <label class="option">
+              <input type="radio" name="service" value="deep-clean" required>
+              <span class="option__body">
+                <span class="option__label">Full interior deep clean</span>
+                <span class="option__price">From $120</span>
+              </span>
+            </label>
+            <label class="option">
+              <input type="radio" name="service" value="shampoo-only">
+              <span class="option__body">
+                <span class="option__label">Carpet &amp; seat shampoo only</span>
+                <span class="option__price">$50 flat</span>
+              </span>
+            </label>
+            <label class="option">
+              <input type="radio" name="service" value="not-sure">
+              <span class="option__body">
+                <span class="option__label">Not sure — help me pick</span>
+                <span class="option__price">I'll advise</span>
+              </span>
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset data-detail-only>
           <legend class="fieldset__legend">Vehicle size <span class="req">*</span></legend>
           <div class="option-grid option-grid--3">
             <label class="option">
               <input type="radio" name="size" value="car" required>
               <span class="option__body">
                 <span class="option__label">Car</span>
-                <span class="option__price">From $125</span>
+                <span class="option__price">From $120</span>
               </span>
             </label>
             <label class="option">
@@ -184,29 +266,30 @@
               </span>
             </label>
           </div>
+          <span class="hint" style="display:block;margin-top:.7rem">Shampoo-only visits are $50 whatever the size — this is for the full deep clean.</span>
         </fieldset>
 
         <fieldset>
           <legend class="fieldset__legend">Add-ons</legend>
           <div class="option-grid option-grid--3">
             <label class="option">
-              <input type="checkbox" name="addons" value="pet-hair">
+              <input type="checkbox" name="addons" value="shampoo">
               <span class="option__body">
-                <span class="option__label">Pet hair removal</span>
+                <span class="option__label">Carpet shampoo &amp; stain removal</span>
                 <span class="option__price">+$20</span>
               </span>
             </label>
             <label class="option">
-              <input type="checkbox" name="addons" value="shampoo">
+              <input type="checkbox" name="addons" value="dog-hair">
               <span class="option__body">
-                <span class="option__label">Carpet or seat shampoo</span>
+                <span class="option__label">Dog hair removal</span>
                 <span class="option__price">+$10</span>
               </span>
             </label>
             <label class="option">
               <input type="checkbox" name="addons" value="uv">
               <span class="option__body">
-                <span class="option__label">UV protection</span>
+                <span class="option__label">UV protectant</span>
                 <span class="option__price">+$10</span>
               </span>
             </label>
@@ -227,16 +310,17 @@
             <input class="input" id="date" name="date" type="date" required>
           </div>
           <div class="field">
-            <label for="time">Preferred time <span class="req">*</span></label>
-            <input class="input" id="time" name="time" type="time" required>
+            <label for="time">Preferred time <span class="req" data-detail-only>*</span></label>
+            <input class="input" id="time" name="time" type="time" data-detail-required required>
+            <span class="hint" data-simple-only>Optional. Leave it blank and I'll suggest a time.</span>
           </div>
         </div>
         <span class="hint" style="margin-top:-.6rem">This is a request, not a locked slot — I'll confirm or offer the closest time I have.</span>
 
         <!-- ---- 4. Notes ---- -->
         <div class="field">
-          <label for="notes">Anything specific I should know about your vehicle? <span class="req">*</span></label>
-          <textarea class="textarea" id="notes" name="notes" placeholder="Pet hair, a spill in the back seat, stains you want gone, a smell you can't find — the more you tell me, the more accurate your quote." required></textarea>
+          <label for="notes">Anything I should know about your car? <span class="req" data-detail-only>*</span></label>
+          <textarea class="textarea" id="notes" name="notes" data-detail-required placeholder="Dog hair, a spill in the back seat, stains you want gone, a smell you can't find — and a day or two that works for you." required></textarea>
         </div>
 
         </div>
@@ -277,12 +361,12 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-5.3 7-11a7 7 0 1 0-14 0c0 5.7 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
             <div>
               <span>Service area</span>
-              <p>Bonney Lake, Buckley &amp; Enumclaw, WA</p>
+              <p>All of Pierce County, WA</p>
             </div>
           </li>
         </ul>
         <p class="price-note" style="margin-top:1.25rem">
-          Don't see your city? Contact me anyway — it's usually a yes.
+          Outside the county? Contact me anyway — it's usually a yes.
         </p>
       </div>
 
@@ -322,7 +406,7 @@
             <span class="brand__tag">Any time, any place</span>
           </span>
         </a>
-        <p>Mobile interior auto detailing on the Bonney Lake plateau. Owned and operated by Ava Bright.</p>
+        <p>Mobile interior auto detailing across Pierce County. Owned and operated by Ava Bright.</p>
       </div>
       <div class="footer-col">
         <h4>Pages</h4>
@@ -337,9 +421,10 @@
       <div class="footer-col">
         <h4>Service area</h4>
         <ul>
-          <li><p>Bonney Lake, WA</p></li>
-          <li><p>Buckley, WA</p></li>
-          <li><p>Enumclaw, WA</p></li>
+          <li><p>All of Pierce County, WA</p></li>
+          <li><p>Bonney Lake &middot; Sumner &middot; Puyallup</p></li>
+          <li><p>Tacoma &middot; Orting &middot; Buckley</p></li>
+          <li><p>Enumclaw</p></li>
           <li><a href="contact.html">Somewhere else? Ask.</a></li>
         </ul>
       </div>

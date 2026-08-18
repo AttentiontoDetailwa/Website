@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Concept 3 — Full Bleed | Attention to Detail</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0E1516;
+  --paper:#FBFAF7;
+  --paper-2:#F1EEE7;
+  --teal:#0A6068;
+  --teal-bright:#7FDFE4;
+  --teal-tint:#E4F4F5;
+  --text:#151B1C;
+  --muted:#4A5556;
+  --line:rgba(21,27,28,.14);
+  --shell:1180px;
+  --pad:clamp(6rem,11vw,10rem);
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+.shell{width:min(100% - 3rem,var(--shell));margin-inline:auto}
+h1,h2,h3{margin:0;font-family:'Instrument Serif',Georgia,serif;font-weight:400;letter-spacing:-.015em;line-height:1.02}
+h1{font-size:clamp(3.2rem,7.5vw,6.2rem)}
+h2{font-size:clamp(2.4rem,4.6vw,3.8rem)}
+h3{font-size:1.5rem;line-height:1.15}
+p{margin:0}
+.label{font-family:'Inter',sans-serif;font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;font-weight:600;color:var(--teal);margin:0}
+.lede{color:var(--muted);max-width:56ch;font-size:1.05rem}
+:focus-visible{outline:2px solid var(--teal);outline-offset:3px}
+section{padding-block:var(--pad)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 1.8rem;font-size:.94rem;font-weight:500;text-decoration:none;border:1px solid transparent;border-radius:3px;transition:.2s}
+.btn--fill{background:var(--teal);color:#fff}
+.btn--fill:hover{background:#084A51}
+.btn--line{border-color:var(--line);color:var(--text)}
+.btn--line:hover{border-color:var(--text)}
+.btn--sm{min-height:42px;padding:0 1.2rem;font-size:.86rem}
+.row{display:flex;flex-wrap:wrap;gap:.9rem;margin-top:2.4rem}
+
+/* header sits over the hero */
+header{position:absolute;top:0;left:0;right:0;z-index:20}
+.hdr{display:flex;align-items:center;gap:2.5rem;height:84px;color:#fff}
+.brand{margin-right:auto;text-decoration:none;font-family:'Instrument Serif',serif;font-size:1.4rem;letter-spacing:-.01em}
+nav{display:flex;gap:2rem}
+nav a{text-decoration:none;font-size:.9rem;color:rgba(255,255,255,.78)}
+nav a:hover{color:#fff}
+.hdr .btn--line{border-color:rgba(255,255,255,.4);color:#fff}
+.hdr .btn--line:hover{border-color:#fff;background:rgba(255,255,255,.1)}
+
+/* hero */
+.hero{position:relative;min-height:min(94vh,860px);display:flex;align-items:flex-end;color:#fff;overflow:hidden}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 42%}
+.hero::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(6,12,13,.94) 0%,rgba(6,12,13,.78) 48%,rgba(6,12,13,.6) 100%),
+             linear-gradient(to right,rgba(6,12,13,.5) 0%,rgba(6,12,13,0) 62%)}
+.hero-in{position:relative;z-index:2;padding-block:clamp(3.5rem,7vw,6rem)}
+.hero .label{color:var(--teal-bright)}
+.hero h1{margin-top:1.4rem;max-width:13ch}
+.hero h1 i{color:var(--teal-bright)}
+.hero .lede{color:rgba(255,255,255,.82);margin-top:1.6rem}
+.hero .btn--line{border-color:rgba(255,255,255,.4);color:#fff}
+.hero .btn--line:hover{border-color:#fff;background:rgba(255,255,255,.1)}
+
+/* proof bar */
+.bar{background:var(--ink);color:var(--paper)}
+.bar-in{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;padding-block:2.4rem}
+.bar b{display:block;font-family:'Instrument Serif',serif;font-size:2.1rem;line-height:1;color:var(--teal-bright)}
+.bar p{margin-top:.5rem;font-size:.92rem;color:rgba(251,250,247,.72);max-width:26ch}
+
+/* two column feature */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,7vw,6rem);align-items:center}
+.split img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:3px}
+.list{list-style:none;margin:2.2rem 0 0;padding:0}
+.list li{padding:1rem 0;border-top:1px solid var(--line);display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:baseline}
+.list li:last-child{border-bottom:1px solid var(--line)}
+.list b{font-weight:600;font-size:.95rem;white-space:nowrap}
+.list span{color:var(--muted);font-size:.92rem}
+
+/* before after strip */
+.ba{display:grid;gap:2.5rem;margin-top:3.5rem}
+.ba figure{margin:0}
+.ba img{width:100%;border-radius:3px}
+.ba figcaption{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;padding-top:1rem;color:var(--muted);font-size:.92rem}
+
+/* pricing */
+.price{background:var(--paper-2)}
+.tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:3.5rem;border-top:1px solid var(--line)}
+.tier{padding:2.2rem 2rem;border-bottom:1px solid var(--line);border-right:1px solid var(--line)}
+.tier:first-child{border-left:1px solid var(--line)}
+.tier b{display:block;font-family:'Instrument Serif',serif;font-size:2.8rem;line-height:1;margin:1.2rem 0 .3rem}
+.tier small{color:var(--muted);font-size:.85rem;display:block}
+.tier p{color:var(--muted);font-size:.9rem;margin-top:.6rem}
+.tier .btn{margin-top:1.6rem;width:100%}
+.addons{list-style:none;padding:0;margin:2rem 0 0;display:flex;flex-wrap:wrap;gap:.6rem 2.2rem;color:var(--muted);font-size:.93rem}
+.addons b{color:var(--teal);font-weight:600}
+
+/* quote */
+.pull{background:var(--teal-tint);border-left:3px solid var(--teal)}
+.pull-in{max-width:36ch;padding-block:clamp(3.5rem,7vw,5.5rem)}
+.pull h2{font-style:italic}
+.pull cite{display:block;margin-top:1.5rem;font-style:normal;font-size:.9rem;color:var(--muted);font-family:'Inter',sans-serif}
+
+/* area */
+.area{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,6vw,5rem);align-items:center}
+.map{aspect-ratio:4/3;background:var(--paper-2);border:1px solid var(--line);border-radius:3px;display:grid;place-items:center;text-align:center;padding:2rem;color:var(--muted);font-size:.92rem}
+.cities{list-style:none;padding:0;margin:2rem 0 0}
+.cities li{padding:.9rem 0;border-bottom:1px solid var(--line);font-size:1.05rem;display:flex;justify-content:space-between}
+.cities li span{color:var(--muted);font-size:.88rem}
+
+/* cta */
+.cta{background:var(--ink);color:var(--paper);text-align:center}
+.cta p{color:rgba(251,250,247,.72);max-width:46ch;margin:1.4rem auto 0}
+.cta .row{justify-content:center}
+.cta .btn--fill{background:var(--teal-bright);color:#06282C}
+.cta .btn--fill:hover{background:#9DEBEF}
+.cta .btn--line{border-color:rgba(251,250,247,.3);color:var(--paper)}
+.cta .btn--line:hover{border-color:var(--paper)}
+
+footer{background:var(--ink);color:rgba(251,250,247,.72);padding-block:0 2.5rem}
+.fgrid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:2.5rem;padding-top:3.5rem;border-top:1px solid rgba(251,250,247,.12)}
+.fgrid h4{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--teal-bright);margin:0 0 1rem;font-weight:600}
+.fgrid ul{list-style:none;margin:0;padding:0;display:grid;gap:.55rem}
+.fgrid a,.fgrid li{font-size:.92rem;text-decoration:none}
+.fgrid a:hover{color:var(--paper)}
+.fbot{margin-top:3rem;padding-top:1.4rem;border-top:1px solid rgba(251,250,247,.12);display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-size:.82rem}
+
+@media(max-width:900px){
+  nav{display:none}
+  .split,.area,.fgrid,.bar-in{grid-template-columns:1fr}
+  .tiers{grid-template-columns:1fr;border-left:1px solid var(--line)}
+  .tier{border-right:1px solid var(--line)}
+  .hero{min-height:88vh}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="shell hdr">
+    <a class="brand" href="#">Attention to Detail</a>
+    <nav><a href="#work">Work</a><a href="#pricing">Pricing</a><a href="#area">Service area</a><a href="#">About</a></nav>
+    <a class="btn btn--line btn--sm" href="#quote">Free quote</a>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <img src="../assets/audi-after-dash.jpg" alt="Freshly detailed Audi TT interior with clean dash and red leather seats">
+  <div class="shell hero-in">
+    <p class="label">Mobile interior detailing · Bonney Lake plateau</p>
+    <h1>Clean, down to <i>the seams.</i></h1>
+    <p class="lede">I bring the water, the power and the tools to wherever your car is parked. You get it back the way it looked on the lot.</p>
+    <div class="row">
+      <a class="btn btn--fill" href="#quote">Get my free quote</a>
+      <a class="btn btn--line" href="#work">See the work</a>
+    </div>
+  </div>
+</section>
+
+<div class="bar">
+  <div class="shell bar-in">
+    <div><b>$125</b><p>Starting price for a full car interior.</p></div>
+    <div><b>24 hours</b><p>Quote and confirmed appointment, in writing.</p></div>
+    <div><b>3 cities</b><p>Bonney Lake, Buckley and Enumclaw — plus most of what's between them.</p></div>
+  </div>
+</div>
+
+<section>
+  <div class="shell split">
+    <img src="../assets/work-truck-floor.jpg" alt="Detailed truck floor and all-weather mats">
+    <div>
+      <p class="label">What a full interior means</p>
+      <h2 style="margin-top:1.1rem">Every visit is the whole car.</h2>
+      <p class="lede" style="margin-top:1.3rem">There's no basic tier that skips the parts that actually bother you. One service, done properly.</p>
+      <ul class="list">
+        <li><b>Vacuum</b><span>Seats, rails, seams, trunk, spare well</span></li>
+        <li><b>Surfaces</b><span>Dash, console, doors, every vent by hand</span></li>
+        <li><b>Glass</b><span>Interior glass and mirrors, streak-free</span></li>
+        <li><b>Mats</b><span>Pulled, cleaned, dried, put back straight</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="work" style="background:var(--paper-2)">
+  <div class="shell">
+    <p class="label">Before &amp; after</p>
+    <h2 style="margin-top:1.1rem;max-width:16ch">The difference is not subtle.</h2>
+    <p class="lede" style="margin-top:1.3rem">Same car, same day, phone camera. No studio lighting, no filters.</p>
+    <div class="ba">
+      <figure>
+        <img src="../assets/ba-driver.jpg" alt="Chrysler 300 driver area before and after detailing">
+        <figcaption><span><strong style="color:var(--text)">Dash, wheel &amp; driver floor</strong></span><span>Chrysler 300 · 2 hr 40 min</span></figcaption>
+      </figure>
+      <figure>
+        <img src="../assets/ba-console.jpg" alt="Chrysler 300 console and footwell before and after detailing">
+        <figcaption><span><strong style="color:var(--text)">Console, footwell &amp; door panel</strong></span><span>Chrysler 300 · same visit</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="pull">
+  <div class="shell pull-in">
+    <h2>“Two kids and three years of goldfish crackers. It smells like a new car again.”</h2>
+    <cite>Customer review slot — replace with a real Google review once the profile is verified.</cite>
+  </div>
+</section>
+
+<section class="price" id="pricing">
+  <div class="shell">
+    <p class="label">Starting prices</p>
+    <h2 style="margin-top:1.1rem;max-width:18ch">You know the number before I show up.</h2>
+    <p class="lede" style="margin-top:1.3rem">Priced by vehicle size. If condition moves the final number, you hear it in writing before we book — never after.</p>
+    <div class="tiers">
+      <div class="tier"><h3>Car</h3><b>$125</b><small>Starting</small><p>Sedans, coupes, compacts, hatchbacks</p><a class="btn btn--line btn--sm" href="#quote">Get a quote</a></div>
+      <div class="tier"><h3>Mid-size SUV / Truck</h3><b>$140</b><small>Starting</small><p>Crossovers, two-row SUVs, pickups</p><a class="btn btn--fill btn--sm" href="#quote">Get a quote</a></div>
+      <div class="tier"><h3>Large / 3-row</h3><b>$160</b><small>Starting</small><p>Full-size SUVs, minivans, three-row vehicles</p><a class="btn btn--line btn--sm" href="#quote">Get a quote</a></div>
+    </div>
+    <ul class="addons"><li>Pet hair removal <b>+$20</b></li><li>Carpet or seat shampoo <b>+$10</b></li><li>UV protection <b>+$10</b></li></ul>
+  </div>
+</section>
+
+<section id="area">
+  <div class="shell area">
+    <div>
+      <p class="label">Service area</p>
+      <h2 style="margin-top:1.1rem">I drive to you.</h2>
+      <p class="lede" style="margin-top:1.3rem">Based in Bonney Lake, working across the plateau. If your city isn't on the list, ask anyway.</p>
+      <ul class="cities">
+        <li>Bonney Lake <span>Home base</span></li>
+        <li>Buckley <span>15 min</span></li>
+        <li>Enumclaw <span>25 min</span></li>
+      </ul>
+    </div>
+    <div class="map">Google map of the service area drops in here at build.</div>
+  </div>
+</section>
+
+<section class="cta" id="quote">
+  <div class="shell">
+    <h2>One form. One number. One clean car.</h2>
+    <p>Tell me the vehicle and when works. I'll confirm within 24 hours with your appointment and final price.</p>
+    <div class="row"><a class="btn btn--fill" href="#">Get my free quote</a><a class="btn btn--line" href="tel:+12065656741">Call (206) 565-6741</a></div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="shell">
+    <div class="fgrid">
+      <div>
+        <a class="brand" href="#" style="color:var(--paper);display:block;margin-bottom:.9rem">Attention to Detail</a>
+        <p style="font-size:.92rem;max-width:34ch">Mobile interior auto detailing on the Bonney Lake plateau. Owned and operated by Ava Bright.</p>
+      </div>
+      <div><h4>Pages</h4><ul><li><a href="#">Home</a></li><li><a href="#">Services</a></li><li><a href="#">Gallery</a></li><li><a href="#">About</a></li><li><a href="#">Contact</a></li></ul></div>
+      <div><h4>Service area</h4><ul><li>Bonney Lake, WA</li><li>Buckley, WA</li><li>Enumclaw, WA</li><li><a href="#">Somewhere else? Ask.</a></li></ul></div>
+      <div><h4>Get in touch</h4><ul><li><a href="tel:+12065656741">(206) 565-6741</a></li><li><a href="mailto:avabright2006@gmail.com">avabright2006@gmail.com</a></li><li><a href="#">Request a quote</a></li></ul></div>
+    </div>
+    <div class="fbot"><p>© 2026 Attention to Detail — Interior Auto Detailing</p><p>Site by Gaspar Web Co.</p></div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -17,67 +17,85 @@
    ========================================================================== */
 
 /* --- 1. Tokens ----------------------------------------------------------- */
+/* Warm near-white ground, white surfaces lifted on soft shadow, rounded
+   geometry, one deep teal doing the work. Elevation comes from shadow and
+   radius rather than hairlines — the opposite of the marque treatment this
+   replaced, and much friendlier to read at arm's length. */
 :root {
-  /* Sand is the GROUND, white is a SURFACE that sits on it. The ground is
-     deliberately deep enough that white reads as raised — a near-white ground
-     would put cream on cream and lose the surface entirely. */
-  --paper:         #F0E9DE;  /* ground */
-  --paper-alt:     #E6DCCA;  /* deeper ground slab */
-  --paper-alt-end: #DFD4C0;
-  --ink:           #151110;
-  --ink-soft:      #241E19;
-  --on-ink:        #F8F4EE;  /* text on the espresso bands — never the ground */
+  --paper:         #F2EDE4;  /* ground */
+  --paper-alt:     #E6DFD2;  /* the warm band that alternates against it */
+  --paper-alt-end: #E6DFD2;
+  /* Near-black rather than a soft charcoal. It keeps a trace of the cyan's hue
+     at 5% lightness so it reads as deliberate rather than as a flat #000, which
+     halates against the cream and looks cheap at this size — but it is close
+     enough to black that the bands land as black. */
+  --ink:           #0A0D0E;  /* header, banner, mid-band, footer, CTA card */
+  --ink-soft:      #0F1314;  /* the mid-page band, a hair off the bookends */
+  --on-ink:        #FFFFFF;
 
   --bg:            var(--paper);
   --surface:       #FFFFFF;
-  --surface-2:     #FFFDFA;
-  /* One step down from white, for hovering a card that already sits on white.
-     Kept lighter than --paper so a hovered card still reads as a surface
-     rather than dropping into the ground. */
-  --surface-sunk:  #F5EFE5;
+  --surface-2:     #F2EDE4;
+  --surface-sunk:  #EEE8DC;
 
-  --line:          rgba(26, 22, 19, 0.16);
-  --line-soft:     rgba(26, 22, 19, 0.10);
-  --line-strong:   rgba(26, 22, 19, 0.30);
+  --line:          rgba(18, 25, 26, 0.12);
+  --line-soft:     rgba(18, 25, 26, 0.08);
+  --line-strong:   rgba(18, 25, 26, 0.22);
 
-  --text:          #1A1613;
-  /* On the light grounds, small type is black — hierarchy comes from size,
-     weight and tracking, not from fading the text out.
-       muted      body-scale secondary copy · 10.4:1 on sand
-       muted-dim  the little uppercase labels, hints and captions · black */
-  --muted:         #3A322C;
-  --muted-dim:     #1A1613;
-  /* Field placeholders are the one thing that must stay lighter — black
-     placeholder text reads as an already-filled value. */
-  --placeholder:   #615850;
+  --text:          #18201F;
+  /* Secondary copy is a warm slate rather than black — at this type size the
+     page needs the tonal step, and it still clears 6:1 on the ground. */
+  --muted:         #4E5958;
+  --muted-dim:     #4E5958;
+  /* Darkened a step along with the ground. This is on the two lightest things
+     that still have to be read — input placeholders on a white field, and the
+     number on a step the form has not reached yet — and at the old #6B7574 the
+     step number fell to 4.07:1 once the cream came down. 4.8:1 now, and still
+     a clear tonal step above --muted so the hierarchy survives. */
+  --placeholder:   #606A69;
 
-  /* Brand cyan, sampled off the business card (#7FDFE4 card, #8CDCDC banner).
-     A light aqua made for dark grounds, so it works two ways:
-       --accent-bright  the literal card colour — fills carrying dark text, and
-                        all accent type on the espresso bands
-       --accent         the same hue deepened, for type/rules on sand, where
-                        the light aqua would be unreadable */
-  --accent-bright:      #7FDFE4;
-  --accent-bright-deep: #6ACFD6;
-  --accent:             #096068;
-  --accent-deep:        #07474E;
-  --accent-tint:        #DFF3F5;
-  --accent-ink:         #06282C;
+  /* Brand cyan off the business card — #85E5E8, taken from the card itself
+     rather than eyeballed. It is the only colour on the site.
 
-  /* Form validation. Deep brick rather than a signal red — it has to sit on
-     the sand ground next to the cyan without shouting over it. */
+     There used to be a second, deepened cyan here for type on light grounds,
+     because #85E5E8 sits at 1.25:1 on the cream and cannot be read as words.
+     That one is gone, so the accent can no longer be a text colour on
+     anything light, and the rule the page now runs on is:
+
+         on the cream ground   the cyan is a FILL, with ink type on it
+         on the ink bands      the cyan is the TYPE
+
+     --accent is what the stylesheet reaches for ~45 times below, for words,
+     icons, dots, hairlines and focus rings. Pointing it at ink is what takes
+     all of those monochrome on light in one move; the ink-band rule in
+     section 3b flips it back to the card colour inside the dark bands. The
+     cyan then gets spent about six times a page instead of forty, which is
+     what makes it read as her colour rather than a default link colour. */
+  --accent-bright:      #85E5E8;
+  --accent-bright-deep: #A6EEF0;
+  --accent:             #0A0D0E;
+  --accent-deep:        #2B3334;
+  /* The pill and avatar wash is the card colour itself at 30%, not a separate
+     pale blue. Mixed on the cream it lands near #D1EAE5 and holds ink at 14:1. */
+  --accent-tint:        rgba(133, 229, 232, 0.30);
+  --accent-ink:         #0A0D0E;
+
   --danger:             #9C2B16;
 
-  --font-display:  'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  --font-body:     'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-display:  'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-body:     var(--font-display);
 
-  --radius:        2px;
-  --radius-lg:     2px;
-  --shell:         1280px;
-  --shell-narrow:  840px;
+  --radius:        18px;
+  --radius-sm:     12px;
+  --radius-lg:     26px;
+  /* Deeper and longer than a default card shadow — on a tinted ground a faint
+     shadow disappears, and lifting the white cards off the cream is most of
+     the reason the ground is tinted at all. */
+  --shadow:        0 1px 2px rgba(18, 25, 26, 0.06), 0 16px 36px -18px rgba(18, 25, 26, 0.30);
+  --shell:         1160px;
+  --shell-narrow:  820px;
 
-  /* Marque sites breathe. This is deliberately generous. */
-  --pad-section:   clamp(5.5rem, 11vw, 10rem);
+  --pad-section:   clamp(4.5rem, 9vw, 8rem);
   --ease:          cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
@@ -87,7 +105,10 @@
    display beats it — .btn and .form-foot both do. The stepped form toggles
    real elements with the hidden property, so this has to win outright. */
 [hidden] { display: none !important; }
+/* Root bumped off the 16px default so every rem-based size and gap scales
+   together. A lot of her customers are reading this at arm's length. */
 html {
+  font-size: 17px;
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
   color-scheme: light;
@@ -97,7 +118,7 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
-  font-size: 1rem;
+  font-size: 1.09rem;
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
@@ -107,17 +128,18 @@ a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; cursor: pointer; }
 ul { margin: 0; padding: 0; list-style: none; }
 
-/* Large and calm, never shouty — marque headlines don't use heavy weights. */
+/* Heavy and tightly tracked. The weight is what carries hierarchy here, so
+   there are only two of them on the page — 800 for headings, 400 for copy. */
 h1, h2, h3, h4 {
   font-family: var(--font-display);
-  font-weight: 600;
-  line-height: 1.08;
-  letter-spacing: -0.022em;
+  font-weight: 800;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
   margin: 0;
 }
-h1 { font-size: clamp(2.4rem, 5.4vw, 3.9rem); }
-h2 { font-size: clamp(1.85rem, 3.6vw, 2.7rem); }
-h3 { font-size: clamp(1.05rem, 1.5vw, 1.2rem); letter-spacing: -0.01em; }
+h1 { font-size: clamp(2.6rem, 5.6vw, 4.2rem); text-wrap: balance; }
+h2 { font-size: clamp(1.9rem, 3.6vw, 2.9rem); text-wrap: balance; }
+h3 { font-size: clamp(1.1rem, 1.5vw, 1.25rem); letter-spacing: -0.01em; line-height: 1.3; }
 p  { margin: 0 0 1.1em; }
 p:last-child { margin-bottom: 0; }
 
@@ -132,182 +154,214 @@ p:last-child { margin-bottom: 0; }
 .section { padding-block: var(--pad-section); }
 
 .section--alt {
-  background: linear-gradient(180deg, var(--paper-alt) 0%, var(--paper-alt-end) 100%);
-  border-block: 1px solid var(--line);
+  background: var(--paper-alt);
 }
 
-/* Espresso band. Redefining the tokens on the section flips the whole subtree
-   — rules, muted text, accents — with no per-element overrides. */
-.section--ink {
-  /* The ground flips too. Without this, anything painting var(--bg) in here
-     (cards, photo frames) keeps the light sand ground while its text flips to
-     cream — which put the before/after captions at 1.1:1. */
+/* --- 3b. Ink bands ------------------------------------------------------ */
+/* Three things on every page are ink: the banner the interior pages open on,
+   one band through the middle, and the footer. With the sticky header already
+   black and the closing CTA card already black, the page reads as dark at the
+   top, light and open through the middle where the reading happens, and dark
+   again at the close — rather than one continuous sheet of cream.
+
+   Everything below is driven off these six custom properties. The base
+   stylesheet never hard-codes a text or hairline colour, so re-pointing the
+   tokens inverts the entire subtree — eyebrow pills, ledes, hairlines, card
+   grounds, city lists, spec rows, the footer link colour — without any of
+   those rules knowing they are on a dark ground.
+
+   --accent is the important one. On the cream it is ink; in here it goes back
+   to the card cyan, which is the mechanism behind the whole palette: the one
+   colour is a fill on light and type on dark, and never the other way round. */
+.section--ink,
+.page-banner,
+.site-footer {
   --bg:            var(--ink);
-  --surface:       #241E19;
-  --surface-2:     #2C251E;
-  --line:          rgba(248, 244, 238, 0.20);
-  --line-soft:     rgba(248, 244, 238, 0.12);
-  --line-strong:   rgba(248, 244, 238, 0.34);
-  --text:          var(--on-ink);
-  --muted:         #B7ABA0;
-  --muted-dim:     #968B80;
+  --surface:       rgba(255, 255, 255, 0.05);
+  --surface-2:     rgba(255, 255, 255, 0.08);
+  --surface-sunk:  rgba(255, 255, 255, 0.05);
+  --line:          rgba(255, 255, 255, 0.15);
+  --line-soft:     rgba(255, 255, 255, 0.09);
+  --line-strong:   rgba(255, 255, 255, 0.32);
+  --text:          #FFFFFF;
+  --muted:         rgba(255, 255, 255, 0.74);
+  --muted-dim:     rgba(255, 255, 255, 0.62);
+  --placeholder:   rgba(255, 255, 255, 0.55);
   --accent:        var(--accent-bright);
-  --accent-deep:   var(--accent-bright);
-  --accent-tint:   rgba(127, 223, 228, 0.16);
-  background: var(--ink);
+  --accent-deep:   var(--accent-bright-deep);
+  --accent-tint:   rgba(133, 229, 232, 0.15);
+  /* Shadow is a light-ground device. On ink it only shows up as a smudge. */
+  --shadow:        none;
+  background: var(--bg);
   color: var(--text);
 }
+/* The mid-page band sits a hair off the bookends so a page that happens to
+   end with the band butted against the footer still shows the seam. */
+.section--ink { --bg: var(--ink-soft); }
+
+/* Two cream bands in a row would read as one very long slab and lose the
+   alternation, so consecutive light bands get a hairline between them. An ink
+   band needs no such help — the tonal step is the divider. */
+.section--alt + .section--alt { border-top: 1px solid var(--line); }
 
 .section--tight { padding-block: clamp(3.5rem, 6vw, 5.5rem); }
 .hr { height: 1px; background: var(--line); border: 0; margin: 0; }
 
-/* Wide-tracked uppercase label with a long hairline — the spec-sheet tic that
-   opens every section. */
+/* Soft teal pill. Replaces the wide-tracked hairline label — same job, but it
+   reads as a tag rather than a spec-sheet heading. */
 .eyebrow {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  background: var(--accent-tint);
   font-family: var(--font-display);
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   font-weight: 600;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--accent);
   margin: 0 0 1.4rem;
 }
-.eyebrow::before {
-  content: "";
-  width: 42px; height: 1px; flex: none;
-  background: currentColor;
-}
-.lede { font-size: clamp(1.02rem, 1.35vw, 1.14rem); color: var(--muted); max-width: 56ch; }
+.lede { font-size: clamp(1.1rem, 1.35vw, 1.18rem); color: var(--muted); max-width: 56ch; }
 .section-head { max-width: 60ch; margin-bottom: clamp(2.75rem, 5vw, 4rem); }
 .section-head--center { margin-inline: auto; text-align: center; }
 .section-head--center .lede { margin-inline: auto; }
 .section-head--center .eyebrow { justify-content: center; }
 
 /* --- 4. Buttons --------------------------------------------------------- */
-/* Rectangular, uppercase, wide-tracked. Pills read friendly; marques don't. */
+/* Pills, sentence case, sized so they're easy to hit. Every variant clears
+   48px tall; the defaults are 54. */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.6rem;
-  padding: 1.15rem 2.3rem;
-  border: 1px solid transparent;
-  border-radius: 0;
+  gap: 0.5rem;
+  min-height: 54px;
+  padding: 0 1.7rem;
+  border: 1.5px solid transparent;
+  border-radius: 999px;
   font-family: var(--font-display);
-  font-size: 0.76rem;
+  font-size: 1rem;
   font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
   text-align: center;
-  transition: background 0.45s var(--ease), border-color 0.45s var(--ease), color 0.45s var(--ease);
+  transition: background 0.18s var(--ease), border-color 0.18s var(--ease),
+              color 0.18s var(--ease), transform 0.18s var(--ease);
 }
+/* The one loud thing on the page. Cyan fill, ink type, 12.2:1 — and identical
+   on the cream sections, in the header and on the closing card, so the thing
+   you are meant to press looks the same everywhere. No shadow: it is already
+   the highest-contrast object in view and does not need lifting too. */
 .btn--primary {
   background: var(--accent-bright);
   border-color: var(--accent-bright);
   color: var(--accent-ink);
+  box-shadow: none;
 }
-.btn--primary:hover { background: var(--accent-bright-deep); border-color: var(--accent-bright-deep); }
-.btn--ghost { border-color: var(--line-strong); color: var(--text); background: transparent; }
-/* Hover inverts the button, so the label has to come from the ground token,
-   not the literal sand. --paper never flips, which made a ghost button on an
-   espresso band hover to cream-on-cream; --bg flips with the section. */
-.btn--ghost:hover { border-color: var(--text); background: var(--text); color: var(--bg); }
-.btn--sm { padding: 0.78rem 1.4rem; font-size: 0.68rem; letter-spacing: 0.12em; }
+.btn--primary:hover { background: var(--accent-bright-deep); border-color: var(--accent-bright-deep); transform: translateY(-1px); }
+.btn--ghost { border-color: var(--line); color: var(--text); background: var(--surface); }
+.btn--ghost:hover { border-color: var(--accent); color: var(--accent); }
+.btn--sm { min-height: 48px; padding: 0 1.3rem; font-size: 0.94rem; }
 .btn--block { width: 100%; }
-.btn-row { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 0.8rem; }
 
 .textlink {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  padding: 0.5rem 0;
   color: var(--accent);
   font-family: var(--font-display);
-  font-size: 0.74rem;
+  font-size: 1rem;
   font-weight: 600;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  padding-bottom: 0.35rem;
-  border-bottom: 1px solid currentColor;
-  transition: gap 0.45s var(--ease);
+  letter-spacing: 0;
+  text-transform: none;
+  border-bottom: 0;
+  transition: gap 0.18s var(--ease);
 }
-.textlink:hover { gap: 0.85rem; }
+.textlink:hover { gap: 0.85rem; text-decoration: underline; text-underline-offset: 4px; }
 
 /* --- 5. Header / nav ---------------------------------------------------- */
 /* Espresso bar — always darker than whatever sits beneath it, on every page.
    Same token flip as .section--ink, so the whole subtree inverts. */
 .site-header {
-  --line:          rgba(248, 244, 238, 0.18);
-  --line-soft:     rgba(248, 244, 238, 0.12);
-  --line-strong:   rgba(248, 244, 238, 0.34);
-  --text:          var(--on-ink);
-  --muted:         #B7ABA0;
-  --muted-dim:     #968B80;
+  --line:          rgba(255, 255, 255, 0.16);
+  --line-soft:     rgba(255, 255, 255, 0.10);
+  --line-strong:   rgba(255, 255, 255, 0.30);
+  --text:          #FFFFFF;
+  --muted:         rgba(255, 255, 255, 0.76);
+  --muted-dim:     rgba(255, 255, 255, 0.60);
   --accent:        var(--accent-bright);
   position: sticky;
   top: 0;
   z-index: 60;
-  background: rgba(21, 17, 16, 0.96);
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(248, 244, 238, 0.14);
+  background: var(--ink);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   color: var(--text);
 }
 .site-header__inner {
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  min-height: 88px;
+  min-height: 78px;
 }
 
-.brand { display: flex; align-items: center; gap: 0.85rem; margin-right: auto; }
-.brand__mark { width: 44px; height: 24px; flex: none; color: var(--accent); }
-.brand__text { display: flex; flex-direction: column; line-height: 1; }
+.brand { display: flex; align-items: center; gap: 0.75rem; margin-right: auto; }
+.brand__mark { width: 42px; height: 23px; flex: none; color: var(--accent); }
+.brand__text { display: flex; flex-direction: column; line-height: 1.15; }
 .brand__name {
   font-family: var(--font-display);
-  font-size: 0.98rem;
-  font-weight: 600;
-  letter-spacing: 0.19em;
-  text-transform: uppercase;
+  font-size: 1.02rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-transform: none;
   white-space: nowrap;
   color: var(--text);
 }
 .brand__tag {
-  font-size: 0.62rem;
+  font-size: 0.8rem;
   font-weight: 500;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--muted-dim);
-  margin-top: 0.5rem;
+  margin-top: 0.25rem;
 }
 
-.nav { display: flex; align-items: center; gap: 1.4rem; }
-.nav a {
+.nav { display: flex; align-items: center; gap: 1.6rem; }
+/* :not(.btn) throughout — the drawer's quote button is an <a> inside .nav, and
+   a bare `.nav a` out-specifies `.btn--primary`, so without this the button
+   picks up the nav's link colour and its ink type turns into white-on-cyan the
+   moment the drawer opens. Scoping the link rules is the fix; patching the
+   button afterwards would just start the specificity race again. */
+.nav a:not(.btn) {
   position: relative;
-  padding: 0.4rem 0;
+  padding: 0.5rem 0;
   font-family: var(--font-display);
-  font-size: 0.72rem;
+  font-size: 0.96rem;
   font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
   white-space: nowrap;
   color: var(--muted);
-  transition: color 0.45s var(--ease);
+  transition: color 0.18s var(--ease);
 }
-.nav a::after {
+.nav a:not(.btn)::after {
   content: "";
   position: absolute; left: 0; right: 0; bottom: 0;
-  height: 1px;
-  background: currentColor;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--accent);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 0.45s var(--ease);
+  transition: transform 0.18s var(--ease);
 }
-.nav a:hover { color: var(--text); }
-.nav a:hover::after { transform: scaleX(1); }
-.nav a[aria-current="page"] { color: var(--text); }
-.nav a[aria-current="page"]::after { transform: scaleX(1); background: var(--accent); }
+.nav a:not(.btn):hover { color: var(--text); }
+.nav a:not(.btn):hover::after { transform: scaleX(1); }
+.nav a:not(.btn)[aria-current="page"] { color: var(--text); }
+.nav a:not(.btn)[aria-current="page"]::after { transform: scaleX(1); }
 /* The nav's quote button is for the mobile drawer only. */
 .nav .btn { display: none; }
 
@@ -316,24 +370,28 @@ p:last-child { margin-bottom: 0; }
    collapse into a stack of words. The drawer breakpoint below is set to hand
    off before that can happen. */
 .header__cta .btn { white-space: nowrap; }
+/* Calling beats the form for a lot of her customers, so the number is real
+   text in the bar at full size, not a small caption next to the button. */
 .header__phone {
   font-family: var(--font-display);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
+  font-size: 1.06rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  padding: 0.6rem 0;
   color: var(--text);
   white-space: nowrap;
-  transition: color 0.45s var(--ease);
+  transition: color 0.18s var(--ease);
 }
 .header__phone:hover { color: var(--accent); }
 
 .nav-toggle {
   display: none;
-  width: 46px; height: 46px;
+  width: 48px; height: 48px;
   align-items: center; justify-content: center;
   background: none;
   border: 1px solid var(--line-strong);
-  border-radius: 0;
+  border-radius: 999px;
+  color: var(--text);
 }
 .nav-toggle svg { width: 20px; height: 20px; }
 
@@ -343,10 +401,18 @@ p:last-child { margin-bottom: 0; }
    Keep this number in sync with the resize handler in js/nav.js. */
 @media (max-width: 1259px) {
   .nav-toggle { display: inline-flex; }
-  .header__cta { display: none; }
+  /* The bar keeps the phone number once the links collapse — the quote button
+     is already in the drawer, and calling is the action most of her customers
+     actually want. No new markup: this is the CTA block that was hidden
+     wholesale before, with only its button dropped. */
+  .header__cta { display: flex; gap: 0.9rem; order: 2; }
+  .header__cta .btn { display: none; }
+  /* The toggle sits before the CTA block in the markup; on the collapsed bar
+     the number should come first and the toggle sit at the far right. */
+  .nav-toggle { order: 3; }
   .nav {
     position: absolute;
-    inset: 88px 0 auto;
+    inset: 78px 0 auto;
     flex-direction: column;
     align-items: stretch;
     gap: 0;
@@ -356,147 +422,170 @@ p:last-child { margin-bottom: 0; }
     display: none;
   }
   .nav[data-open="true"] { display: flex; }
-  .nav a { padding: 1.05rem 0; font-size: 0.82rem; border-bottom: 1px solid var(--line-soft); }
-  .nav a::after { display: none; }
+  .nav a:not(.btn) { padding: 1.15rem 0; font-size: 1.06rem; border-bottom: 1px solid var(--line-soft); }
+  .nav a:not(.btn)::after { display: none; }
   .nav .btn { display: inline-flex; margin-top: 1.5rem; }
+}
+
+/* Phone-width bar: brand, number and toggle all have to fit on one row, so
+   the strapline under the wordmark drops out. */
+@media (max-width: 560px) {
+  .site-header .brand__tag { display: none; }
+  .site-header .brand__mark { width: 34px; height: 19px; }
+  .site-header .brand__name { font-size: 0.94rem; }
+  .header__phone { font-size: 0.98rem; }
+  .site-header__inner { gap: 0.8rem; }
 }
 
 /* --- 6. Hero ------------------------------------------------------------ */
 .hero { position: relative; overflow: hidden; background: var(--bg); }
 
-/* Thin concentric arc — reads as a technical mark, not decoration. */
-.hero__arc {
-  position: absolute;
-  top: 4%; right: -10%;
-  width: min(50rem, 78vw);
-  aspect-ratio: 1;
-  border: 1px solid var(--accent);
-  border-radius: 50%;
-  opacity: 0.22;
-  pointer-events: none;
-}
-.hero__arc::after {
-  content: "";
-  position: absolute;
-  inset: 15%;
-  border: 1px solid var(--accent);
-  border-radius: 50%;
-}
+/* The concentric arc belonged to the technical treatment. This ground is
+   plain — the photo card is the only thing that should be drawing the eye. */
+.hero__arc { display: none; }
 
 .hero__grid {
   position: relative;
   display: grid;
-  gap: clamp(3rem, 6vw, 5.5rem);
+  gap: clamp(2.5rem, 5vw, 4rem);
   align-items: center;
-  padding-block: clamp(4rem, 9vw, 7.5rem) clamp(4rem, 9vw, 7rem);
+  padding-block: clamp(3rem, 6vw, 5rem) clamp(3.5rem, 7vw, 6rem);
 }
 @media (min-width: 1000px) { .hero__grid { grid-template-columns: 1.05fr 0.95fr; } }
 
 .hero__badge {
-  display: inline-flex; align-items: center; gap: 0.85rem;
-  margin-bottom: 2rem;
+  display: inline-flex; align-items: center; gap: 0.55rem;
+  margin-bottom: 1.4rem;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  background: var(--accent-tint);
   font-family: var(--font-display);
-  font-size: 0.68rem;
+  font-size: 0.85rem;
   font-weight: 600;
-  letter-spacing: 0.3em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--accent);
 }
 .hero__badge i {
-  width: 5px; height: 5px; flex: none;
+  width: 6px; height: 6px; flex: none;
   border-radius: 50%;
   background: currentColor;
 }
 
+/* Sized to the column it actually sits in — the hero copy shares the row with
+   the photo pair, so it never gets the full shell width to wrap into. */
 .hero h1 {
-  font-size: clamp(2.6rem, 5vw, 4.2rem);
-  line-height: 1.03;
+  font-size: clamp(2.5rem, 4.4vw, 3.5rem);
+  line-height: 1.06;
   letter-spacing: -0.03em;
-  margin-bottom: 1.6rem;
+  margin-bottom: 1.4rem;
   text-wrap: balance;
 }
-.hero h1 em { font-style: normal; color: var(--accent); }
-.hero__sub {
-  font-size: clamp(1.02rem, 1.35vw, 1.14rem);
-  line-height: 1.7;
-  color: var(--muted);
-  max-width: 32rem;
-  margin-bottom: 2.6rem;
+/* The second half of the headline used to be teal. With --accent at ink the
+   whole line would go one tone, so the accent comes back underneath the words
+   instead — the card colour at the largest scale anywhere on the site, with
+   the type still ink and fully legible above it. A text-decoration rather than
+   a background gradient because the em wraps onto two lines at most widths,
+   and a gradient paints once across the whole inline box; this draws per line,
+   and skip-ink lifts it around the descenders on its own. Home page only —
+   every other page opens on the ink banner, where `em` is already cyan type. */
+.hero h1 em {
+  font-style: normal;
+  color: var(--text);
+  text-decoration: underline;
+  text-decoration-color: var(--accent-bright);
+  text-decoration-thickness: 0.1em;
+  text-underline-offset: 0.1em;
+  text-decoration-skip-ink: auto;
 }
-.hero .btn-row { margin-bottom: 3.25rem; }
+.hero__sub {
+  font-size: clamp(1.1rem, 1.35vw, 1.18rem);
+  line-height: 1.65;
+  color: var(--muted);
+  max-width: 34rem;
+  margin-bottom: 2.2rem;
+}
+.hero .btn-row { margin-bottom: 2.4rem; }
 
-/* Spec strip — hairline-divided figures, the way a marque lists performance. */
+/* Was a hairline-divided spec strip. Now three plain lines under the buttons —
+   no rules, no boxes, just the three things people need to know. */
 .hero__facts {
   display: grid;
-  gap: 1px;
-  background: var(--line);
-  border-block: 1px solid var(--line);
+  gap: 0.9rem;
+  background: none;
+  border: 0;
 }
-@media (min-width: 560px) { .hero__facts { grid-template-columns: repeat(3, 1fr); } }
+/* Stacked, not three-up. These sit in the narrow hero column, and splitting
+   them into thirds put every description on three wrapped lines. */
 .hero__fact {
-  display: flex; align-items: flex-start; gap: 0.7rem;
-  padding: 1.4rem 1.25rem 1.4rem 0;
-  background: var(--bg);
-  font-size: 0.84rem;
+  display: flex; align-items: flex-start; gap: 0.65rem;
+  padding: 0;
+  background: none;
+  font-size: 1rem;
   color: var(--muted);
 }
-@media (min-width: 560px) {
-  .hero__fact { padding-inline: 1.25rem; }
-  .hero__fact:first-child { padding-left: 0; }
-}
-.hero__fact svg { width: 17px; height: 17px; flex: none; margin-top: 0.25rem; color: var(--accent); }
+.hero__fact svg { width: 20px; height: 20px; flex: none; margin-top: 0.2rem; color: var(--accent); }
 .hero__fact strong {
   display: block;
   font-family: var(--font-display);
-  font-size: 0.94rem;
-  font-weight: 600;
-  letter-spacing: -0.005em;
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   color: var(--text);
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.15rem;
 }
 .hero__fact em {
   display: block;
   font-style: normal;
-  font-size: 0.8rem;
-  line-height: 1.45;
+  font-size: 0.96rem;
+  line-height: 1.5;
   color: var(--muted);
 }
 
 /* --- showcase: a real before/after pair, above the fold ------------------ */
+/* Two white cards on soft shadow instead of overlapping hairline frames, and
+   the price is a floating white pill rather than a black slab. */
 .hero__showcase { position: relative; }
 .showcase-card {
   position: relative;
   margin: 0;
   overflow: hidden;
   background: var(--surface);
-  border: 1px solid var(--line);
+  border: 0;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
 }
 .showcase-card img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
 .showcase-card figcaption {
-  position: absolute; top: 0; left: 0;
-  padding: 0.6rem 1.1rem;
+  position: absolute; top: 0.85rem; left: 0.85rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
   font-family: var(--font-display);
-  font-size: 0.6rem;
+  font-size: 0.82rem;
   font-weight: 600;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-  background: var(--paper);
-  color: var(--muted);
+  letter-spacing: 0;
+  text-transform: none;
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--text);
 }
+/* Was deep teal behind white type. Same job, inverted: the card colour as the
+   fill, ink on top of it. */
 .showcase-card--after figcaption { background: var(--accent-bright); color: var(--accent-ink); }
 
 .showcase-chip {
-  display: inline-flex; align-items: baseline; gap: 0.65rem;
-  padding: 1.05rem 1.6rem;
-  background: var(--ink);
-  color: var(--on-ink);
+  display: inline-flex; align-items: baseline; gap: 0.5rem;
+  padding: 0.85rem 1.4rem;
+  border-radius: 999px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+  color: var(--text);
   font-family: var(--font-display);
-  font-size: 0.62rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
 }
-.showcase-chip b { font-size: 1.5rem; font-weight: 500; letter-spacing: -0.03em; }
+.showcase-chip b { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.03em; }
 
 @media (min-width: 1000px) {
   .hero__showcase { aspect-ratio: 1 / 1.02; }
@@ -506,10 +595,8 @@ p:last-child { margin-bottom: 0; }
   .showcase-chip { position: absolute; z-index: 3; left: 0; bottom: 15%; }
 }
 @media (max-width: 999px) {
-  .hero__showcase { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); }
-  .showcase-card { border: 0; }
+  .hero__showcase { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; background: none; }
   .showcase-chip { display: none; }
-  .hero__arc { display: none; }
 }
 
 /* --- 7. Marquee --------------------------------------------------------- */
@@ -517,12 +604,10 @@ p:last-child { margin-bottom: 0; }
    strip rather than a joke ticker. */
 .marquee {
   overflow: hidden;
-  padding-block: 1.4rem;
-  background: var(--ink);
-  color: var(--on-ink);
-  /* The band it runs into is also espresso, so it needs its own closing
-     hairline or the ticker reads as the top line of that section. */
-  border-bottom: 1px solid rgba(248, 244, 238, 0.14);
+  padding-block: 1.5rem;
+  background: var(--paper-alt);
+  color: var(--text);
+  border-block: 1px solid var(--line);
 }
 .marquee__track {
   display: flex;
@@ -536,35 +621,40 @@ p:last-child { margin-bottom: 0; }
   gap: 3.5rem;
   white-space: nowrap;
   font-family: var(--font-display);
-  font-size: 0.68rem;
+  font-size: 1rem;
   font-weight: 500;
-  letter-spacing: 0.34em;
-  text-transform: uppercase;
-  color: rgba(248, 244, 238, 0.66);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--muted);
 }
 .marquee__group li::after {
   content: "";
-  width: 4px; height: 4px; flex: none;
+  width: 5px; height: 5px; flex: none;
   border-radius: 50%;
-  background: var(--accent-bright);
+  background: var(--accent);
 }
 @keyframes marquee-scroll { to { transform: translateX(-50%); } }
 
 /* --- 8. Before / after -------------------------------------------------- */
-.ba-grid { display: grid; gap: 1px; background: var(--line); }
+.ba-grid { display: grid; gap: 1.25rem; background: none; }
 @media (min-width: 900px) { .ba-grid { grid-template-columns: 1fr 1fr; } }
-.ba-card { background: var(--bg); overflow: hidden; }
+.ba-card {
+  background: var(--surface);
+  overflow: hidden;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
 .ba-card img { width: 100%; }
 .ba-card__foot {
   display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
-  padding: 1.5rem 1.5rem 1.6rem;
+  padding: 1.4rem 1.6rem 1.5rem;
 }
-.ba-card__foot h3 { font-size: 1rem; }
+.ba-card__foot h3 { font-size: 1.1rem; }
 .ba-card__foot span {
   font-family: var(--font-display);
-  font-size: 0.66rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  font-size: 0.95rem;
+  letter-spacing: 0;
+  text-transform: none;
   color: var(--muted-dim);
   white-space: nowrap;
 }
@@ -704,96 +794,167 @@ p:last-child { margin-bottom: 0; }
 @media (min-width: 900px) { .split { grid-template-columns: 0.95fr 1.05fr; } }
 .split--reverse > :first-child { order: 2; }
 @media (max-width: 899px) { .split--reverse > :first-child { order: 0; } }
+/* For splits where the copy is much shorter than the photo beside it —
+   without this the text pins to the top and leaves a large dead gap. */
+.split--center { align-items: center; }
 
-.frame { overflow: hidden; }
+/* Both columns finish on the same line: the photo takes its height from the
+   copy beside it rather than running past it. Only above the breakpoint —
+   once the split stacks there is no second column to match. */
+@media (min-width: 900px) {
+  .split--level { align-items: stretch; }
+  /* The photo is taken out of flow so it contributes no intrinsic height of
+     its own. That leaves the copy column as the only thing setting the row
+     height, and the image then fills exactly that — so the two columns start
+     and finish on the same line instead of the photo's aspect ratio pushing
+     the row taller than the text. */
+  .split--level .frame { position: relative; height: 100%; min-height: 0; }
+  .split--level .frame--tall img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    aspect-ratio: auto;
+    object-fit: cover;
+  }
+}
+
+.frame { overflow: hidden; border-radius: var(--radius); box-shadow: var(--shadow); }
 .frame img { width: 100%; }
 .frame--tall img { aspect-ratio: 4 / 5; object-fit: cover; }
 
 /* --- 10. Pricing -------------------------------------------------------- */
 /* A spec sheet, not a set of cards: hairline columns, oversized figures. */
-.price-grid { display: grid; gap: 1px; background: var(--line); border-block: 1px solid var(--line); }
+/* Separate rounded cards rather than one hairline-divided slab. */
+.price-grid { display: grid; gap: 1.25rem; background: none; border: 0; }
 @media (min-width: 860px) { .price-grid { grid-template-columns: repeat(3, 1fr); } }
-/* Every package sits on white — the three are the same offer at three sizes,
-   so singling one out with a lighter ground implied a recommendation the copy
-   never made. Hover drops a step instead. */
 .price-card {
   position: relative;
   display: flex; flex-direction: column;
-  padding: clamp(2.25rem, 3.5vw, 3rem) clamp(1.5rem, 2.5vw, 2.25rem);
+  padding: clamp(2rem, 3vw, 2.4rem) clamp(1.6rem, 2.5vw, 2rem);
   background: var(--surface);
-  transition: background 0.5s var(--ease);
+  border: 1.5px solid transparent;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: transform 0.18s var(--ease);
 }
-.price-card:hover { background: var(--surface-sunk); }
+.price-card:hover { transform: translateY(-2px); }
+/* The middle tier already carries the filled button in the markup — the
+   border just finishes the emphasis that was half-made. */
+.price-card:nth-child(2) { border-color: var(--accent); }
 .price-card__tag {
-  position: absolute; top: clamp(2.25rem, 3.5vw, 3rem); right: clamp(1.5rem, 2.5vw, 2.25rem);
+  position: absolute; top: clamp(2rem, 3vw, 2.4rem); right: clamp(1.6rem, 2.5vw, 2rem);
   font-family: var(--font-display);
-  font-size: 0.58rem; font-weight: 600;
-  letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--accent-deep);
+  font-size: 0.85rem; font-weight: 600;
+  letter-spacing: 0; text-transform: none;
+  color: var(--accent);
 }
-.price-card__icon { width: 52px; height: 30px; color: var(--muted-dim); margin-bottom: 2rem; }
+.price-card__icon { width: 52px; height: 30px; color: var(--accent); margin-bottom: 1.4rem; }
 .price-card h3 {
-  font-size: 0.76rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  margin-bottom: 0.65rem;
+  font-size: 1.15rem;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  margin-bottom: 0.4rem;
 }
-.price-card__fits { font-size: 0.89rem; color: var(--muted-dim); margin-bottom: 1.75rem; min-height: 2.9em; }
-.price-card__price { display: flex; align-items: baseline; gap: 0.6rem; margin-bottom: 2rem; }
+.price-card__fits { font-size: 0.98rem; color: var(--muted); margin-bottom: 1.2rem; min-height: 2.9em; }
+.price-card__price { display: flex; align-items: baseline; gap: 0.6rem; margin-bottom: 1.6rem; }
 .price-card__price b {
   font-family: var(--font-display);
-  font-size: clamp(3rem, 5vw, 3.9rem);
-  font-weight: 500;
-  letter-spacing: -0.045em;
+  font-size: clamp(2.6rem, 4.4vw, 3.2rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
   line-height: 1;
 }
 .price-card__price span {
   font-family: var(--font-display);
-  font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--muted-dim);
+  font-size: 0.98rem; letter-spacing: 0; text-transform: none;
+  color: var(--muted);
 }
 .price-card .btn { margin-top: auto; }
 
-.addons { display: grid; gap: 1px; background: var(--line); border-bottom: 1px solid var(--line); }
-@media (min-width: 700px) { .addons { grid-template-columns: repeat(3, 1fr); } }
-/* These sit inside an espresso band, where --text is cream and --surface is
-   near-black. A white card there needs the light tokens declared back on the
-   row, or the copy (which reads var(--text) inline) turns cream-on-white. */
-.addon {
-  --surface:    #FFFFFF;
-  --text:       #1A1613;
-  --muted:      #3A322C;
-  --muted-dim:  #1A1613;
-  --accent:     #096068;
-  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-  padding: 1.4rem clamp(1.25rem, 2.5vw, 2.25rem);
-  background: var(--surface);
-  color: var(--text);
-  font-size: 0.94rem;
-  transition: background 0.5s var(--ease);
+/* Add-ons. Cards rather than pills: each one has to carry the reason someone
+   would want it, and a pill can only hold a name and a number. Equal-height
+   columns so the three prices line up instead of floating at three depths. */
+.addons {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 2.25rem;
+  padding: 0;
+  list-style: none;
+  background: none;
+  border: 0;
 }
-.addon:hover { background: var(--surface-sunk); }
-.addon b { font-family: var(--font-display); color: var(--accent); font-weight: 600; }
-.price-note { margin-top: 1.5rem; font-size: 0.88rem; color: var(--muted-dim); }
+@media (min-width: 820px) { .addons { grid-template-columns: repeat(3, 1fr); } }
+.addon {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.8rem;
+  padding: 1.8rem 1.7rem;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  color: var(--text);
+  font-size: 1rem;
+}
+.addon__head {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+}
+.addon__name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.15rem; font-weight: 800; letter-spacing: -0.02em;
+  color: var(--text);
+}
+.addon__price {
+  flex: none;
+  font-family: var(--font-display);
+  font-size: 1.3rem; font-weight: 800; letter-spacing: -0.03em;
+  color: var(--accent);
+}
+.addon p { margin: 0; color: var(--muted); line-height: 1.6; }
+
+/* Stacked — for the add-on list sitting in one half of a split, beside a
+   photo, where three across would be far too narrow. Doubled class so it
+   beats the three-column rule in the media query above regardless of order.
+   Compressed, because the whole copy column has to finish level with the
+   photograph next to it. */
+.addons.addons--stack { grid-template-columns: 1fr; gap: 0.7rem; margin-top: 1.75rem; }
+.addons--stack .addon { padding: 1rem 1.35rem; gap: 0.2rem; }
+.addons--stack .addon__name { font-size: 1.02rem; }
+.addons--stack .addon__price { font-size: 1.12rem; }
+.addons--stack .addon p { font-size: 0.98rem; line-height: 1.5; }
+
+/* Compact — the home page carries the name and the price only, so the roomier
+   card used on Services leaves it looking hollow. */
+.addons.addons--compact { gap: 1rem; }
+.addons--compact .addon { padding: 1.15rem 1.35rem; gap: 0; }
+.addons--compact .addon__name { font-size: 1.02rem; }
+.addons--compact .addon__price { font-size: 1.15rem; }
+
+.price-note { margin-top: 1.5rem; font-size: 1rem; color: var(--muted); }
 
 /* --- 11. Gallery -------------------------------------------------------- */
-/* Hairline gaps so the grid reads as one continuous photographic wall. */
-.gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); }
+/* Separate rounded photos with real gaps, not a hairline wall. */
+.gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; background: none; }
 @media (min-width: 760px) { .gallery { grid-template-columns: repeat(3, 1fr); } }
 @media (min-width: 1060px) { .gallery { grid-template-columns: repeat(4, 1fr); } }
-.gallery figure { margin: 0; position: relative; overflow: hidden; background: var(--bg); }
-.gallery img { width: 100%; aspect-ratio: 1; object-fit: cover; transition: transform 1.1s var(--ease); }
-.gallery figure:hover img { transform: scale(1.06); }
+.gallery figure {
+  margin: 0; position: relative; overflow: hidden;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.gallery img { width: 100%; aspect-ratio: 1; object-fit: cover; transition: transform 0.5s var(--ease); }
+.gallery figure:hover img { transform: scale(1.04); }
 .gallery figcaption {
   position: absolute; inset: auto 0 0 0;
-  padding: 2.5rem 1.1rem 1rem;
+  padding: 2.5rem 1.2rem 1.1rem;
   font-family: var(--font-display);
-  font-size: 0.64rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--on-ink);
-  background: linear-gradient(180deg, transparent, rgba(15, 11, 9, 0.88));
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  color: #FFFFFF;
+  background: linear-gradient(180deg, transparent, rgba(10, 13, 14, 0.9));
 }
 .gallery--tall img { aspect-ratio: 3 / 4; }
 
@@ -804,72 +965,82 @@ p:last-child { margin-bottom: 0; }
 }
 
 /* --- 12. Reviews -------------------------------------------------------- */
-.reviews { display: grid; gap: 1px; background: var(--line); border-block: 1px solid var(--line); }
+.reviews { display: grid; gap: 1.25rem; background: none; border: 0; }
 @media (min-width: 860px) { .reviews { grid-template-columns: repeat(3, 1fr); } }
 .review {
   display: flex; flex-direction: column;
-  padding: clamp(2rem, 3vw, 2.5rem) clamp(1.5rem, 2.5vw, 2rem);
-  background: var(--bg);
-  transition: background 0.5s var(--ease);
+  padding: clamp(1.8rem, 2.6vw, 2.1rem) clamp(1.6rem, 2.4vw, 1.9rem);
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
 }
-.review:hover { background: var(--surface); }
-.stars { display: flex; gap: 0.22rem; color: var(--accent); margin-bottom: 1.4rem; }
-.stars svg { width: 14px; height: 14px; }
-.review blockquote { margin: 0 0 1.75rem; font-size: 1rem; line-height: 1.65; color: var(--text); }
-.review__who { margin-top: auto; display: flex; align-items: center; gap: 0.9rem; }
+.stars { display: flex; gap: 0.15rem; color: #E0A32E; margin-bottom: 1.1rem; }
+.stars svg { width: 18px; height: 18px; }
+.review blockquote { margin: 0 0 1.5rem; font-size: 1.06rem; line-height: 1.6; color: var(--text); }
+.review__who { margin-top: auto; display: flex; align-items: center; gap: 0.8rem; }
 .review__avatar {
   width: 40px; height: 40px; flex: none;
   display: grid; place-items: center;
-  border: 1px solid var(--line-strong);
-  font-family: var(--font-display); font-weight: 600; font-size: 0.8rem;
-  color: var(--muted);
+  border: 0;
+  border-radius: 999px;
+  background: var(--accent-tint);
+  font-family: var(--font-display); font-weight: 700; font-size: 0.95rem;
+  color: var(--accent);
 }
 .review__name {
   font-family: var(--font-display);
-  font-size: 0.76rem; font-weight: 600;
-  letter-spacing: 0.14em; text-transform: uppercase;
+  font-size: 1rem; font-weight: 700;
+  letter-spacing: -0.01em; text-transform: none;
 }
-.review__meta { font-size: 0.8rem; color: var(--muted-dim); }
+.review__meta { font-size: 0.95rem; color: var(--muted); }
 
 /* Placeholder styling — deliberately obvious, swapped for real reviews. */
-.is-placeholder { background: transparent; }
-.is-placeholder blockquote { color: var(--muted-dim); font-style: italic; }
+.is-placeholder blockquote { color: var(--muted); font-style: italic; }
 .placeholder-flag {
   display: inline-block;
   font-family: var(--font-display);
-  font-size: 0.6rem; font-weight: 600;
-  letter-spacing: 0.22em; text-transform: uppercase;
-  color: var(--muted-dim);
+  font-size: 0.85rem; font-weight: 600;
+  letter-spacing: 0; text-transform: none;
+  color: var(--muted);
   border: 1px dashed var(--line-strong);
-  padding: 0.3rem 0.6rem;
-  margin-bottom: 1.4rem;
+  border-radius: 999px;
+  padding: 0.3rem 0.85rem;
+  margin-bottom: 1.2rem;
 }
 
 .google-bar {
   display: flex; flex-wrap: wrap; align-items: center; gap: 1.25rem 2rem;
-  padding: 1.85rem 0;
-  border-bottom: 1px solid var(--line);
+  margin-top: 1.5rem;
+  padding: 1.5rem 1.8rem;
+  background: var(--surface);
+  border: 0;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
 }
 .google-bar__score { display: flex; align-items: center; gap: 0.9rem; }
-.google-bar__score b { font-family: var(--font-display); font-size: 1.5rem; font-weight: 500; }
-.google-bar p { font-size: 0.9rem; color: var(--muted); margin: 0; }
+.google-bar__score b { font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; letter-spacing: -0.03em; }
+.google-bar p { font-size: 1rem; color: var(--muted); margin: 0; }
 .google-bar .btn { margin-left: auto; }
 
 /* --- 13. Service area --------------------------------------------------- */
 .area-grid { display: grid; gap: clamp(2.5rem, 5vw, 4.5rem); align-items: center; }
 @media (min-width: 900px) { .area-grid { grid-template-columns: 1fr 1fr; } }
-.city-list { display: grid; gap: 0; margin: 2.25rem 0; border-top: 1px solid var(--line); }
+/* Cities read as pills rather than a hairline table. */
+.city-list { display: flex; flex-wrap: wrap; gap: 0.7rem; margin: 2rem 0; border: 0; }
 .city-list li {
-  display: flex; align-items: center; gap: 0.85rem;
-  padding: 1rem 0;
-  border-bottom: 1px solid var(--line);
+  display: inline-flex; align-items: center; gap: 0.55rem;
+  padding: 0.7rem 1.2rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
   font-family: var(--font-display);
-  font-size: 0.86rem;
+  font-size: 1rem;
   font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
 }
-.city-list svg { width: 14px; height: 14px; color: var(--accent); }
+.city-list svg { width: 17px; height: 17px; color: var(--accent); }
 
 .map-placeholder {
   position: relative;
@@ -877,25 +1048,55 @@ p:last-child { margin-bottom: 0; }
   display: grid; place-items: center;
   text-align: center;
   padding: 2rem;
-  border: 1px dashed var(--line-strong);
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
 }
 .map-placeholder svg { width: 30px; height: 30px; color: var(--accent); margin-bottom: 1rem; }
-.map-placeholder p { font-size: 0.9rem; color: var(--muted-dim); max-width: 26ch; margin: 0; }
+.map-placeholder p { font-size: 1rem; color: var(--muted); max-width: 26ch; margin: 0; }
 
 /* --- 14. CTA band ------------------------------------------------------- */
+/* The one black block on the page below the header — an inset rounded card
+   sitting on the ground, rather than a full-bleed band. */
 .cta-band {
-  --line: rgba(248, 244, 238, 0.2);
+  --line: rgba(255, 255, 255, 0.2);
   --accent: var(--accent-bright);
-  background: var(--ink-soft);
+  background: var(--bg);
   color: var(--on-ink);
   text-align: center;
+  padding-block: var(--pad-section);
+  padding-inline: clamp(1.25rem, 5vw, 3.5rem);
 }
-.cta-band .shell { padding-block: clamp(5rem, 10vw, 8rem); }
-.cta-band h2 { margin-bottom: 1.4rem; }
-.cta-band .lede { color: rgba(248, 244, 238, 0.68); margin-inline: auto; margin-bottom: 2.75rem; }
+/* Backed with a finished interior. The band is the last thing on every page, so
+   it closes on the work rather than on a flat black card — but the card is the
+   one place the page relies on white type, so the photograph sits under an ink
+   scrim at 80–92%. That floor is what holds the lede (white at 72%) past 4.5:1
+   even across the sunlit part of the frame, and it lets the ghost button's
+   border stay a legible edge rather than a suggestion. The focal point sits low
+   so the wheel and console hold the centre when the card goes tall and narrow on
+   a phone. Static by construction: no attachment: fixed, nothing to animate. */
+.cta-band .shell {
+  background-color: var(--ink);
+  background-image:
+    linear-gradient(180deg,
+      rgba(10, 13, 14, 0.92) 0%,
+      rgba(10, 13, 14, 0.80) 52%,
+      rgba(10, 13, 14, 0.90) 100%),
+    url("../assets/audi-after-dash.jpg");
+  background-position: 50% 62%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: var(--radius-lg);
+  padding: clamp(2.8rem, 6vw, 4.5rem) clamp(1.5rem, 4vw, 3rem);
+}
+.cta-band h2 { margin-bottom: 1.3rem; }
+.cta-band .lede { color: rgba(255, 255, 255, 0.72); margin-inline: auto; margin-bottom: 2.4rem; }
 .cta-band .btn-row { justify-content: center; }
-.cta-band .btn--ghost { border-color: rgba(248, 244, 238, 0.4); color: var(--on-ink); }
-.cta-band .btn--ghost:hover { background: var(--on-ink); border-color: var(--on-ink); color: var(--ink); }
+/* Bumped from 0.3 — over the photograph that edge fell to ~2.2:1 and the button
+   read as floating text. At 0.5 it clears 3:1 against the lightest composite. */
+.cta-band .btn--ghost { background: transparent; border-color: rgba(255, 255, 255, 0.5); color: var(--on-ink); }
+.cta-band .btn--ghost:hover { background: transparent; border-color: #FFFFFF; color: #FFFFFF; }
 
 /* --- 15. Forms ---------------------------------------------------------- */
 .form-layout { display: grid; gap: clamp(2.5rem, 5vw, 4.5rem); align-items: start; }
@@ -958,12 +1159,19 @@ p:last-child { margin-bottom: 0; }
   border-color: var(--accent);
   background: var(--surface-2);
 }
+/* The outline:none above outranks the global :focus-visible ring, which left
+   these three signalling keyboard focus by border colour alone. Put the ring
+   back for keyboard users; pointer focus keeps the quieter treatment. */
+.input:focus-visible, .select:focus-visible, .textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
 /* appearance:none strips the native arrow, and a filled select with no arrow is
    indistinguishable from a text input — so draw one back on. */
 .select {
   appearance: none;
   padding-right: 2.6rem;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none' stroke='%23096068' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m1 1.5 5 5 5-5'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8' fill='none' stroke='%230A0D0E' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m1 1.5 5 5 5-5'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 0.95rem center;
   background-size: 12px 8px;
@@ -1194,101 +1402,109 @@ fieldset { margin: 0; padding: 0; border: 0; }
 .portrait-placeholder svg { width: 34px; height: 34px; color: var(--muted-dim); margin-bottom: 1rem; }
 .portrait-placeholder p { font-size: 0.89rem; color: var(--muted-dim); max-width: 24ch; margin: 0; }
 
-.stat-row { display: grid; gap: 1px; background: var(--line); border-block: 1px solid var(--line); }
-@media (min-width: 640px) { .stat-row { grid-template-columns: repeat(3, 1fr); } }
-.stat { background: var(--bg); padding: 1.85rem 1.5rem 1.85rem 0; }
-@media (min-width: 640px) {
-  .stat { padding-inline: 1.5rem; }
-  .stat:first-child { padding-left: 0; }
+/* The stats were the last of the marque treatment left standing: columns split
+   by a 1px grid gap bleeding a hairline through, boxed top and bottom, with a
+   500-weight numeral and a label that never set a weight at all. Nothing else
+   on the page is built that way any more — repeated peer units are white
+   surfaces on soft shadow (.review, .city-list, .google-bar), display numerals
+   run 800 at -0.03em (.google-bar__score b, .addon__price), and every uppercase
+   micro-label runs 600. Same three facts, house construction. The top margin
+   lives here rather than in two inline styles that had drifted apart between
+   index and about. */
+.stat-row {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 2.5rem;
+}
+/* auto-fit rather than repeat(3, 1fr). This row sits in the copy half of a
+   split, so its width tracks the split, not the viewport: at 1280 it has 458px
+   on the home page and 554px on About, and the moment the split goes two-up
+   around 900 it drops to ~360. A fixed three columns tore "Quote turnaround"
+   out of its tile at those widths, and a bare 1fr let the widest label push its
+   own column past the other two. auto-fit takes three across wherever three fit
+   and folds to two where they don't, with no new breakpoint. */
+@media (min-width: 640px) { .stat-row { grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr)); } }
+.stat {
+  padding: 1.25rem 1rem;
+  border: 0;
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
 }
 .stat b {
   display: block;
   font-family: var(--font-display);
-  font-size: 2.1rem; font-weight: 500; letter-spacing: -0.035em;
+  font-size: 1.7rem; font-weight: 800; letter-spacing: -0.03em;
+  line-height: 1.15;
   color: var(--accent);
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.4rem;
 }
 .stat span {
+  display: block;
   font-family: var(--font-display);
-  font-size: 0.64rem; letter-spacing: 0.2em; text-transform: uppercase;
+  font-size: 0.64rem; font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: 0.2em; text-transform: uppercase;
   color: var(--muted-dim);
 }
 
 /* --- 17. Footer --------------------------------------------------------- */
-.site-footer {
-  --line: rgba(248, 244, 238, 0.16);
-  --muted: #B7ABA0;
-  --muted-dim: #968B80;
-  --accent: var(--accent-bright);
-  background: var(--ink);
-  color: var(--on-ink);
-}
+/* Ink footer — the ground and the token flip both come from the shared
+   ink-band rule in section 3b, so there is nothing to set here. No top
+   hairline: the tonal step against the section above already is the edge. */
+.site-footer { border-top: 0; }
 .footer-grid {
   display: grid; gap: clamp(2.5rem, 4vw, 3.5rem);
-  padding-block: clamp(4rem, 7vw, 5.5rem);
+  padding-block: clamp(3rem, 5vw, 4rem);
 }
 @media (min-width: 860px) { .footer-grid { grid-template-columns: 1.6fr 1fr 1fr 1.2fr; } }
 .footer-col h4 {
   font-family: var(--font-display);
-  font-size: 0.62rem; letter-spacing: 0.24em; text-transform: uppercase;
-  color: var(--muted-dim); font-weight: 600; margin-bottom: 1.5rem;
+  font-size: 0.92rem; letter-spacing: -0.01em; text-transform: none;
+  color: var(--text); font-weight: 700; margin-bottom: 0.9rem;
 }
-.footer-col ul { display: grid; gap: 0.85rem; }
-.footer-col a, .footer-col p { font-size: 0.92rem; color: var(--muted); }
-.footer-col a { transition: color 0.45s var(--ease); }
+/* These rows are real tap targets — the phone number and email down here get
+   used, and at 22px tall they were a coin toss on a phone. */
+.footer-col ul { display: grid; gap: 0.15rem; }
+.footer-col a, .footer-col p { font-size: 1rem; color: var(--muted); }
+/* Scoped to the link lists — the brand lockup is also an <a> in here, and
+   making it inline-block broke the mark and wordmark onto separate lines. */
+.footer-col ul a { display: inline-block; padding: 0.65rem 0; }
+.footer-col li > p { padding: 0.65rem 0; margin: 0; }
+.footer-col a { transition: color 0.18s var(--ease); }
 .footer-col a:hover { color: var(--accent); }
-.site-footer .brand__name { color: var(--on-ink); }
-.footer-brand p { margin-top: 1.5rem; max-width: 32ch; font-size: 0.92rem; }
+.site-footer .brand__name { color: var(--text); }
+.site-footer .brand__tag { color: var(--muted); }
+.site-footer .brand__mark { color: var(--accent); }
+.footer-brand p { margin-top: 1.2rem; max-width: 32ch; font-size: 1rem; }
 .footer-bottom {
   display: flex; flex-wrap: wrap; gap: 0.75rem 1.5rem; align-items: center;
-  padding-block: 1.85rem;
+  padding-block: 1.6rem;
   border-top: 1px solid var(--line);
   font-family: var(--font-display);
-  font-size: 0.66rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--muted-dim);
+  font-size: 0.92rem;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--muted);
 }
 .footer-bottom p { margin: 0; }
 .footer-bottom .spacer { margin-left: auto; }
 
 /* --- 18. Page banner (interior pages) ---------------------------------- */
-/* Same technical vocabulary as the hero — concentric arc, two-tone headline,
-   hairline spec strip — so an interior page opens like the home page does
-   instead of dropping the reader onto a bare title slab. */
+/* Opens the same way the home hero does now: warm ground, pill eyebrow, heavy
+   two-tone headline, and whatever that page is actually about carried in a
+   white card beside it. The concentric arc and the accent tick belonged to the
+   technical treatment and are gone. */
+/* Ground and token flip come from the shared ink-band rule in section 3b. */
 .page-banner {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(180deg, var(--paper-alt) 0%, var(--paper-alt-end) 100%);
-  border-bottom: 1px solid var(--line);
+  border-bottom: 0;
 }
-/* Short accent tick sitting on the closing hairline. */
-.page-banner::after {
-  content: "";
-  position: absolute; left: 0; bottom: -1px;
-  width: clamp(88px, 16vw, 200px); height: 2px;
-  background: var(--accent);
-}
-.page-banner__arc {
-  position: absolute;
-  top: -62%; right: -10%;
-  width: min(34rem, 62vw);
-  aspect-ratio: 1;
-  border: 1px solid var(--accent);
-  border-radius: 50%;
-  opacity: 0.17;
-  pointer-events: none;
-}
-.page-banner__arc::after {
-  content: "";
-  position: absolute;
-  inset: 16%;
-  border: 1px solid var(--accent);
-  border-radius: 50%;
-}
+.page-banner__arc { display: none; }
 .page-banner .shell {
   position: relative;
-  padding-block: clamp(3.5rem, 7vw, 6rem);
+  padding-block: clamp(3rem, 6vw, 5rem);
 }
 .page-banner__grid { display: grid; gap: clamp(2.25rem, 5vw, 4.5rem); }
 @media (min-width: 900px) {
@@ -1303,8 +1519,8 @@ fieldset { margin: 0; padding: 0; border: 0; }
   }
 }
 .page-banner h1 {
-  font-size: clamp(2.1rem, 4.2vw, 3.2rem);
-  margin-bottom: 1.25rem;
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  margin-bottom: 1.2rem;
   text-wrap: balance;
 }
 .page-banner h1 em { font-style: normal; color: var(--accent); }
@@ -1313,23 +1529,30 @@ fieldset { margin: 0; padding: 0; border: 0; }
    actually about — figures on pricing, frames on the gallery, a voice on
    about, the next three steps on contact. Same hairline grammar throughout. */
 
-/* Services — spec strip, the hairline-listed figures the hero uses. */
-.page-banner__spec { list-style: none; margin: 0; padding: 0; }
+/* Services — the figures, in a white card. */
+.page-banner__spec {
+  list-style: none; margin: 0;
+  padding: 0.4rem 1.6rem;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
 .page-banner__spec li {
   display: flex; align-items: baseline; justify-content: space-between; gap: 1.25rem;
-  padding-block: 0.9rem;
+  padding-block: 1.1rem;
   border-top: 1px solid var(--line);
 }
-.page-banner__spec li:last-child { border-bottom: 1px solid var(--line); }
+.page-banner__spec li:first-child { border-top: 0; }
+.page-banner__spec li:last-child { border-bottom: 0; }
 .page-banner__spec span {
   font-family: var(--font-display);
-  font-size: 0.62rem; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase;
-  color: var(--muted-dim);
+  font-size: 1rem; font-weight: 400; letter-spacing: 0; text-transform: none;
+  color: var(--muted);
   flex: none;
 }
 .page-banner__spec strong {
   font-family: var(--font-display);
-  font-size: 1rem; font-weight: 600; letter-spacing: -0.01em;
+  font-size: 1.15rem; font-weight: 800; letter-spacing: -0.02em;
   color: var(--text);
   text-align: right;
 }
@@ -1340,15 +1563,17 @@ fieldset { margin: 0; padding: 0; border: 0; }
 .page-banner__sheet-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1px;
-  background: var(--line);
-  border: 1px solid var(--line);
+  gap: 0.75rem;
+  background: none;
+  border: 0;
 }
 .page-banner__sheet-grid img {
   display: block;
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow);
 }
 /* Full width, a 2x2 of 4:3 frames would be half a phone screen tall and push
    the actual gallery under the fold — so below the split it runs as a strip. */
@@ -1357,11 +1582,11 @@ fieldset { margin: 0; padding: 0; border: 0; }
   .page-banner__sheet-grid img { aspect-ratio: 1; }
 }
 .page-banner__sheet figcaption {
-  display: flex; align-items: center; gap: 0.7rem;
+  display: flex; align-items: center; gap: 0.6rem;
   margin-top: 0.9rem;
   font-family: var(--font-display);
-  font-size: 0.62rem; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase;
-  color: var(--muted-dim);
+  font-size: 1rem; font-weight: 500; letter-spacing: 0; text-transform: none;
+  color: var(--muted);
 }
 .page-banner__sheet figcaption i {
   width: 5px; height: 5px; flex: none;
@@ -1373,33 +1598,48 @@ fieldset { margin: 0; padding: 0; border: 0; }
    service area in one object, which is more of an introduction than any line
    of copy would be. */
 .page-banner__card { align-self: center; max-width: 33rem; }
-.page-banner__card img { display: block; }
+.page-banner__card img {
+  display: block;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
 
 /* Contact — what happens after the form. Answering that above the fold is
    what gets it filled in. Arrows rather than 01/02/03: the form below numbers
    its own groups, and two numbered sequences on one screen read as one. */
 .page-banner__next-label {
-  margin: 0 0 0.4rem;
+  display: inline-flex; align-items: center;
+  margin: 0 0 0.9rem;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  background: var(--accent-tint);
   font-family: var(--font-display);
-  font-size: 0.62rem; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase;
+  font-size: 0.85rem; font-weight: 600; letter-spacing: 0; text-transform: none;
   color: var(--accent);
 }
-.page-banner__steps { list-style: none; margin: 0; padding: 0; }
+.page-banner__steps {
+  list-style: none; margin: 0;
+  padding: 0.4rem 1.6rem;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
 .page-banner__steps li {
-  display: flex; align-items: baseline; gap: 1rem;
-  padding-block: 0.9rem;
+  display: flex; align-items: baseline; gap: 0.9rem;
+  padding-block: 1.1rem;
   border-top: 1px solid var(--line);
 }
-.page-banner__steps li:last-child { border-bottom: 1px solid var(--line); }
+.page-banner__steps li:first-child { border-top: 0; }
+.page-banner__steps li:last-child { border-bottom: 0; }
 .page-banner__steps b {
   flex: none;
-  font-size: 0.9rem; font-weight: 400;
+  font-size: 1rem; font-weight: 700;
   color: var(--accent);
 }
 .page-banner__steps p {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 0.95rem; font-weight: 600; letter-spacing: -0.01em;
+  font-size: 1.06rem; font-weight: 600; letter-spacing: -0.01em;
   color: var(--text);
 }
 
@@ -1414,9 +1654,11 @@ fieldset { margin: 0; padding: 0; border: 0; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
 @media (max-width: 480px) {
-  .brand__mark { width: 34px; height: 19px; }
-  .brand__name { font-size: 0.8rem; letter-spacing: 0.14em; }
-  .brand__tag  { font-size: 0.54rem; letter-spacing: 0.2em; }
+  /* The header brand is handled in the 560px block above; this only needs to
+     catch the footer lockup, which is still sentence case now. */
+  .site-footer .brand__mark { width: 34px; height: 19px; }
+  .site-footer .brand__name { font-size: 0.95rem; }
+  .site-footer .brand__tag  { font-size: 0.8rem; }
   .hero .btn-row .btn,
   .cta-band .btn-row .btn { width: 100%; }
 }

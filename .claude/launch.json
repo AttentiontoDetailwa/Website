@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "atd-site",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["/Users/diamondback/Desktop/client_websites/Ava Bright:ATD/ATD client website/.claude/serve.py"],
+      "port": 4188
+    }
+  ]
+}
