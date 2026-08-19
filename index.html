@@ -33,6 +33,12 @@
   "email": "avabright2006@gmail.com",
   "founder": { "@type": "Person", "name": "Ava Bright" },
   "priceRange": "$50-$200",
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+    "opens": "08:00",
+    "closes": "18:00"
+  },
   "areaServed": [
     { "@type": "AdministrativeArea", "name": "Pierce County", "addressRegion": "WA" },
     { "@type": "City", "name": "Bonney Lake", "addressRegion": "WA" },
@@ -47,7 +53,7 @@
 }
 </script>
 </head>
-<body>
+<body class="home">
 <a class="skip-link" href="#main">Skip to content</a>
 
 <!-- ============================ HEADER ============================ -->
@@ -99,23 +105,45 @@
       <h1>Get back the car <em>you actually bought.</em></h1>
       <p class="hero__sub">
         A mobile interior deep clean that comes to your driveway. I vacuum to the seams,
-        steam clean throughout, and do every vent and crevice by hand. Your day keeps
-        going while I work.
+        steam clean throughout, and do every vent and crevice by hand.
+        <span class="u-phone-hide">Your day keeps going while I work.</span>
       </p>
 
       <div class="btn-row">
         <a class="btn btn--primary" href="contact.html">Get my free quote</a>
         <a class="btn btn--ghost" href="gallery.html#before-after">See before &amp; after</a>
       </div>
+
+      <!-- Phone only (hidden above 40em). The showcase pair to the right is two
+           static cards ~150px wide once the grid stacks, which is too small to
+           read as proof; below 40em it gives way to this, a single frame you
+           wipe between the same two photographs. The range input is the real
+           control — invisible over the photo, and it carries touch drag,
+           click-to-jump and arrow keys without any of that being hand-rolled. -->
+      <div class="ba">
+        <div class="ba__shot ba__shot--after" aria-hidden="true"></div>
+        <div class="ba__clip" id="ba-clip" aria-hidden="true"><div class="ba__shot ba__shot--before"></div></div>
+        <div class="ba__handle" id="ba-handle" aria-hidden="true"></div>
+        <div class="ba__tags" aria-hidden="true"><span>Before</span><span>After</span></div>
+        <input class="ba__range" id="ba-range" type="range" min="0" max="100" value="50" step="0.1"
+               aria-label="Reveal the before and after of an Audi TT driver area">
+      </div>
+      <p class="ba__hint">Drag to compare &mdash; same car, same afternoon</p>
     </div>
 
     <div class="hero__showcase">
       <figure class="showcase-card showcase-card--before">
-        <img src="assets/audi-before-seat.jpg" alt="Audi TT driver footwell before detailing — gritty rubber mats and dusty pedals" loading="eager">
+        <picture>
+          <source srcset="assets/audi-before-seat.webp" type="image/webp">
+          <img src="assets/audi-before-seat.jpg" alt="Audi TT driver footwell before detailing — gritty rubber mats and dusty pedals" loading="eager" width="900" height="1200">
+        </picture>
         <figcaption>Before</figcaption>
       </figure>
       <figure class="showcase-card showcase-card--after">
-        <img src="assets/audi-after-wheel.jpg" alt="The same Audi TT after detailing — clean dash, vents, wheel and seats" fetchpriority="high">
+        <picture>
+          <source srcset="assets/audi-after-wheel.webp" type="image/webp">
+          <img src="assets/audi-after-wheel.jpg" alt="The same Audi TT after detailing — clean dash, vents, wheel and seats" fetchpriority="high" width="900" height="1200">
+        </picture>
         <figcaption>After</figcaption>
       </figure>
       <p class="showcase-chip">From <b>$120</b></p>
@@ -137,10 +165,48 @@
   </div>
 </div>
 
+<!-- ============================ GALLERY PREVIEW ============================ -->
+<section class="section section--ink">
+  <div class="shell">
+    <div class="section-head">
+      <p class="eyebrow">Recent work</p>
+      <h2>Finished interiors.</h2>
+    </div>
+    <div class="gallery gallery--feature">
+      <figure>
+        <picture>
+          <source srcset="assets/work-f150-rear.webp" type="image/webp">
+          <img src="assets/work-f150-rear.jpg" alt="Detailed rear leather seats and all-weather mats in a Ford F-150" loading="lazy" width="900" height="1200">
+        </picture>
+        <figcaption>Ford F-150 — rear cab</figcaption>
+      </figure>
+      <figure><picture>
+  <source srcset="assets/work-chrysler-door.webp" type="image/webp">
+  <img src="assets/work-chrysler-door.jpg" alt="Cleaned passenger door panel and dashboard of a Chrysler 300" loading="lazy" width="900" height="1200">
+</picture></figure>
+      <figure><picture>
+  <source srcset="assets/work-truck-seats.webp" type="image/webp">
+  <img src="assets/work-truck-seats.jpg" alt="Detailed rear leather seats in a pickup truck" loading="lazy" width="900" height="1200">
+</picture></figure>
+      <figure><picture>
+  <source srcset="assets/audi-after-dash.webp" type="image/webp">
+  <img src="assets/audi-after-dash.jpg" alt="Detailed Audi TT dash, steering wheel and red leather seats" loading="lazy" width="900" height="1200">
+</picture></figure>
+      <figure><picture>
+  <source srcset="assets/work-cargo.webp" type="image/webp">
+  <img src="assets/work-cargo.jpg" alt="Vacuumed cargo area and rear seat backs of an SUV" loading="lazy" width="900" height="1200">
+</picture></figure>
+    </div>
+    <div class="btn-row" style="margin-top:2rem">
+      <a class="btn btn--ghost" href="gallery.html">View all photos</a>
+    </div>
+  </div>
+</section>
+
 <!-- ============================ HOW I CLEAN ============================ -->
-<section class="section" id="how-i-clean">
-  <div class="shell split split--center">
-    <div>
+<section class="section section--alt" id="how-i-clean">
+  <div class="shell split split--center split--stats">
+    <div class="split__copy">
       <p class="eyebrow">How I clean</p>
       <h2>Steam, not a shelf of chemicals.</h2>
       <p class="lede" style="margin-top:1.1rem">
@@ -155,21 +221,25 @@
       </p>
       <a class="textlink" href="services.html#how-i-clean" style="margin-top:1.4rem">What's in a deep clean &rarr;</a>
 
-      <div class="stat-row">
-        <div class="stat"><b>100+</b><span>Cars detailed</span></div>
-        <div class="stat"><b>1</b><span>Detailer, every time</span></div>
-        <div class="stat"><b>24 hr</b><span>Quote turnaround</span></div>
-      </div>
     </div>
 
     <div class="frame frame--tall">
-      <img src="assets/work-truck-mats.jpg" alt="Steam-cleaned all-weather floor mats and rear vents in a truck" loading="lazy">
+      <picture>
+        <source srcset="assets/work-truck-mats.webp" type="image/webp">
+        <img src="assets/work-truck-mats.jpg" alt="Steam-cleaned all-weather floor mats and rear vents in a truck" loading="lazy" width="900" height="1200">
+      </picture>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat"><b>100+</b><span>Cars detailed</span></div>
+      <div class="stat"><b>1</b><span>Detailer, every time</span></div>
+      <div class="stat"><b>24 hr</b><span>Quote turnaround</span></div>
     </div>
   </div>
 </section>
 
 <!-- ============================ PRICING ============================ -->
-<section class="section section--alt" id="pricing">
+<section class="section" id="pricing">
   <div class="shell">
     <div class="section-head section-head--center">
       <p class="eyebrow">Starting prices</p>
@@ -178,6 +248,37 @@
         Priced by vehicle size. Condition can move the final number, and if it does
         you'll hear it from me in writing before we book, not after.
       </p>
+    </div>
+
+    <!-- Phone only (hidden above 40em). The three cards below stack into
+         2,164px of scrolling on a phone; this holds all three figures on one
+         screen so they can still be compared, and switches the detail panel. -->
+    <div class="price-tabs">
+      <div class="price-tabs__seg" role="tablist" aria-label="Vehicle size">
+        <button type="button" role="tab" id="pt0" aria-selected="true"  aria-controls="pt-panel">
+          <span class="lbl">Car</span><span class="fig">$120</span></button>
+        <button type="button" role="tab" id="pt1" aria-selected="false" aria-controls="pt-panel">
+          <span class="lbl">SUV / Truck</span><span class="fig">$140</span></button>
+        <button type="button" role="tab" id="pt2" aria-selected="false" aria-controls="pt-panel">
+          <span class="lbl">3-row</span><span class="fig">$160</span></button>
+      </div>
+      <div class="price-tabs__panel" id="pt-panel" role="tabpanel" aria-labelledby="pt0" aria-live="polite">
+        <div class="price-tabs__top">
+          <svg class="price-tabs__icon" id="pt-icon" viewBox="0 0 64 34" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          <span class="price-tabs__name" id="pt-name">Car</span>
+          <span class="price-tabs__amt" id="pt-amt">$120</span>
+        </div>
+        <p class="price-tabs__fits" id="pt-fits">Sedans, coupes, compacts and hatchbacks.</p>
+        <div class="price-tabs__inc">
+          <p>In every price</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L19 7"/></svg> Vacuumed to the seams, front and back</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L19 7"/></svg> Steam cleaning throughout &mdash; never an upcharge</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L19 7"/></svg> Every vent, seam and crevice done by hand</li>
+          </ul>
+        </div>
+        <a class="btn btn--primary btn--block" href="contact.html">Get a quote for this</a>
+      </div>
     </div>
 
     <div class="price-grid">
@@ -249,116 +350,11 @@
   </div>
 </section>
 
-<!-- ============================ GALLERY PREVIEW ============================ -->
-<section class="section section--ink">
-  <div class="shell">
-    <div class="section-head">
-      <p class="eyebrow">Recent work</p>
-      <h2>Finished interiors.</h2>
-    </div>
-    <div class="gallery gallery--feature">
-      <figure>
-        <img src="assets/work-f150-rear.jpg" alt="Detailed rear leather seats and all-weather mats in a Ford F-150" loading="lazy">
-        <figcaption>Ford F-150 — rear cab</figcaption>
-      </figure>
-      <figure><img src="assets/work-chrysler-door.jpg" alt="Cleaned passenger door panel and dashboard of a Chrysler 300" loading="lazy"></figure>
-      <figure><img src="assets/work-truck-seats.jpg" alt="Detailed rear leather seats in a pickup truck" loading="lazy"></figure>
-      <figure><img src="assets/audi-after-dash.jpg" alt="Detailed Audi TT dash, steering wheel and red leather seats" loading="lazy"></figure>
-      <figure><img src="assets/work-cargo.jpg" alt="Vacuumed cargo area and rear seat backs of an SUV" loading="lazy"></figure>
-    </div>
-    <div class="btn-row" style="margin-top:2rem">
-      <a class="btn btn--ghost" href="gallery.html">View all photos</a>
-    </div>
-  </div>
-</section>
-
-<!-- ============================ REVIEWS ============================ -->
-<section class="section section--alt" id="reviews">
-  <div class="shell">
-    <div class="section-head section-head--center">
-      <p class="eyebrow">Reviews</p>
-      <h2>What people say after.</h2>
-      <p class="lede">Every review below comes from a real customer's Google or Facebook post.</p>
-    </div>
-
-    <div class="reviews">
-      <article class="review is-placeholder">
-        <span class="placeholder-flag">Review slot 1</span>
-        <div class="stars" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.6 6 .8-4.4 4.2 1.1 6.1L12 16.9 6.7 19.7l1.1-6.1L3.4 9.4l6-.8L12 3Z"/></svg>
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.6 6 .8-4.4 4.2 1.1 6.1L12 16.9 6.7 19.7l1.1-6.1L3.4 9.4l6-.8L12 3Z"/></svg>
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.6 6 .8-4.4 4.2 1.1 6.1L12 16.9 6.7 19.7l1.1-6.1L3.4 9.4l6-.8L12 3Z"/></svg>
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.6 6 .8-4.4 4.2 1.1 6.1L12 16.9 6.7 19.7l1.1-6.1L3.4 9.4l6-.8L12 3Z"/></svg>
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.6 6 .8-4.4 4.2 1.1 6.1L12 16.9 6.7 19.7l1.1-6.1L3.4 9.4l6-.8L12 3Z"/></svg>
-        </div>
-        <blockquote>Real customer quote goes here. Best ones name the car and the problem — “two kids, three years of goldfish crackers…” — specifics sell, adjectives don't.</blockquote>
-        <div class="review__who">
-          <div class="review__avatar" aria-hidden="true">—</div>
-          <div>
-            <div class="review__name">Customer name</div>
-            <div class="review__meta">Vehicle &middot; City &middot; Source</div>
-          </div>
-        </div>
-      </article>
-
-      <article class="review is-placeholder">
-        <span class="placeholder-flag">Review slot 2</span>
-        <div class="stars" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.6 6 .8-4.4 4.2 1.1 6.1L12 16.9 6.7 19.7l1.1-6.1L3.4 9.4l6-.8L12 3Z"/></svg>
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.6 6 .8-4.4 4.2 1.1 6.1L12 16.9 6.7 19.7l1.1-6.1L3.4 9.4l6-.8L12 3Z"/></svg>
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.6 6 .8-4.4 4.2 1.1 6.1L12 16.9 6.7 19.7l1.1-6.1L3.4 9.4l6-.8L12 3Z"/></svg>
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.6 6 .8-4.4 4.2 1.1 6.1L12 16.9 6.7 19.7l1.1-6.1L3.4 9.4l6-.8L12 3Z"/></svg>
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.6 6 .8-4.4 4.2 1.1 6.1L12 16.9 6.7 19.7l1.1-6.1L3.4 9.4l6-.8L12 3Z"/></svg>
-        </div>
-        <blockquote>Second review. Aim for one that answers the “will she actually show up on time?” worry — reliability is the biggest objection for mobile services.</blockquote>
-        <div class="review__who">
-          <div class="review__avatar" aria-hidden="true">—</div>
-          <div>
-            <div class="review__name">Customer name</div>
-            <div class="review__meta">Vehicle &middot; City &middot; Source</div>
-          </div>
-        </div>
-      </article>
-
-      <article class="review is-placeholder">
-        <span class="placeholder-flag">Review slot 3</span>
-        <div class="stars" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.6 6 .8-4.4 4.2 1.1 6.1L12 16.9 6.7 19.7l1.1-6.1L3.4 9.4l6-.8L12 3Z"/></svg>
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.6 6 .8-4.4 4.2 1.1 6.1L12 16.9 6.7 19.7l1.1-6.1L3.4 9.4l6-.8L12 3Z"/></svg>
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.6 6 .8-4.4 4.2 1.1 6.1L12 16.9 6.7 19.7l1.1-6.1L3.4 9.4l6-.8L12 3Z"/></svg>
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.6 6 .8-4.4 4.2 1.1 6.1L12 16.9 6.7 19.7l1.1-6.1L3.4 9.4l6-.8L12 3Z"/></svg>
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.6 6 .8-4.4 4.2 1.1 6.1L12 16.9 6.7 19.7l1.1-6.1L3.4 9.4l6-.8L12 3Z"/></svg>
-        </div>
-        <blockquote>Third review. A repeat customer is worth more here than a five-star one-liner — “third time she's done my truck” does a lot of work.</blockquote>
-        <div class="review__who">
-          <div class="review__avatar" aria-hidden="true">—</div>
-          <div>
-            <div class="review__name">Customer name</div>
-            <div class="review__meta">Vehicle &middot; City &middot; Source</div>
-          </div>
-        </div>
-      </article>
-    </div>
-
-    <div class="google-bar">
-      <div class="google-bar__score">
-        <div class="stars" style="margin:0" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.6 6 .8-4.4 4.2 1.1 6.1L12 16.9 6.7 19.7l1.1-6.1L3.4 9.4l6-.8L12 3Z"/></svg>
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.6 6 .8-4.4 4.2 1.1 6.1L12 16.9 6.7 19.7l1.1-6.1L3.4 9.4l6-.8L12 3Z"/></svg>
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.6 6 .8-4.4 4.2 1.1 6.1L12 16.9 6.7 19.7l1.1-6.1L3.4 9.4l6-.8L12 3Z"/></svg>
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.6 6 .8-4.4 4.2 1.1 6.1L12 16.9 6.7 19.7l1.1-6.1L3.4 9.4l6-.8L12 3Z"/></svg>
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.6 6 .8-4.4 4.2 1.1 6.1L12 16.9 6.7 19.7l1.1-6.1L3.4 9.4l6-.8L12 3Z"/></svg>
-        </div>
-        <b>—</b>
-      </div>
-      <p>Live rating pulls from the Google Business Profile once it's verified.</p>
-      <a class="btn btn--ghost btn--sm" href="#">Review on Google</a>
-    </div>
-  </div>
-</section>
-
 <!-- ============================ SERVICE AREA ============================ -->
-<section class="section">
+<!-- Alt ground: the CTA band below is the plain cream, so without the tonal
+     step here the last two blocks of the page merge into one long slab. The
+     whole page alternates cream/alt either side of the one ink band. -->
+<section class="section section--alt">
   <div class="shell area-grid">
     <div>
       <p class="eyebrow">Service area</p>
@@ -466,7 +462,17 @@
   </div>
 </footer>
 
+<!-- Phone only. Once you scroll past the hero on a phone there is no way to
+     call or quote without scrolling back, so the two actions ride along. -->
+<div class="action-rail">
+  <a class="action-rail__call" href="tel:+12065656741" aria-label="Call (206) 565-6741">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
+  </a>
+  <a class="btn btn--primary" href="contact.html">Get my free quote</a>
+</div>
+
 <script src="js/nav.js"></script>
 <script src="js/lightbox.js"></script>
+<script src="js/mobile-home.js"></script>
 </body>
 </html>
