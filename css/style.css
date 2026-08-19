@@ -1766,7 +1766,7 @@ fieldset { margin: 0; padding: 0; border: 0; }
 
 /* Both phone-only blocks are hidden by default and switched on inside the
    query below, so no desktop browser ever lays them out. */
-.ba, .ba__hint, .price-tabs, .action-rail, .u-phone-only { display: none; }
+.ba, .ba__hint, .hero__acts, .price-tabs, .action-rail, .u-phone-only { display: none; }
 
 @media (max-width: 40em) {
 
@@ -1798,15 +1798,13 @@ fieldset { margin: 0; padding: 0; border: 0; }
   .nav-toggle         { width: 44px; height: 44px; }
   .nav                { inset-block-start: 70px; }
 
-  /* On the home page the rail holds Call at the bottom of every screen, so the
-     bar no longer has to carry the number — which is what was crowding the
-     wordmark out below 440px. Name and mark go back in.
-     Home only: the other four pages have no rail, and the number in the bar is
-     their only one-tap call. */
-  .home .header__cta        { display: none; }
-  .home .brand__name        { display: inline; font-size: 0.95rem; }
-  .home .brand              { gap: 0.6rem; }
-  .home .brand__mark        { width: 38px; height: 21px; }
+  /* The rail holds Call at the bottom of every screen on every page now, so no
+     bar has to carry the number — which is what was crowding the wordmark out
+     below 440px. Name and mark go back in, the same on all five pages. */
+  .has-rail .header__cta    { display: none; }
+  .has-rail .brand__name    { display: inline; font-size: 0.95rem; }
+  .has-rail .brand          { gap: 0.6rem; }
+  .has-rail .brand__mark    { width: 38px; height: 21px; }
 
   /* --- hero ------------------------------------------------------------- */
   /* The buttons go: the rail at the bottom of the screen carries the same
@@ -1817,6 +1815,9 @@ fieldset { margin: 0; padding: 0; border: 0; }
   /* Headline, then the proof. The paragraph was five lines of phone screen
      between the two, saying what the photograph says faster. */
   .home .hero__sub     { display: none; }
+  /* Under the photo, where the eye lands once it has read the before/after. */
+  .home .hero__acts    { display: grid; gap: 0.6rem; margin-top: 1.2rem; }
+  .home .hero__acts .btn { width: 100%; }
   .hero__badge   { margin-bottom: 1rem; padding: 0.35rem 0.8rem; font-size: 0.8rem; }
   .home .hero__showcase { display: none; }
 
@@ -1991,23 +1992,35 @@ fieldset { margin: 0; padding: 0; border: 0; }
   /* Add-ons drop from cards to pills — three cards was ~350px of page for
      three numbers. The li stops being the card (block, no chrome) and the
      head becomes the pill, inline so it shrinks to its own text. */
-  /* .addons--compact carries its own padding and type sizes at a higher
-     specificity than the bare element selectors, so the phone overrides have
-     to match it rather than sit under it. */
-  .addons, .addons.addons--compact { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
-  .addon, .addons--compact .addon {
+  /* Pills are for the HOME page's compact strip only — three names and three
+     numbers, no descriptions, which as cards was ~350px of page. services.html
+     uses .addons--stack, where every add-on carries a line of copy explaining
+     it; stripping the card off those would leave the description floating
+     under a pill with nothing holding it. That variant just gets phone padding.
+     .addons--compact carries its own padding and type sizes at a higher
+     specificity than the bare element selectors, so these have to match it
+     rather than sit under it. */
+  .addons.addons--compact { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+  .addons--compact .addon {
     display: block; padding: 0; gap: 0;
     background: none; border: 0; box-shadow: none;
   }
-  .addon__head, .addons--compact .addon__head {
+  .addons--compact .addon__head {
     display: inline-flex; align-items: baseline; justify-content: flex-start; gap: 0.4rem;
     padding: 0.5rem 0.9rem;
     background: var(--surface);
     border-radius: 999px;
     box-shadow: var(--shadow);
   }
-  .addon__name,  .addons--compact .addon__name  { font-size: 0.86rem; font-weight: 600; }
-  .addon__price, .addons--compact .addon__price { font-size: 0.86rem; font-weight: 800; }
+  .addons--compact .addon__name  { font-size: 0.86rem; font-weight: 600; }
+  .addons--compact .addon__price { font-size: 0.86rem; font-weight: 800; }
+
+  .addons--stack .addon { padding: 1.15rem 1.2rem; gap: 0.5rem; }
+  .addons--stack .addon__name  { font-size: 1.05rem; }
+  .addons--stack .addon__price { font-size: 1.05rem; }
+  .addons--stack .addon p { font-size: 0.9rem; }
+  .addons { gap: 0.85rem; }
+
   .price-note   { font-size: 0.88rem; }
 
   /* --- the rest --------------------------------------------------------- */
@@ -2076,10 +2089,44 @@ fieldset { margin: 0; padding: 0; border: 0; }
   }
   .footer-bottom .spacer { margin-left: 0; }
 
+  /* --- the other four pages --------------------------------------------- */
+  /* The home page gets the segmented control instead of the cards; services is
+     the page you go to *for* the detail, so the cards stay — just at phone
+     size. The desktop padding is up to 2.4rem on all four sides of a card,
+     which on a 335px column is more margin than card. */
+  .price-card { padding: 1.4rem 1.25rem; }
+  .price-card__icon { width: 42px; height: 24px; margin-bottom: 0.9rem; }
+  .price-card h3 { font-size: 1.2rem; }
+  .price-card__fits { font-size: 0.9rem; }
+  .price-grid { gap: 0.85rem; }
+
+  /* Two-up is already the base below 760px; this only tightens the gutter and
+     stops the tiles going letterbox on a narrow column. */
+  .gallery { gap: 0.5rem; }
+  .gallery figure img { aspect-ratio: 1; object-fit: cover; }
+
+  /* About's portrait is 4/5 of a full-width column — nearly a whole screen of
+     placeholder before any copy. */
+  .portrait-placeholder { aspect-ratio: 3 / 2; padding: 1.5rem; }
+  .about-hero { gap: 1.75rem; }
+
+  /* Contact: the vehicle options are the one thing on that form you tap rather
+     than type, so they get proper row height and stop being desktop cards. */
+  .option { padding: 1rem 1rem; min-height: 60px; }
+  .option__label { font-size: 0.98rem; }
+  .option__price { font-size: 0.95rem; }
+  .field-grid { gap: 1rem; }
+  .form-layout { gap: 2rem; }
+
+  /* Interior pages open on the ink banner rather than the hero. */
+  .page-banner { padding-block: 2.25rem 2.5rem; }
+  .page-banner .lede { font-size: 0.97rem; }
+
   /* --- the rail --------------------------------------------------------- */
-  /* Home page only — it is the one page with markup for it. */
-  .home { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
-  .home .action-rail {
+  /* 52px button + 0.6rem of rail padding top and bottom = 73px. The old 64px
+     left the last 9px of every page sitting under the rail. */
+  .has-rail { padding-bottom: calc(77px + env(safe-area-inset-bottom)); }
+  .has-rail .action-rail {
     position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
     display: grid; grid-template-columns: auto 1fr;
     gap: 0.6rem; align-items: center;
@@ -2089,12 +2136,16 @@ fieldset { margin: 0; padding: 0; border: 0; }
     backdrop-filter: blur(12px);
     border-top: 1px solid var(--line);
   }
-  .home .action-rail__call {
+  .has-rail .action-rail__call {
     display: grid; place-items: center;
     width: 52px; height: 52px; border-radius: 999px;
     background: var(--surface); color: var(--text);
     box-shadow: var(--shadow);
   }
-  .home .action-rail__call svg { width: 22px; height: 22px; }
-  .home .action-rail .btn { width: 100%; min-height: 52px; }
+  .has-rail .action-rail__call svg { width: 22px; height: 22px; }
+  .has-rail .action-rail .btn { width: 100%; min-height: 52px; }
+  /* Contact carries one full-width button rather than a call/quote pair. */
+  .action-rail--single { grid-template-columns: 1fr; }
+  .action-rail--single .btn { gap: 0.6rem; }
+  .action-rail--single .btn svg { width: 19px; height: 19px; }
 }
