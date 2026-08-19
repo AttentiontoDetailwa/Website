@@ -23,7 +23,7 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/lightbox.css">
 </head>
-<body class="has-rail">
+<body class="has-rail has-price-tabs">
 <a class="skip-link" href="#main">Skip to content</a>
 
 <header class="site-header">
@@ -162,6 +162,38 @@
         spills, or a car that's been through a rough year can move the number, and if
         it does you'll get the new figure in writing before anything is booked.
       </p>
+    </div>
+
+    <!-- Phone only (hidden above 40em). The same segmented control the home
+         page uses: the three size cards below are 322px each on a phone, and
+         this holds all three figures on one screen instead. The shampoo-only
+         card stays where it is — it is an alternative, not a fourth size. -->
+    <div class="price-tabs">
+      <div class="price-tabs__seg" role="tablist" aria-label="Vehicle size">
+        <button type="button" role="tab" id="pt0" aria-selected="true"  aria-controls="pt-panel">
+          <span class="lbl">Car</span><span class="fig">$120</span></button>
+        <button type="button" role="tab" id="pt1" aria-selected="false" aria-controls="pt-panel">
+          <span class="lbl">SUV / Truck</span><span class="fig">$140</span></button>
+        <button type="button" role="tab" id="pt2" aria-selected="false" aria-controls="pt-panel">
+          <span class="lbl">3-row</span><span class="fig">$160</span></button>
+      </div>
+      <div class="price-tabs__panel" id="pt-panel" role="tabpanel" aria-labelledby="pt0" aria-live="polite">
+        <div class="price-tabs__top">
+          <svg class="price-tabs__icon" id="pt-icon" viewBox="0 0 64 34" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"></svg>
+          <span class="price-tabs__name" id="pt-name">Car</span>
+          <span class="price-tabs__amt" id="pt-amt">$120</span>
+        </div>
+        <p class="price-tabs__fits" id="pt-fits">Sedans, coupes, compacts and hatchbacks.</p>
+        <div class="price-tabs__inc">
+          <p>In every price</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L19 7"/></svg> Vacuumed to the seams, front and back</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L19 7"/></svg> Steam cleaning throughout &mdash; never an upcharge</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5L19 7"/></svg> Every vent, seam and crevice done by hand</li>
+          </ul>
+        </div>
+        <a class="btn btn--primary btn--block" href="contact.html">Get a quote for this</a>
+      </div>
     </div>
 
     <div class="price-grid">
@@ -360,6 +392,7 @@
 </div>
 
 <script src="js/nav.js"></script>
+<script src="js/mobile-home.js"></script>
 <script src="js/lightbox.js"></script>
 </body>
 </html>
