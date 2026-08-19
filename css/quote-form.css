@@ -1,20 +1,7 @@
 /* ==========================================================================
-   Quote form — length switch
-   Loaded after style.css on the contact page only. The switch reuses the
-   .option / .option-grid boxes the rest of the form is built from, so it
-   reads as part of the form rather than a control bolted on above it.
+   Quote form
+   Loaded after style.css on the contact page only.
    ========================================================================== */
-
-.option-grid--2 { grid-template-columns: 1fr; }
-@media (min-width: 560px) {
-  .option-grid--2 { grid-template-columns: repeat(2, 1fr); }
-}
-
-.form-mode {
-  margin-bottom: clamp(2rem, 4vw, 2.75rem);
-  padding-bottom: clamp(2rem, 4vw, 2.75rem);
-  border-bottom: 1px solid var(--line);
-}
 
 /* --- Phone / email -------------------------------------------------------- */
 /* The two share a wrapper so the "one of these is enough" error has somewhere
@@ -24,16 +11,3 @@
    itself keeps the .field-grid rhythm. */
 .contact-group > .hint,
 .contact-group > .field__error { margin-top: 0.55rem; }
-
-/* Copy that only holds on the short form. Hidden by default: with JS off
-   everyone gets the long form, where the stricter rules apply. */
-[data-simple-only] { display: none; }
-form[data-mode="simple"] [data-simple-only] { display: block; }
-
-/* --- Short form ---------------------------------------------------------- */
-/* With the stepper gone the 01/02/03 headings have nothing to number, and
-   three labelled sections make a short list of fields look like a bigger job
-   than it is. Close the gaps and it reads as one short list. */
-form[data-mode="simple"] .form-group__title { display: none; }
-
-form[data-mode="simple"] .form-group + .form-group { margin-top: 2.25rem; }

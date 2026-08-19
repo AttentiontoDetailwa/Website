@@ -98,9 +98,9 @@
   grid-column: 2;
   grid-row: 2;
   margin: 0.45rem 0 0;
-  color: rgba(255, 255, 255, 0.55);
-  font-size: 0.78rem;
-  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.92rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   text-align: center;
 }
