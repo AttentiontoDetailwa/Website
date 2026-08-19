@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mobile 5 — Night Pocket | Attention to Detail</title>
+<meta name="theme-color" content="#0A0D0E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ===========================================================
+   MOBILE CONCEPT 05 — NIGHT POCKET
+   Dark on the phone, cream on desktop. Reads better outdoors
+   and in a car at dusk, which is where half of her customers
+   are standing when they look her up, and the cyan finally
+   gets to be a colour instead of a highlighter. Everything is
+   a tight list; the pricing is a segmented control, not three
+   tall cards.
+   =========================================================== */
+:root{
+  --ink:#0A0D0E; --ink-2:#12191A; --ink-3:#182224; --cream:#F4F1EA;
+  --dim:#A3AFAF; --cyan:#85E5E8;
+  --line:rgba(244,241,234,.13); --line-2:rgba(244,241,234,.08);
+  --r:16px; --gut:20px;
+  --bar:calc(62px + env(safe-area-inset-bottom));
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ink);color:var(--cream);
+  font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:16px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;padding-bottom:var(--bar)}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{margin:0;letter-spacing:-.03em;line-height:1.1;font-weight:700}
+p{margin:0}
+.wrap{padding-inline:var(--gut)}
+section{padding-block:2.5rem;border-top:1px solid var(--line-2)}
+
+.hdr{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:.7rem;
+  padding:.7rem var(--gut);background:rgba(10,13,14,.86);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line-2)}
+.hdr svg.mark{width:30px;height:17px;color:var(--cyan);flex:none}
+.hdr .name{font-size:.84rem;font-weight:700}
+.hdr .name span{display:block;font-size:.64rem;font-weight:500;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--dim)}
+.hdr .menu{margin-left:auto;width:44px;height:44px;display:grid;place-items:center;
+  border:1px solid var(--line);border-radius:999px;background:none;color:var(--cream)}
+.hdr .menu svg{width:18px;height:18px}
+
+/* --- hero: glow, big type, one photo --------------------- */
+.hero{position:relative;padding:2rem var(--gut) 2.25rem;border:0;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:-40% -30% auto;height:70%;
+  background:radial-gradient(60% 60% at 50% 0%,rgba(133,229,232,.22),transparent 70%);pointer-events:none}
+.kicker{position:relative;font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--cyan)}
+h1{position:relative;font-size:2.25rem;margin:.8rem 0 .7rem}
+h1 em{font-style:normal;color:var(--cyan)}
+.sub{position:relative;color:var(--dim);font-size:1rem}
+.shot{position:relative;margin-top:1.5rem;border-radius:var(--r);overflow:hidden;
+  border:1px solid var(--line)}
+.shot img{width:100%;aspect-ratio:16/11;object-fit:cover}
+.shot .tag{position:absolute;left:.7rem;bottom:.7rem;background:rgba(10,13,14,.78);
+  backdrop-filter:blur(6px);border:1px solid var(--line);border-radius:999px;
+  padding:.32rem .8rem;font-size:.76rem;font-weight:600}
+.shot .price{position:absolute;right:.7rem;bottom:.7rem;background:var(--cyan);color:var(--ink);
+  border-radius:999px;padding:.32rem .85rem;font-size:.8rem;font-weight:700}
+
+.btn{display:flex;align-items:center;justify-content:center;gap:.5rem;min-height:52px;
+  border-radius:999px;font-weight:700;font-size:1rem;border:0;width:100%}
+.btn--p{background:var(--cyan);color:var(--ink)}
+.btn--o{background:transparent;color:var(--cream);border:1px solid var(--line)}
+.acts{position:relative;display:grid;gap:.6rem;margin-top:1.4rem}
+
+/* --- shared -------------------------------------------- */
+.eyebrow{font-size:.7rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--cyan);margin-bottom:.5rem}
+h2{font-size:1.55rem}
+.lede{color:var(--dim);font-size:.96rem;margin-top:.6rem}
+
+/* --- segmented pricing --------------------------------- */
+.seg{display:flex;background:var(--ink-2);border:1px solid var(--line);border-radius:999px;
+  padding:4px;margin-top:1.3rem}
+.seg button{flex:1;min-height:44px;border:0;border-radius:999px;background:none;color:var(--dim);
+  font-family:inherit;font-size:.86rem;font-weight:700;cursor:pointer}
+.seg button[aria-selected="true"]{background:var(--cyan);color:var(--ink)}
+.panel{margin-top:1.1rem;background:var(--ink-2);border:1px solid var(--line);border-radius:var(--r);
+  padding:1.2rem}
+.panel .top{display:flex;align-items:flex-end;gap:.8rem}
+.panel .amount{font-size:2.6rem;font-weight:800;letter-spacing:-.045em;line-height:.9;color:var(--cyan)}
+.panel .from{font-size:.74rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--dim);margin-bottom:.35rem}
+.panel .fits{color:var(--dim);font-size:.92rem;margin-top:.7rem}
+.inc{list-style:none;margin:1.1rem 0 0;padding:0;display:grid;gap:.55rem}
+.inc li{display:flex;gap:.6rem;align-items:flex-start;font-size:.93rem;color:var(--cream)}
+.inc svg{width:16px;height:16px;flex:none;margin-top:.28rem;color:var(--cyan)}
+.panel .btn{margin-top:1.2rem}
+.addrow{display:flex;gap:.45rem;flex-wrap:wrap;margin-top:1rem;padding:0;list-style:none}
+.addrow li{border:1px solid var(--line);border-radius:999px;padding:.42rem .85rem;font-size:.84rem;
+  color:var(--dim)}
+.addrow b{color:var(--cream);font-weight:700}
+
+/* --- work: 2-up dark tiles ------------------------------ */
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:1.2rem}
+.tiles img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:12px;border:1px solid var(--line-2)}
+.tiles img:first-child{grid-column:span 2;aspect-ratio:16/10}
+
+.stats{display:grid;grid-template-columns:repeat(3,1fr);margin-top:1.6rem;
+  border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.stats div{padding:.95rem .4rem;text-align:center;border-right:1px solid var(--line)}
+.stats div:last-child{border-right:0}
+.stats b{display:block;font-size:1.3rem;font-weight:800;letter-spacing:-.03em;color:var(--cyan)}
+.stats span{font-size:.72rem;color:var(--dim);display:block;line-height:1.25}
+
+.towns{display:flex;flex-wrap:wrap;gap:.45rem;margin:1rem 0 0;padding:0;list-style:none}
+.towns li{border:1px solid var(--line);border-radius:999px;padding:.45rem .9rem;font-size:.88rem;
+  color:var(--dim)}
+.link{margin-top:.8rem;display:inline-flex;align-items:center;min-height:44px;font-weight:700;font-size:.95rem;
+  text-decoration:underline;text-decoration-color:var(--cyan);text-decoration-thickness:2px;
+  text-underline-offset:5px}
+
+.ftr{padding:2.25rem var(--gut) 2rem;border-top:1px solid var(--line);color:var(--dim);font-size:.88rem}
+.ftr h4{color:var(--cream);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;margin:0 0 .55rem}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem}
+.ftr ul{list-style:none;margin:0;padding:0;display:grid;gap:.45rem}
+.ftr .legal{margin-top:1.6rem;padding-top:1.1rem;border-top:1px solid var(--line-2);font-size:.76rem;
+  color:rgba(244,241,234,.38)}
+
+.rail{position:fixed;left:0;right:0;bottom:0;z-index:50;display:grid;
+  grid-template-columns:auto 1fr;gap:.6rem;align-items:center;
+  padding:.55rem var(--gut) calc(.55rem + env(safe-area-inset-bottom));
+  background:rgba(10,13,14,.9);backdrop-filter:blur(14px);border-top:1px solid var(--line)}
+.rail .call{display:grid;place-items:center;width:50px;height:50px;border-radius:999px;
+  border:1px solid var(--line);color:var(--cream)}
+.rail .call svg{width:21px;height:21px}
+.rail .btn{min-height:50px;font-size:.96rem}
+.backlink{display:block;text-align:center;font-size:.8rem;padding:1rem;color:var(--dim)}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <svg class="mark" viewBox="0 0 64 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 24h6M55 24h6M9 24a5.4 5.4 0 1 0 10.8 0A5.4 5.4 0 0 0 9 24Zm35 0a5.4 5.4 0 1 0 10.8 0A5.4 5.4 0 0 0 44 24Z"/><path d="M19.8 24h24.4"/><path d="M4 21c1-5.5 3-8 6-8.6l9-5.2c2-1.2 4.3-1.6 6.6-1.2l14 2.6c2 .4 3.8 1.4 5.2 2.9l4.4 4.6 8 1.8c3 .7 4.8 2.5 4.8 5"/></svg>
+  <span class="name">Attention to Detail<span>Any time, any place</span></span>
+  <button class="menu" type="button" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+</header>
+
+<main>
+  <section class="hero">
+    <p class="kicker">Mobile · Pierce County</p>
+    <h1>Get back the car <em>you actually bought.</em></h1>
+    <p class="sub">An interior deep clean in your driveway. Steam throughout, every vent and crevice by hand.</p>
+    <figure class="shot" style="margin:1.5rem 0 0">
+      <img src="../assets/audi-after-wheel.jpg" alt="A detailed Audi TT interior" fetchpriority="high">
+      <figcaption class="tag">Audi TT — full interior</figcaption>
+      <span class="price">From $120</span>
+    </figure>
+    <div class="acts">
+      <a class="btn btn--p" href="#">Get my free quote</a>
+      <a class="btn btn--o" href="#">See before &amp; after</a>
+    </div>
+  </section>
+
+  <section class="wrap">
+    <p class="eyebrow">Starting prices</p>
+    <h2>Pick your vehicle.</h2>
+    <div class="seg" role="tablist">
+      <button type="button" role="tab" aria-selected="true" data-i="0">Car</button>
+      <button type="button" role="tab" aria-selected="false" data-i="1">SUV / Truck</button>
+      <button type="button" role="tab" aria-selected="false" data-i="2">3-row</button>
+    </div>
+    <div class="panel">
+      <div class="top">
+        <p class="from">From</p>
+        <p class="amount" id="amt">$120</p>
+      </div>
+      <p class="fits" id="fits">Sedans, coupes, compacts and hatchbacks.</p>
+      <ul class="inc">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L19 7"/></svg> Vacuumed to the seams, front and back</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L19 7"/></svg> Steam cleaning throughout — never an upcharge</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L19 7"/></svg> Every vent, seam and crevice done by hand</li>
+      </ul>
+      <a class="btn btn--p" href="#">Get a quote for this</a>
+    </div>
+    <ul class="addrow">
+      <li>Carpet shampoo <b>+$20</b></li><li>Dog hair <b>+$10</b></li><li>UV protectant <b>+$10</b></li>
+      <li>Shampoo only <b>$50</b></li>
+    </ul>
+  </section>
+
+  <section class="wrap">
+    <p class="eyebrow">Recent work</p>
+    <h2>Finished interiors.</h2>
+    <div class="tiles">
+      <img src="../assets/work-f150-rear.jpg" alt="F-150 rear cab" loading="lazy">
+      <img src="../assets/work-chrysler-door.jpg" alt="Chrysler door panel" loading="lazy">
+      <img src="../assets/audi-after-dash.jpg" alt="Audi dash" loading="lazy">
+    </div>
+    <div class="stats">
+      <div><b>100+</b><span>Cars detailed</span></div>
+      <div><b>1</b><span>Detailer, always</span></div>
+      <div><b>24hr</b><span>Quote back</span></div>
+    </div>
+    <a class="link" href="#">View all photos &rarr;</a>
+  </section>
+
+  <section class="wrap">
+    <p class="eyebrow">How I clean</p>
+    <h2>Steam, not a shelf of chemicals.</h2>
+    <p class="lede">It pulls dirt up out of fabric and gets into vents, seams and seat rails without soaking anything. Safe on leather, cloth and every plastic surface in there.</p>
+    <figure class="shot" style="margin:1.3rem 0 0">
+      <img src="../assets/work-truck-mats.jpg" alt="Steam-cleaned truck mats" loading="lazy" style="aspect-ratio:16/10">
+    </figure>
+    <a class="link" href="#">What's in a deep clean &rarr;</a>
+  </section>
+
+  <section class="wrap">
+    <p class="eyebrow">Service area</p>
+    <h2>All of Pierce County. I drive to you.</h2>
+    <ul class="towns"><li>Bonney Lake</li><li>Sumner</li><li>Puyallup</li><li>Tacoma</li><li>Orting</li><li>Buckley</li><li>Enumclaw</li></ul>
+    <a class="link" href="#">Don't see your town? Ask me &rarr;</a>
+  </section>
+
+  <section class="wrap" style="text-align:center">
+    <h2>Tell me the car and where it's parked.</h2>
+    <p class="lede" style="margin-bottom:1.4rem">I'll confirm within 24 hours with your appointment and final price.</p>
+    <a class="btn btn--p" href="#">Get my free quote</a>
+  </section>
+</main>
+
+<footer class="ftr">
+  <div class="fgrid">
+    <div><h4>Pages</h4><ul><li><a href="#">Services</a></li><li><a href="#">Gallery</a></li><li><a href="#">About</a></li><li><a href="#">Contact</a></li></ul></div>
+    <div><h4>Get in touch</h4><ul><li><a href="tel:+12065656741">(206) 565-6741</a></li><li><a href="mailto:avabright2006@gmail.com">Email Ava</a></li><li><a href="#">Google profile</a></li></ul></div>
+  </div>
+  <p class="legal">&copy; 2026 Attention to Detail — Bonney Lake, WA. Site by Gaspar Web Co.</p>
+</footer>
+
+<div class="rail">
+  <a class="call" href="tel:+12065656741" aria-label="Call (206) 565-6741">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
+  </a>
+  <a class="btn btn--p" href="#">Get my free quote</a>
+</div>
+
+<a class="backlink" href="index.html">&larr; All five mobile concepts</a>
+
+<script>
+(function(){
+  var data=[
+    {p:'$120',f:'Sedans, coupes, compacts and hatchbacks.'},
+    {p:'$140',f:'Crossovers, two-row SUVs and pickups.'},
+    {p:'$160',f:'Full-size SUVs, minivans and three-row vehicles.'}
+  ];
+  var tabs=[].slice.call(document.querySelectorAll('.seg button'));
+  var amt=document.getElementById('amt'),fits=document.getElementById('fits');
+  tabs.forEach(function(t){ t.addEventListener('click',function(){
+    tabs.forEach(function(x){x.setAttribute('aria-selected','false')});
+    t.setAttribute('aria-selected','true');
+    var d=data[+t.dataset.i]; amt.textContent=d.p; fits.textContent=d.f;
+  })});
+})();
+</script>
+</body>
+</html>

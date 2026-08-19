@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mobile 3 — Full Bleed | Attention to Detail</title>
+<meta name="theme-color" content="#0A0D0E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ===========================================================
+   MOBILE CONCEPT 03 — FULL BLEED
+   The phone screen is a photo frame, so photos run edge to
+   edge and the type sits on top of them. No side gutters on
+   imagery, no cards, no shadows. The most premium-feeling of
+   the five and the one that leans hardest on her photography.
+   =========================================================== */
+:root{
+  --paper:#F2EDE4; --ink:#0A0D0E; --text:#18201F; --muted:#4E5958; --cyan:#85E5E8;
+  --line:rgba(18,25,26,.14); --gut:22px;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--text);
+  font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:16px;line-height:1.6;
+  -webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{margin:0;letter-spacing:-.035em;line-height:1.06;font-weight:700}
+p{margin:0}
+.wrap{padding-inline:var(--gut)}
+section{overflow-x:clip} /* the town rail hangs past the gutter */
+
+/* header floats over the hero photo, no bar --------------- */
+.hdr{position:absolute;top:0;left:0;right:0;z-index:20;display:flex;align-items:center;
+  gap:.7rem;padding:1rem var(--gut);color:#fff}
+.hdr svg.mark{width:32px;height:18px;color:var(--cyan)}
+.hdr .name{font-size:.84rem;font-weight:700;letter-spacing:.02em}
+.hdr .menu{margin-left:auto;width:44px;height:44px;display:grid;place-items:center;
+  border:1px solid rgba(255,255,255,.35);border-radius:999px;background:rgba(0,0,0,.2);
+  color:#fff;backdrop-filter:blur(6px)}
+.hdr .menu svg{width:18px;height:18px}
+
+/* --- hero: full screen photo ----------------------------- */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;
+  justify-content:flex-end;color:#fff;overflow:hidden}
+.hero > img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(10,13,14,.97) 4%,rgba(10,13,14,.88) 30%,rgba(10,13,14,.4) 58%,rgba(10,13,14,.62))}
+.hero .inner{position:relative;z-index:2;padding:0 var(--gut) calc(2.25rem + env(safe-area-inset-bottom))}
+.kicker{font-size:.72rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--cyan)}
+.hero h1{font-size:2.5rem;margin:.85rem 0 .8rem}
+.hero h1 em{font-style:normal;color:var(--cyan)}
+.hero p{color:rgba(255,255,255,.8);font-size:1rem;max-width:30ch}
+.hero .acts{display:grid;gap:.6rem;margin-top:1.6rem}
+.btn{display:flex;align-items:center;justify-content:center;gap:.5rem;min-height:54px;
+  border-radius:4px;font-weight:700;font-size:1rem;border:0}
+.btn--p{background:var(--cyan);color:var(--ink)}
+.btn--o{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.4);
+  backdrop-filter:blur(6px)}
+.hero .priceflag{position:absolute;z-index:2;right:var(--gut);top:5.5rem;background:var(--cyan);
+  color:var(--ink);padding:.55rem .9rem;text-align:center;line-height:1.1;border-radius:4px}
+.hero .priceflag b{display:block;font-size:1.35rem;font-weight:800;letter-spacing:-.03em}
+.hero .priceflag span{font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+
+/* --- alternating full-bleed plates ----------------------- */
+.plate{position:relative}
+.plate img{width:100%;aspect-ratio:3/4;object-fit:cover}
+.plate .cap{position:absolute;left:0;right:0;bottom:0;padding:2.5rem var(--gut) 1.6rem;color:#fff;
+  background:linear-gradient(to top,rgba(10,13,14,.92),rgba(10,13,14,0))}
+.plate h2{font-size:1.75rem;margin-bottom:.5rem}
+.plate p{color:rgba(255,255,255,.78);font-size:.96rem}
+.plate .kicker{margin-bottom:.6rem;display:block}
+
+.slab{padding:3rem var(--gut)}
+.slab .kicker{color:var(--text);opacity:.5;display:block;margin-bottom:.7rem}
+.slab h2{font-size:1.9rem;margin-bottom:.8rem}
+.slab p{color:var(--muted)}
+.slab--ink{background:var(--ink);color:#fff}
+.slab--ink .kicker{color:var(--cyan);opacity:1}
+.slab--ink p{color:rgba(255,255,255,.7)}
+.link{margin-top:.8rem;display:inline-flex;align-items:center;min-height:44px;font-weight:700;font-size:.95rem;
+  text-decoration:underline;text-decoration-color:var(--cyan);text-decoration-thickness:2px;
+  text-underline-offset:5px}
+
+/* --- pricing: a bare list, hairlines only ---------------- */
+.plist{margin-top:1.6rem;border-top:1px solid var(--line)}
+.slab--ink .plist{border-color:rgba(255,255,255,.18)}
+.pitem{display:flex;align-items:baseline;gap:1rem;padding:1.05rem 0;
+  border-bottom:1px solid var(--line)}
+.slab--ink .pitem{border-color:rgba(255,255,255,.18)}
+.pitem .n{font-weight:700;font-size:1.02rem}
+.pitem .n span{display:block;font-weight:500;font-size:.82rem;color:var(--muted);margin-top:.15rem}
+.slab--ink .pitem .n span{color:rgba(255,255,255,.55)}
+.pitem .v{margin-left:auto;font-size:1.5rem;font-weight:800;letter-spacing:-.04em;white-space:nowrap}
+.slab--ink .pitem .v{color:var(--cyan)}
+.fine{font-size:.86rem;color:var(--muted);margin-top:1.1rem}
+.slab--ink .fine{color:rgba(255,255,255,.55)}
+
+/* --- strip of towns as one scrolling line ---------------- */
+.towns{display:flex;gap:.5rem;overflow-x:auto;padding:1.1rem var(--gut) 0;
+  margin-inline:calc(var(--gut) * -1);list-style:none;scrollbar-width:none}
+.towns::-webkit-scrollbar{display:none}
+.towns li{flex:none;border:1px solid var(--line);border-radius:999px;padding:.45rem .95rem;
+  font-size:.9rem;white-space:nowrap}
+.slab--ink .towns li{border-color:rgba(255,255,255,.25)}
+
+.ftr{background:var(--ink);color:rgba(255,255,255,.65);padding:2.25rem var(--gut) 2rem;font-size:.9rem;
+  border-top:1px solid rgba(255,255,255,.1)}
+.ftr h4{color:#fff;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;margin:0 0 .6rem}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:1.75rem}
+.ftr ul{list-style:none;margin:0;padding:0;display:grid;gap:.5rem}
+.ftr .legal{margin-top:1.75rem;padding-top:1.25rem;border-top:1px solid rgba(255,255,255,.12);
+  font-size:.78rem;color:rgba(255,255,255,.42)}
+.backlink{display:block;text-align:center;font-size:.8rem;padding:1rem;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <img src="../assets/audi-after-dash.jpg" alt="A freshly detailed Audi TT interior" fetchpriority="high">
+  <header class="hdr">
+    <svg class="mark" viewBox="0 0 64 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 24h6M55 24h6M9 24a5.4 5.4 0 1 0 10.8 0A5.4 5.4 0 0 0 9 24Zm35 0a5.4 5.4 0 1 0 10.8 0A5.4 5.4 0 0 0 44 24Z"/><path d="M19.8 24h24.4"/><path d="M4 21c1-5.5 3-8 6-8.6l9-5.2c2-1.2 4.3-1.6 6.6-1.2l14 2.6c2 .4 3.8 1.4 5.2 2.9l4.4 4.6 8 1.8c3 .7 4.8 2.5 4.8 5"/></svg>
+    <span class="name">ATTENTION TO DETAIL</span>
+    <button class="menu" type="button" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  </header>
+  <p class="priceflag"><b>$120</b><span>Starting</span></p>
+  <div class="inner">
+    <p class="kicker">Mobile · Pierce County</p>
+    <h1>Get back the car <em>you actually bought.</em></h1>
+    <p>An interior deep clean that comes to your driveway. Steam throughout, every vent by hand.</p>
+    <div class="acts">
+      <a class="btn btn--p" href="#">Get my free quote</a>
+      <a class="btn btn--o" href="tel:+12065656741">Call (206) 565-6741</a>
+    </div>
+  </div>
+</section>
+
+<main>
+  <section class="plate">
+    <img src="../assets/audi-before-seat.jpg" alt="Audi footwell before detailing" loading="lazy">
+    <div class="cap">
+      <span class="kicker">Before</span>
+      <h2>This is where every job starts.</h2>
+      <p>Grit in the mats, dust on the pedals, three years of coffee in the console.</p>
+    </div>
+  </section>
+  <section class="plate">
+    <img src="../assets/audi-after-wheel.jpg" alt="The same Audi after detailing" loading="lazy">
+    <div class="cap">
+      <span class="kicker" style="color:var(--cyan)">After</span>
+      <h2>Same car. Same afternoon.</h2>
+      <p>Vacuumed to the seams, steamed throughout, every vent and crevice done by hand.</p>
+    </div>
+  </section>
+
+  <section class="slab">
+    <span class="kicker">How I clean</span>
+    <h2>Steam, not a shelf of chemicals.</h2>
+    <p>Steam pulls dirt up out of fabric and gets into vents, seams and seat rails without soaking anything. Safe on leather, cloth and every plastic surface in there — and it never costs extra.</p>
+    <a class="link" href="#">What's in a deep clean &rarr;</a>
+  </section>
+
+  <section class="plate">
+    <img src="../assets/work-truck-mats.jpg" alt="Steam-cleaned truck mats" loading="lazy" style="aspect-ratio:1">
+    <div class="cap"><span class="kicker" style="color:var(--cyan)">Recent work</span><h2>Ford F-150 — full interior</h2></div>
+  </section>
+
+  <section class="slab slab--ink">
+    <span class="kicker">Starting prices</span>
+    <h2>You know the number before I show up.</h2>
+    <div class="plist">
+      <div class="pitem"><p class="n">Car<span>Sedans, coupes, hatchbacks</span></p><p class="v">$120</p></div>
+      <div class="pitem"><p class="n">Mid-size SUV / Truck<span>Crossovers, two-row, pickups</span></p><p class="v">$140</p></div>
+      <div class="pitem"><p class="n">Large / 3-row<span>Full-size SUVs, minivans</span></p><p class="v">$160</p></div>
+      <div class="pitem"><p class="n">Shampoo &amp; stains only<span>Any vehicle, flat rate</span></p><p class="v">$50</p></div>
+    </div>
+    <p class="fine">Add-ons: carpet shampoo +$20 · dog hair +$10 · UV protectant +$10. Condition can move the final number, and you'll hear it in writing before we book.</p>
+  </section>
+
+  <section class="plate">
+    <img src="../assets/work-cargo.jpg" alt="Vacuumed cargo area" loading="lazy" style="aspect-ratio:4/5">
+    <div class="cap">
+      <span class="kicker" style="color:var(--cyan)">Service area</span>
+      <h2>All of Pierce County. I drive to you.</h2>
+      <p>Based in Bonney Lake, working the whole county plus Enumclaw.</p>
+    </div>
+  </section>
+
+  <section class="slab">
+    <span class="kicker">Towns</span>
+    <h2>Where I work.</h2>
+    <ul class="towns"><li>Bonney Lake</li><li>Sumner</li><li>Puyallup</li><li>Tacoma</li><li>Orting</li><li>Buckley</li><li>Enumclaw</li></ul>
+    <a class="link" href="#">Don't see your town? Ask me &rarr;</a>
+  </section>
+
+  <section class="slab slab--ink" style="text-align:center">
+    <h2>Tell me the car and where it's parked.</h2>
+    <p style="margin:.7rem 0 1.4rem">I'll confirm within 24 hours with your appointment and final price.</p>
+    <a class="btn btn--p" href="#">Get my free quote</a>
+  </section>
+</main>
+
+<footer class="ftr">
+  <div class="fgrid">
+    <div><h4>Pages</h4><ul><li><a href="#">Services</a></li><li><a href="#">Gallery</a></li><li><a href="#">About</a></li><li><a href="#">Contact</a></li></ul></div>
+    <div><h4>Get in touch</h4><ul><li><a href="tel:+12065656741">(206) 565-6741</a></li><li><a href="mailto:avabright2006@gmail.com">Email Ava</a></li><li><a href="#">Google profile</a></li></ul></div>
+  </div>
+  <p class="legal">&copy; 2026 Attention to Detail — Bonney Lake, WA. Site by Gaspar Web Co.</p>
+</footer>
+
+<a class="backlink" href="index.html">&larr; All five mobile concepts</a>
+</body>
+</html>
