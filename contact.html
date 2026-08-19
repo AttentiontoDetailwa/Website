@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Request a Quote | Attention to Detail — Interior Auto Detailing</title>
-<meta name="description" content="Request an interior detailing appointment anywhere in Pierce County, WA. A short form, or the long one if you'd rather. Confirmed within 24 hours.">
+<meta name="description" content="Request an interior detailing appointment anywhere in Pierce County, WA. One short form, open seven days a week, 8am to 6pm. Confirmed within 24 hours.">
 <meta name="theme-color" content="#0A0D0E">
 <link rel="canonical" href="https://attentiontodetailwa.com/contact">
 
@@ -90,7 +90,7 @@
 <section class="section" id="quote-form">
   <div class="shell form-layout">
 
-    <form class="form-card" id="quote" data-steps novalidate
+    <form class="form-card" id="quote" data-quote novalidate
           action="https://formspree.io/f/REPLACE_WITH_FORM_ID" method="POST">
 
       <!-- Formspree plumbing. _subject sets the email subject Ava sees;
@@ -98,88 +98,44 @@
       <input type="hidden" name="_subject" value="New quote request from the website">
       <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
 
-      <!-- Length switch. Simple is the default and covers what Ava needs to
-           price the job and book it; Detailed opens the long stepped form for
-           people who'd rather answer everything up front. With JS off this
-           does nothing and everyone gets the long form. -->
-      <fieldset class="form-mode">
-        <legend class="fieldset__legend">How much do you want to fill out?</legend>
-        <div class="option-grid option-grid--2">
-          <label class="option">
-            <input type="radio" name="form-length" value="simple" checked>
-            <span class="option__body">
-              <span class="option__label">Keep it simple</span>
-              <span class="option__price">The short version</span>
-            </span>
-          </label>
-          <label class="option">
-            <input type="radio" name="form-length" value="detailed">
-            <span class="option__body">
-              <span class="option__label">Give me the details</span>
-              <span class="option__price">A few more questions</span>
-            </span>
-          </label>
-        </div>
-        <span class="hint" style="display:block;margin-top:.7rem">
-          Either one reaches me the same way. On the short version I'll ask about the rest when I call.
-        </span>
-      </fieldset>
+      <!-- One page, no stepper, no length switch. A lot of Ava's customers are
+           older and a long form is where they give up, so this asks only for
+           what she needs to price the job and turn up at the right driveway.
+           Everything else she covers on the confirmation call. -->
+      <div class="field-grid">
 
-      <!-- Progress. Hidden until the script takes over, so with JS off the form
-           is simply one long page that still submits. -->
-      <ol class="stepper" id="stepper" hidden>
-        <li class="stepper__item" data-goto="1">
-          <span class="stepper__num">01</span><span class="stepper__label">Your details</span>
-        </li>
-        <li class="stepper__item" data-goto="2">
-          <span class="stepper__num">02</span><span class="stepper__label">The vehicle</span>
-        </li>
-        <li class="stepper__item" data-goto="3">
-          <span class="stepper__num">03</span><span class="stepper__label">Scheduling &amp; notes</span>
-        </li>
-      </ol>
-      <p class="step-status" id="step-status" role="status" aria-live="polite"></p>
-
-      <!-- ---- 01. Who you are ---- -->
-      <div class="form-group" data-step="1">
-        <h2 class="form-group__title" tabindex="-1"><span>01</span> Your details</h2>
-        <div class="field-grid">
-
-        <!-- Name is asked for outright on both lengths, so it carries a plain
-             required and sits on its own row. -->
         <div class="field">
           <label for="name">Full name <span class="req">*</span></label>
           <input class="input" id="name" name="name" type="text" autocomplete="name" placeholder="Jane Miller" required>
         </div>
 
-        <!-- Phone and email are one requirement on the short form: either one
-             is enough for Ava to get back to them. No single required
-             attribute can say "one of these two", so they share a wrapper and
-             form-steps.js checks them as a pair, with the message hanging on
-             the wrapper rather than on whichever field was blamed. They sit
-             side by side so the choice is visible before anyone reads the
-             hint. The required attribute on phone is the long-form rule, and
-             what a browser with JS off enforces. -->
-        <div class="contact-group" data-contact-group>
-          <div class="field-grid field-grid--2">
-            <div class="field">
-              <label for="phone">Phone number <span class="req" data-detail-only>*</span></label>
-              <input class="input" id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(206) 555-0148" data-detail-required required>
-            </div>
-            <div class="field">
-              <label for="email">Email</label>
-              <input class="input" id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@email.com">
-            </div>
-          </div>
-          <span class="hint" data-simple-only>One of these two is enough — whichever you'd rather I use.</span>
-          <span class="hint" data-detail-only>Email is optional. I'll text unless you'd rather I email.</span>
+        <div class="field">
+          <label for="vehicle">Vehicle make and model <span class="req">*</span></label>
+          <input class="input" id="vehicle" name="vehicle" type="text" placeholder="2018 Chrysler 300" required>
+          <span class="hint">Year too, if you know it — it helps me plan how long to book.</span>
         </div>
 
+        <!-- Scheduling. The time input is clamped to trading hours so nobody
+             requests 6am and waits a day to be told no. The hint carries the
+             hours and the "this is a request" caveat, which would otherwise
+             only turn up in the error message. -->
+        <div class="field-grid field-grid--2">
+          <div class="field">
+            <label for="date">Preferred date <span class="req">*</span></label>
+            <input class="input" id="date" name="date" type="date" required>
+          </div>
+          <div class="field">
+            <label for="time">Preferred time <span class="req">*</span></label>
+            <input class="input" id="time" name="time" type="time" min="08:00" max="18:00" step="900" required>
+          </div>
+        </div>
+        <span class="hint" style="margin-top:-1.4rem">I work every day, 8am&nbsp;&ndash;&nbsp;6pm. Whatever you pick is a request, not a locked slot — I'll confirm or offer the closest I have.</span>
+
+        <!-- Location. -->
         <div class="field">
-          <label for="address">Where will the vehicle be? <span class="req" data-detail-only>*</span></label>
-          <input class="input" id="address" name="address" type="text" autocomplete="street-address" placeholder="Street address — home, work, wherever it's parked" data-detail-required required>
-          <span class="hint" data-simple-only>Optional — don't know it offhand? We can figure it out over the phone.</span>
-          <span class="hint" data-detail-only>I come to you, so I need to know where "you" is. Driveway, apartment lot, work parking — all fine.</span>
+          <label for="address">Where will the vehicle be? <span class="req">*</span></label>
+          <input class="input" id="address" name="address" type="text" autocomplete="street-address" placeholder="Street address — home, work, wherever it's parked" required>
+          <span class="hint">I come to you, so I need to know where "you" is. Driveway, apartment lot, work parking — all fine.</span>
         </div>
 
         <div class="field">
@@ -201,73 +157,29 @@
           </select>
         </div>
 
+        <!-- Contact. Either one is enough — no single required attribute can
+             say "one of these two", so they share a wrapper and quote-form.js
+             checks them as a pair, with the message hanging on the wrapper
+             rather than on whichever field got blamed. They sit side by side
+             so the choice is visible before anyone reads the hint. -->
+        <div class="contact-group" data-contact-group>
+          <div class="field-grid field-grid--2">
+            <div class="field">
+              <label for="phone">Phone number</label>
+              <input class="input" id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(206) 555-0148">
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input class="input" id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@email.com">
+            </div>
+          </div>
+          <span class="hint">One of these two is enough — whichever you'd rather I use.</span>
         </div>
-      </div>
 
-      <!-- ---- 02. The vehicle ---- -->
-      <div class="form-group" data-step="2">
-        <h2 class="form-group__title" tabindex="-1"><span>02</span> The vehicle</h2>
-        <div class="field-grid">
         <div class="field">
-          <label for="vehicle">Vehicle year, make and model</label>
-          <input class="input" id="vehicle" name="vehicle" type="text" placeholder="2018 Chrysler 300">
-          <span class="hint">Optional. It helps me plan, but I can ask when I call.</span>
+          <label for="notes">Anything else I should know?</label>
+          <textarea class="textarea" id="notes" name="notes" placeholder="Dog hair, a spill in the back seat, stains you want gone, a smell you can't find, a gate code — anything that helps me come prepared."></textarea>
         </div>
-
-        <fieldset>
-          <legend class="fieldset__legend">What do you need? <span class="req">*</span></legend>
-          <div class="option-grid option-grid--3">
-            <label class="option">
-              <input type="radio" name="service" value="deep-clean" required>
-              <span class="option__body">
-                <span class="option__label">Full interior deep clean</span>
-                <span class="option__price">From $120</span>
-              </span>
-            </label>
-            <label class="option">
-              <input type="radio" name="service" value="shampoo-only">
-              <span class="option__body">
-                <span class="option__label">Carpet &amp; seat shampoo only</span>
-                <span class="option__price">$50 flat</span>
-              </span>
-            </label>
-            <label class="option">
-              <input type="radio" name="service" value="not-sure">
-              <span class="option__body">
-                <span class="option__label">Not sure — help me pick</span>
-                <span class="option__price">I'll advise</span>
-              </span>
-            </label>
-          </div>
-        </fieldset>
-
-        <fieldset data-detail-only>
-          <legend class="fieldset__legend">Vehicle size <span class="req">*</span></legend>
-          <div class="option-grid option-grid--3">
-            <label class="option">
-              <input type="radio" name="size" value="car" required>
-              <span class="option__body">
-                <span class="option__label">Car</span>
-                <span class="option__price">From $120</span>
-              </span>
-            </label>
-            <label class="option">
-              <input type="radio" name="size" value="mid">
-              <span class="option__body">
-                <span class="option__label">Mid-size SUV / Truck</span>
-                <span class="option__price">From $140</span>
-              </span>
-            </label>
-            <label class="option">
-              <input type="radio" name="size" value="large">
-              <span class="option__body">
-                <span class="option__label">Large 3-row vehicle</span>
-                <span class="option__price">From $160</span>
-              </span>
-            </label>
-          </div>
-          <span class="hint" style="display:block;margin-top:.7rem">Shampoo-only visits are $50 whatever the size — this is for the full deep clean.</span>
-        </fieldset>
 
         <fieldset>
           <legend class="fieldset__legend">Add-ons</legend>
@@ -297,39 +209,6 @@
           <span class="hint" style="display:block;margin-top:.7rem">Not sure? Leave them unchecked — I'll tell you if I think the car needs one.</span>
         </fieldset>
 
-        </div>
-      </div>
-
-      <!-- ---- 03. When, and anything else ---- -->
-      <div class="form-group" data-step="3">
-        <h2 class="form-group__title" tabindex="-1"><span>03</span> Scheduling &amp; notes</h2>
-        <div class="field-grid">
-        <div class="field-grid field-grid--2">
-          <div class="field">
-            <label for="date">Preferred date <span class="req">*</span></label>
-            <input class="input" id="date" name="date" type="date" required>
-          </div>
-          <div class="field">
-            <label for="time">Preferred time <span class="req" data-detail-only>*</span></label>
-            <input class="input" id="time" name="time" type="time" data-detail-required required>
-            <span class="hint" data-simple-only>Optional. Leave it blank and I'll suggest a time.</span>
-          </div>
-        </div>
-        <span class="hint" style="margin-top:-.6rem">This is a request, not a locked slot — I'll confirm or offer the closest time I have.</span>
-
-        <!-- ---- 4. Notes ---- -->
-        <div class="field">
-          <label for="notes">Anything I should know about your car? <span class="req" data-detail-only>*</span></label>
-          <textarea class="textarea" id="notes" name="notes" data-detail-required placeholder="Dog hair, a spill in the back seat, stains you want gone, a smell you can't find — and a day or two that works for you." required></textarea>
-        </div>
-
-        </div>
-      </div>
-
-      <!-- Step controls. Revealed by the script; invisible with JS off. -->
-      <div class="step-nav" id="step-nav" hidden>
-        <button class="btn btn--ghost" type="button" id="step-back">Back</button>
-        <button class="btn btn--primary" type="button" id="step-next">Next: the vehicle</button>
       </div>
 
       <div class="form-foot">
@@ -373,12 +252,10 @@
       <div class="rail-card">
         <h3>Hours</h3>
         <ul class="hours">
-          <li>Monday – Friday <span>[Ava to confirm]</span></li>
-          <li>Saturday <span>[Ava to confirm]</span></li>
-          <li>Sunday <span>[Ava to confirm]</span></li>
+          <li>Monday – Sunday <span>8am – 6pm</span></li>
         </ul>
         <p class="price-note" style="margin-top:1.1rem">
-          These need to match the Google Business Profile exactly — Google penalizes mismatched hours.
+          Seven days a week. These need to match the Google Business Profile exactly — Google penalizes mismatched hours.
         </p>
       </div>
 
@@ -446,6 +323,6 @@
 </footer>
 
 <script src="js/nav.js"></script>
-<script src="js/form-steps.js"></script>
+<script src="js/quote-form.js"></script>
 </body>
 </html>
