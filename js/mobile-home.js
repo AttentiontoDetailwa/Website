@@ -6,15 +6,47 @@
   /* --- hero drag-to-compare ------------------------------------------- */
   /* The range input is the control; the clip and the handle follow it. Touch
      drag, click-to-jump and arrow keys all come from the browser. */
+  /* The range input holds the value and gives keyboard users arrow keys, but
+     it does not take the pointer. iOS Safari will not jump a range to a tapped
+     point the way a desktop browser does — you have to land on the thumb and
+     drag it — so on a phone the slider read as broken. The frame takes the
+     pointer instead and writes the value in, which means anywhere on the photo
+     works, on any device, with one code path. */
   var range = document.getElementById('ba-range');
   if (range) {
+    var frame = document.querySelector('.ba');
     var clip = document.getElementById('ba-clip');
     var handle = document.getElementById('ba-handle');
+    var dragging = false;
+
     var paint = function () {
       clip.style.width = range.value + '%';
       handle.style.left = range.value + '%';
     };
+
+    var setFromX = function (clientX) {
+      var box = frame.getBoundingClientRect();
+      if (!box.width) return;
+      var pct = ((clientX - box.left) / box.width) * 100;
+      range.value = Math.min(100, Math.max(0, pct));
+      paint();
+    };
+
     range.addEventListener('input', paint);
+
+    frame.addEventListener('pointerdown', function (e) {
+      dragging = true;
+      if (frame.setPointerCapture) frame.setPointerCapture(e.pointerId);
+      setFromX(e.clientX);
+    });
+    frame.addEventListener('pointermove', function (e) {
+      if (dragging) setFromX(e.clientX);
+    });
+    var stop = function () { dragging = false; };
+    frame.addEventListener('pointerup', stop);
+    frame.addEventListener('pointercancel', stop);
+    frame.addEventListener('lostpointercapture', stop);
+
     paint();
   }
 
