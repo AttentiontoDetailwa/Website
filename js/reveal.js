@@ -88,6 +88,7 @@
     if (!pending.length) {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
+      window.removeEventListener('load', onScroll);
     }
   }
 
@@ -108,18 +109,22 @@
   /* Late-loading images change where everything sits. */
   window.addEventListener('load', onScroll);
 
-  /* A second, independent trigger. IntersectionObserver does not depend on
-     scroll events being delivered, and the scroll handler does not depend on
-     the observer running, so content can only end up stranded if both fail.
-     Both funnel into the same check, so there is still one code path deciding
-     what is visible. */
-  if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function () { onScroll(); }, {
-      rootMargin: '0px 0px -12% 0px',
-      threshold: 0.01
-    });
-    pending.forEach(function (el) { io.observe(el); });
-  }
+  /* The guarantee. Events are the fast path, but they are a path: a browser
+     that has paused rendering delivers no scroll events, no animation frames
+     and no IntersectionObserver callbacks, and content that is only ever
+     revealed by an event stays invisible. I watched exactly that happen in a
+     non-rendering preview — a whole page of cream with nothing on it.
+
+     A timer does not care whether anything is being painted. It re-reads
+     positions four times a second, reveals whatever has come into view, and
+     clears itself the moment nothing is left. The cost is a handful of
+     getBoundingClientRect calls on a list that only shrinks; the payoff is
+     that hidden content cannot outlive the reader scrolling to it, whatever
+     the browser is doing. */
+  var sweep = window.setInterval(function () {
+    check();
+    if (!pending.length) window.clearInterval(sweep);
+  }, 250);
 
   check();
 })();
