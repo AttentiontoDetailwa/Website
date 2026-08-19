@@ -1746,8 +1746,30 @@ fieldset { margin: 0; padding: 0; border: 0; }
   .cta-band .btn-row .btn { width: 100%; }
 }
 
+/* --- 21. Scroll reveals -------------------------------------------------
+   .has-reveal is set by js/reveal.js, so none of this applies unless the
+   script has run and the reader has not asked for reduced motion. Opacity
+   and a 14px rise only — nothing here can move layout, so a reveal firing
+   cannot shift something the reader is already looking at.
+   ------------------------------------------------------------------------ */
+.has-reveal [data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.55s var(--ease), transform 0.55s var(--ease);
+  /* The browser gets told what is about to change, and then told to forget:
+     leaving will-change on a long page keeps a layer alive for every
+     revealed block. */
+  will-change: opacity, transform;
+}
+.has-reveal [data-reveal].is-shown {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  .has-reveal [data-reveal] { opacity: 1; transform: none; }
   *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }
 
@@ -1860,22 +1882,38 @@ fieldset { margin: 0; padding: 0; border: 0; }
                                 url("../assets/audi-after-wheel.jpg")  type("image/jpeg"));
   }
   .ba__clip   { position: absolute; inset: 0; width: 50%; overflow: hidden; will-change: width; }
+  /* Not the stock round knob with two chevrons in it. The divider is the tool:
+     a squeegee blade — a cyan edge with a tall, slim ink grip on it, ribbed
+     the way a handle is. It sits low rather than dead centre so it does not
+     land on the middle of the photograph. */
   .ba__handle {
     position: absolute; top: 0; bottom: 0; left: 50%;
-    width: 2px; background: #fff; pointer-events: none;
-    box-shadow: 0 0 14px rgba(0, 0, 0, 0.5);
+    width: 3px;
+    background: var(--accent-bright);
+    pointer-events: none;
+    box-shadow: 0 0 18px rgba(10, 13, 14, 0.55);
   }
   .ba__handle::after {
-    content: ""; position: absolute; top: 50%; left: 50%;
+    content: "";
+    position: absolute; top: 62%; left: 50%;
     transform: translate(-50%, -50%);
-    width: 52px; height: 52px; border-radius: 999px;
-    background: #fff; box-shadow: 0 3px 14px rgba(0, 0, 0, 0.4);
+    width: 16px; height: 68px;
+    border-radius: 8px;
+    background: var(--ink);
+    border: 1px solid var(--accent-bright);
+    box-shadow: 0 4px 16px rgba(10, 13, 14, 0.55);
   }
+  /* Three ribs down the grip, in the accent. */
   .ba__handle::before {
-    content: ""; position: absolute; top: 50%; left: 50%; z-index: 2;
+    content: "";
+    position: absolute; top: 62%; left: 50%; z-index: 2;
     transform: translate(-50%, -50%);
-    width: 22px; height: 12px; background: var(--ink);
-    clip-path: polygon(0 50%, 7px 0, 7px 100%, 100% 50%, 15px 0, 15px 100%);
+    width: 6px; height: 22px;
+    background:
+      linear-gradient(var(--accent-bright), var(--accent-bright)) 0 0 / 1px 100% no-repeat,
+      linear-gradient(var(--accent-bright), var(--accent-bright)) 50% 0 / 1px 100% no-repeat,
+      linear-gradient(var(--accent-bright), var(--accent-bright)) 100% 0 / 1px 100% no-repeat;
+    opacity: 0.75;
   }
   /* The range is still the value and still the thing a keyboard drives, but it
      no longer takes the pointer: iOS will not jump a range to a tapped point
@@ -1890,17 +1928,31 @@ fieldset { margin: 0; padding: 0; border: 0; }
   }
   .home .ba { cursor: ew-resize; }
   .home .ba:focus-within { outline: 3px solid var(--accent-bright); outline-offset: 2px; }
+  /* Not two rounded pills either. These are the house uppercase micro-label,
+     set as square ink chips on the photograph — the before side plain, the
+     after side carrying the accent as type, which is the rule the rest of the
+     site runs on for anything sitting on a dark ground. */
   .ba__tags {
-    position: absolute; left: 0; right: 0; bottom: 0.75rem; z-index: 2;
+    position: absolute; left: 0; right: 0; top: 0.7rem; z-index: 2;
     display: flex; justify-content: space-between;
-    padding-inline: 0.75rem; pointer-events: none;
+    padding-inline: 0.7rem; pointer-events: none;
   }
   .ba__tags span {
-    padding: 0.3rem 0.75rem; border-radius: 999px;
-    font-family: var(--font-display); font-size: 0.76rem; font-weight: 600;
-    background: rgba(255, 255, 255, 0.95); color: var(--text);
+    padding: 0.32rem 0.6rem;
+    border-radius: 3px;
+    background: rgba(10, 13, 14, 0.72);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    font-family: var(--font-display);
+    font-size: 0.62rem; font-weight: 700;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.9);
   }
-  .ba__tags span:last-child { background: var(--accent-bright); color: var(--accent-ink); }
+  .ba__tags span:last-child {
+    color: var(--accent-bright);
+    border-color: rgba(133, 229, 232, 0.45);
+  }
   .home .ba__hint {
     display: block;
     margin-top: 0.7rem;
@@ -2228,26 +2280,59 @@ fieldset { margin: 0; padding: 0; border: 0; }
   /* 52px button + 0.6rem of rail padding top and bottom = 73px. The old 64px
      left the last 9px of every page sitting under the rail. */
   .has-rail { padding-bottom: calc(77px + env(safe-area-inset-bottom)); }
+  /* The rail was a stock white circle with a handset in it next to a button —
+     the phone-OS default, and it looked borrowed. It is one object now: a
+     single pill split down the middle, ink on the left carrying the call in
+     the card colour, the card colour on the right carrying the quote in ink.
+     The one accent doing both jobs at once, in the one control that follows
+     you down every page. */
   .has-rail .action-rail {
+    /* Not just position — .action-rail is display:none by default above this
+       breakpoint, and this rule is what switches it on. */
+    display: block;
     position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
-    display: grid; grid-template-columns: auto 1fr;
-    gap: 0.6rem; align-items: center;
     padding: 0.6rem 1.25rem calc(0.6rem + env(safe-area-inset-bottom));
     background: rgba(242, 237, 228, 0.93);
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
     border-top: 1px solid var(--line);
   }
-  .has-rail .action-rail__call {
-    display: grid; place-items: center;
-    width: 52px; height: 52px; border-radius: 999px;
-    background: var(--surface); color: var(--text);
-    box-shadow: var(--shadow);
+  .action-rail__bar {
+    display: grid; grid-template-columns: auto 1fr;
+    border-radius: 999px;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(18, 25, 26, 0.10), 0 10px 24px -14px rgba(18, 25, 26, 0.55);
   }
-  .has-rail .action-rail__call svg { width: 22px; height: 22px; }
-  .has-rail .action-rail .btn { width: 100%; min-height: 52px; }
-  /* Contact carries one full-width button rather than a call/quote pair. */
-  .action-rail--single { grid-template-columns: 1fr; }
-  .action-rail--single .btn { gap: 0.6rem; }
-  .action-rail--single .btn svg { width: 19px; height: 19px; }
+  .action-rail__bar--single { grid-template-columns: 1fr; }
+
+  .action-rail__call,
+  .action-rail__quote {
+    display: inline-flex; align-items: center; justify-content: center;
+    gap: 0.5rem;
+    min-height: 54px;
+    font-family: var(--font-display);
+    font-size: 1rem; font-weight: 700; letter-spacing: -0.01em;
+  }
+  .action-rail__call {
+    padding-inline: 1.15rem 1rem;
+    background: var(--ink);
+    color: var(--accent-bright);
+  }
+  .action-rail__call svg { width: 18px; height: 18px; }
+  /* A hairline of the accent between the two halves, so the split reads as
+     one control divided rather than two buttons pushed together. */
+  .action-rail__call::after {
+    content: "";
+    position: absolute; right: 0; top: 20%; bottom: 20%;
+    width: 1px; background: rgba(133, 229, 232, 0.35);
+  }
+  .action-rail__call { position: relative; }
+  .action-rail__call--wide { padding-inline: 1.4rem; }
+  .action-rail__call--wide::after { display: none; }
+  .action-rail__quote {
+    padding-inline: 1rem;
+    background: var(--accent-bright);
+    color: var(--accent-ink);
+  }
+  .action-rail__bar a:active { filter: brightness(0.94); }
 }
