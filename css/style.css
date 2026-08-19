@@ -1766,7 +1766,7 @@ fieldset { margin: 0; padding: 0; border: 0; }
 
 /* Both phone-only blocks are hidden by default and switched on inside the
    query below, so no desktop browser ever lays them out. */
-.ba, .ba__hint, .price-tabs, .action-rail { display: none; }
+.ba, .ba__hint, .price-tabs, .action-rail, .u-phone-only { display: none; }
 
 @media (max-width: 40em) {
 
@@ -1782,6 +1782,7 @@ fieldset { margin: 0; padding: 0; border: 0; }
   .cta-band                      { padding-block: 2.8rem; }
   .shell                         { width: calc(100% - 2.5rem); }
   .u-phone-hide                  { display: none; }
+  .u-phone-only                  { display: revert; }
 
   /* --- header ----------------------------------------------------------- */
   /* I tried restoring the wordmark under 440px here and took it back out: the
@@ -1797,18 +1798,34 @@ fieldset { margin: 0; padding: 0; border: 0; }
   .nav-toggle         { width: 44px; height: 44px; }
   .nav                { inset-block-start: 70px; }
 
+  /* On the home page the rail holds Call at the bottom of every screen, so the
+     bar no longer has to carry the number — which is what was crowding the
+     wordmark out below 440px. Name and mark go back in.
+     Home only: the other four pages have no rail, and the number in the bar is
+     their only one-tap call. */
+  .home .header__cta        { display: none; }
+  .home .brand__name        { display: inline; font-size: 0.95rem; }
+  .home .brand              { gap: 0.6rem; }
+  .home .brand__mark        { width: 38px; height: 21px; }
+
   /* --- hero ------------------------------------------------------------- */
   /* The buttons go: the rail at the bottom of the screen carries the same
      primary action and is visible at every scroll position, and two identical
      cyan buttons 60px apart reads as a bug rather than as emphasis. */
   .hero__grid    { padding-block: 1.6rem 2.2rem; gap: 0; }
   .home .hero .btn-row { display: none; }
+  /* Headline, then the proof. The paragraph was five lines of phone screen
+     between the two, saying what the photograph says faster. */
+  .home .hero__sub     { display: none; }
   .hero__badge   { margin-bottom: 1rem; padding: 0.35rem 0.8rem; font-size: 0.8rem; }
   .home .hero__showcase { display: none; }
 
   .home .ba {
     display: block;
     position: relative;
+    /* Ours horizontally, the page's vertically. Without this the browser
+       claims the horizontal drag for a scroll it is not going to do. */
+    touch-action: pan-y;
     margin-top: 1.35rem;
     aspect-ratio: 4 / 5;
     border-radius: var(--radius);
@@ -1855,14 +1872,19 @@ fieldset { margin: 0; padding: 0; border: 0; }
     width: 22px; height: 12px; background: var(--ink);
     clip-path: polygon(0 50%, 7px 0, 7px 100%, 100% 50%, 15px 0, 15px 100%);
   }
+  /* The range is still the value and still the thing a keyboard drives, but it
+     no longer takes the pointer: iOS will not jump a range to a tapped point
+     the way a desktop browser does, so on a phone you had to land exactly on a
+     56px invisible thumb, in the vertical middle of a 420px photo, to move it
+     at all. The container handles pointers now and writes the value here. */
   .ba__range {
     position: absolute; inset: 0; z-index: 3;
     width: 100%; height: 100%; margin: 0;
-    opacity: 0; cursor: ew-resize;
+    opacity: 0; pointer-events: none;
     -webkit-appearance: none; appearance: none; background: none;
   }
-  .ba__range::-webkit-slider-thumb { -webkit-appearance: none; width: 56px; height: 100%; }
-  .ba__range::-moz-range-thumb     { width: 56px; height: 100%; border: 0; opacity: 0; }
+  .home .ba { cursor: ew-resize; }
+  .home .ba:focus-within { outline: 3px solid var(--accent-bright); outline-offset: 2px; }
   .ba__tags {
     position: absolute; left: 0; right: 0; bottom: 0.75rem; z-index: 2;
     display: flex; justify-content: space-between;
@@ -2002,8 +2024,11 @@ fieldset { margin: 0; padding: 0; border: 0; }
      dead space between a paragraph and the photo under it. */
   .split, .area-grid { gap: 1.75rem; }
   .frame--tall img { aspect-ratio: 16 / 10; object-fit: cover; }
-  .stat b   { font-size: 1.4rem; }
-  .stat span { font-size: 0.75rem; }
+  .stat b    { font-size: 1.4rem; margin-bottom: 0.25rem; }
+  .stat span { font-size: 0.7rem; letter-spacing: 0.06em; line-height: 1.3; }
+  /* The phone paragraph runs at full text colour — at 0.97rem on a warm
+     ground the muted grey was doing more fading than hierarchy. */
+  .home .u-phone-only { color: var(--text); font-size: 0.97rem; margin-top: 1rem; }
   .city-list { gap: 0.5rem; margin: 1.1rem 0; }
   .city-list li { padding: 0.5rem 0.95rem; font-size: 0.9rem; }
   .home .map-placeholder { display: none; }   /* about.html shows a real one */
@@ -2012,18 +2037,44 @@ fieldset { margin: 0; padding: 0; border: 0; }
      minmax(0,1fr) rather than 1fr: a plain fr floors at min-content, and
      avabright2006@gmail.com is a 223px unbreakable token, so the first
      column would take 70% of the row and the second would get the scraps. */
+  /* The desktop footer is a four-column sitemap. Squeezed onto a phone it was
+     either 1,344px of stacked column or, in two columns, 134px-wide cells that
+     put "Bonney Lake" on two lines. Neither is what a phone footer looks like.
+     This is the ordinary mobile pattern instead: one column, each group under
+     a small label, every link a full-width row you can hit with a thumb,
+     hairline between rows, and the legal line centred at the bottom. */
   .footer-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 1.5rem 1.25rem;
-    padding-block: 2.25rem;
+    display: block;
+    padding-block: 1.75rem 0.5rem;
   }
-  .footer-brand { grid-column: 1 / -1; }
-  .site-footer ul { gap: 0.5rem; }
-  /* Two columns of a 290px row is 134px each, and at the footer's full size
-     "Bonney Lake" alone took two lines in that. */
-  .site-footer li, .site-footer .footer-col p { font-size: 0.86rem; }
+  .footer-col { margin-bottom: 1.5rem; }
+  .footer-col:last-child { margin-bottom: 0.5rem; }
+  .footer-col h4 { margin-bottom: 0.2rem; }
+
+  .site-footer ul { gap: 0; }
+  .site-footer li { border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+  .site-footer li:last-child { border-bottom: 0; }
+  /* Rows, not a list — 48px each so they are actually tappable. The service
+     area column is <p> not <a>, so it stays a plain line rather than pretending
+     to be a link. */
+  .site-footer li > a { display: flex; align-items: center; min-height: 48px; }
+  .site-footer li > p { padding-block: 0.6rem; margin: 0; }
+  .site-footer li, .site-footer .footer-col p { font-size: 0.94rem; }
   .site-footer a, .site-footer p { overflow-wrap: anywhere; }
-  .footer-bottom { padding-block: 1.25rem; }
+
+  /* The brand blurb is the one place a paragraph belongs down here. */
+  .footer-brand { margin-bottom: 1.75rem; }
+  .footer-brand p { font-size: 0.9rem; }
+
+  .footer-bottom {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.35rem;
+    padding-block: 1.4rem;
+    font-size: 0.82rem;
+  }
+  .footer-bottom .spacer { margin-left: 0; }
 
   /* --- the rail --------------------------------------------------------- */
   /* Home page only — it is the one page with markup for it. */
