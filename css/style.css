@@ -2018,14 +2018,19 @@ fieldset { margin: 0; padding: 0; border: 0; }
   .addons--compact .addon__name  { font-size: 0.86rem; font-weight: 600; }
   .addons--compact .addon__price { font-size: 0.86rem; font-weight: 800; }
 
-  /* On the ink band the add-on cards inherit --surface at 5% white, which on a
-     phone is a dark card on a dark ground you can barely see. These go cream.
+  /* Cards on an ink ground inherit --surface at 5% white. At desktop size,
+     against a lot of surrounding black, that reads as a card; on a phone,
+     where the card is most of the screen, it is a dark box on a dark ground
+     you can barely make out — which is what made the services and contact
+     openings look flat and the add-ons hard to read. These go cream.
      The band works by re-pointing tokens on the subtree, so the honest way to
      undo it for one component is to re-point them back rather than override
      .addon__name, .addon__price and .addon p one at a time — the literals
      below are the :root values, which the band has already overwritten by the
      time this rule is read. Keep them in step with section 1 if those change. */
-  .section--ink .addon {
+  .section--ink .addon,
+  .page-banner__spec,
+  .page-banner__steps {
     --surface: #FFFFFF;
     --text:    #18201F;
     --muted:   #4E5958;
@@ -2138,6 +2143,23 @@ fieldset { margin: 0; padding: 0; border: 0; }
 
   /* Two-up is already the base below 760px; this only tightens the gutter and
      stops the tiles going letterbox on a narrow column. */
+  /* .ba-card is a <figure> that never had its UA margin reset, so it carried
+     margin:1em 40px — 80px of a 290px track, leaving a 210px card adrift in a
+     full-width row. The caption then laid out as a row with the vehicle name
+     set to nowrap, so "Chrysler 300" ran 26px past the card and was cut off by
+     the card's own overflow:hidden. Full width here, and the caption stacks.
+     (Desktop carries the same 80px inset; there it reads as generous spacing
+     rather than as a fault, so it is left alone.) */
+  .ba-card { margin: 0; }
+  .ba-card__foot {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    padding: 1.1rem 1.15rem 1.25rem;
+  }
+  .ba-card__foot h3   { font-size: 1.05rem; }
+  .ba-card__foot span { white-space: normal; font-size: 0.9rem; }
+
   .gallery { gap: 0.5rem; }
   .gallery figure img { aspect-ratio: 1; object-fit: cover; }
   /* The captions are set over the photograph, and at this size they cover a
@@ -2160,7 +2182,31 @@ fieldset { margin: 0; padding: 0; border: 0; }
   /* Interior pages open on the ink banner rather than the hero. Same 1.6rem
      off the nav that the home hero uses, so the top of every page sits at the
      same height. */
-  .page-banner { padding-block: 1.6rem 2.2rem; }
+  .page-banner {
+    padding-block: 1.6rem 2.2rem;
+    /* A crisp edge where the ink meets the cream, instead of two flat slabs
+       butted together. */
+    border-bottom: 1px solid rgba(133, 229, 232, 0.30);
+  }
+  /* .page-banner__arc is already in the markup on all four interior pages and
+     has been display:none since the technical treatment came out. On a phone
+     the band is mostly headline and card, and the black around them reads as
+     dead space, so the arc comes back as a pool of the card colour low and to
+     the right — away from the eyebrow, whose cyan type on a 15% cyan wash is
+     the first thing to lose contrast if the ground behind it lifts.
+     .page-banner is already position:relative with overflow:hidden, and the
+     shell after it is positioned too, so the content stacks above this. */
+  .page-banner__arc {
+    display: block;
+    position: absolute;
+    right: -25%;
+    bottom: -35%;
+    width: 95%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(133, 229, 232, 0.26), rgba(133, 229, 232, 0) 74%);
+    pointer-events: none;
+  }
   /* The shell inside the banner carries its own clamp(3rem,6vw,5rem) of block
      padding on top of the section's, which is where the ~50px of dead space
      above every interior page title came from. It has to be written at
