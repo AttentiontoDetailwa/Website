@@ -71,8 +71,7 @@
       <p class="eyebrow">Contact</p>
       <h1>Request <em>your appointment.</em></h1>
       <p class="lede">
-        Fill this out and I'll contact you within 24 hours to confirm your appointment,
-        give you a final quote if anything changes it, and answer any questions.
+        This is everything I need to price the job and find the right driveway.
       </p>
     </div>
     <div class="page-banner__next">
@@ -129,7 +128,6 @@
               <input class="input" id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@email.com">
             </div>
           </div>
-          <span class="hint">One of these two is enough — whichever you'd rather I use.</span>
         </div>
 
         </div>
@@ -157,7 +155,7 @@
             <input class="input" id="time" name="time" type="time" min="08:00" max="18:00" step="900" required>
           </div>
         </div>
-        <span class="hint" style="margin-top:-1.4rem">I work every day, 8am&nbsp;&ndash;&nbsp;6pm. Whatever you pick is a request, not a locked slot — I'll confirm or offer the closest I have.</span>
+        <span class="hint" style="margin-top:-1.4rem">I work every day, 8am&nbsp;&ndash;&nbsp;6pm. I'll confirm your time or offer the closest I have.</span>
 
         <!-- Location. -->
         <div class="field">
@@ -189,10 +187,10 @@
              say "one of these two", so they share a wrapper and quote-form.js
              checks them as a pair, with the message hanging on the wrapper
              rather than on whichever field got blamed. They sit side by side
-             so the choice is visible before anyone reads the hint. -->
+             so the choice is visible without a hint line under them. -->
         <div class="field">
           <label for="notes">Anything else I should know?</label>
-          <textarea class="textarea" id="notes" name="notes" placeholder="Dog hair, a spill in the back seat, stains you want gone, a smell you can't find, a gate code — anything that helps me come prepared."></textarea>
+          <textarea class="textarea" id="notes" name="notes" placeholder="Dog hair, a spill in the back seat, a smell you can't find, a gate code."></textarea>
         </div>
 
         <fieldset>
@@ -274,9 +272,8 @@
         <ul class="hours">
           <li>Monday – Sunday <span>8am – 6pm</span></li>
         </ul>
-        <p class="price-note" style="margin-top:1.1rem">
-          Seven days a week. These need to match the Google Business Profile exactly — Google penalizes mismatched hours.
-        </p>
+        <!-- These hours must match the Google Business Profile exactly; Google
+             penalizes a mismatch. Change one, change the other. -->
       </div>
 
     </aside>
