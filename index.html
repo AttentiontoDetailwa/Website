@@ -69,7 +69,7 @@
       </svg>
       <span class="brand__text">
         <span class="brand__name">Attention to Detail</span>
-        <span class="brand__tag">Interior Auto Detailing</span>
+        <span class="brand__tag">Ava Bright</span>
       </span>
     </a>
 
@@ -131,6 +131,11 @@
       </div>
       <p class="ba__hint">Drag to compare &mdash; same car, same afternoon</p>
 
+      <!-- Phone only. Directly under the proof and above the ask: she is the
+           answer to "who is turning up", which is the question the
+           photograph raises. -->
+      <p class="hero__intro">Hi, I'm <em>Ava</em> &mdash; I'm the only one who details your car.</p>
+
       <!-- Phone only. The desktop button row sits above the photo and is
            hidden below 40em; these sit under it, where the eye lands after
            the proof. -->
@@ -150,13 +155,6 @@
       <!-- Phone only. Her mark and her actual slogan — the one on the card, in
            the schema and in the footer — so the hero carries the business and
            not just the offer. -->
-      <div class="hero__sign">
-        <svg viewBox="0 0 64 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 24h6M55 24h6M9 24a5.4 5.4 0 1 0 10.8 0A5.4 5.4 0 0 0 9 24Zm35 0a5.4 5.4 0 1 0 10.8 0A5.4 5.4 0 0 0 44 24Z"/><path d="M19.8 24h24.4"/><path d="M4 21c1-5.5 3-8 6-8.6l9-5.2c2-1.2 4.3-1.6 6.6-1.2l14 2.6c2 .4 3.8 1.4 5.2 2.9l4.4 4.6 8 1.8c3 .7 4.8 2.5 4.8 5"/></svg>
-        <span class="hero__sign-text">
-          <span class="hero__sign-line">Hi, I'm <em>Ava</em> &mdash; I'm the only one who details your car.</span>
-          <span class="hero__sign-slogan">Attention to Detail &middot; any time, any place</span>
-        </span>
-      </div>
     </div>
 
     <div class="hero__showcase">
@@ -235,7 +233,7 @@
 <section class="section section--alt" id="how-i-clean">
   <div class="shell split split--center split--stats">
     <div class="split__copy">
-      <p class="eyebrow">How I clean</p>
+      <p class="eyebrow">How I clean &middot; Who I am</p>
       <h2>Steam, not a shelf of chemicals.</h2>
       <p class="lede u-phone-hide" style="margin-top:1.1rem">
         Most interiors get cleaned with whatever lifts the stain fastest. That's also
@@ -256,22 +254,33 @@
         out of fabric and gets into vents, seams and seat rails without soaking anything.
         Safe on leather, cloth and plastic, and it never costs extra.
       </p>
+      <p class="who">
+        I'm Ava. Attention to Detail is me, my equipment and your driveway &mdash; no crew,
+        no rotating staff, no one else learning on your car. The person who quotes it is
+        the person who cleans it.
+      </p>
+      <!-- Desktop keeps the link here in the copy column; the phone shows the
+           copy below the photograph instead and hides this one. -->
       <a class="textlink" href="services.html#how-i-clean">What's in a deep clean &rarr;</a>
 
     </div>
 
     <div class="frame frame--tall">
-      <picture>
-        <source srcset="assets/work-truck-mats.webp" type="image/webp">
-        <img src="assets/work-truck-mats.jpg" alt="Steam-cleaned all-weather floor mats and rear vents in a truck" loading="lazy" width="900" height="1200">
-      </picture>
+      <!-- Waiting on a photograph of Ava. Same placeholder the about page
+           uses; swap the div for a <picture> when the photo lands. -->
+      <div class="portrait-placeholder">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h3l1.5-2h7L17 7h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1Z"/><circle cx="12" cy="13" r="3.5"/></svg>
+          <p>Photo of Ava goes here &mdash; her, with a car, mid-job.</p>
+        </div>
+      </div>
     </div>
 
-    <div class="stat-row">
-      <div class="stat"><b>100+</b><span>Cars detailed</span></div>
-      <div class="stat"><b>1</b><span>Detailer, every time</span></div>
-      <div class="stat"><b>24 hr</b><span>Quote turnaround</span></div>
-    </div>
+    <!-- Phone only, and a sibling of the frame rather than a child of it:
+         .frame clips its overflow, so a link inside would be cut off on
+         desktop. On desktop this is display:none, so the split is still a
+         two-item grid and its columns are unchanged. -->
+    <a class="textlink u-phone-only" href="services.html#how-i-clean">What's in a deep clean &rarr;</a>
   </div>
 </section>
 
@@ -293,11 +302,11 @@
     <div class="price-tabs">
       <div class="price-tabs__seg" role="tablist" aria-label="Vehicle size">
         <button type="button" role="tab" id="pt0" aria-selected="true"  aria-controls="pt-panel">
-          <span class="lbl">Car</span><span class="fig">$120</span></button>
+          <span class="lbl">Car</span></button>
         <button type="button" role="tab" id="pt1" aria-selected="false" aria-controls="pt-panel">
-          <span class="lbl">SUV / Truck</span><span class="fig">$140</span></button>
+          <span class="lbl">SUV / Truck</span></button>
         <button type="button" role="tab" id="pt2" aria-selected="false" aria-controls="pt-panel">
-          <span class="lbl">3-row</span><span class="fig">$160</span></button>
+          <span class="lbl">3-row</span></button>
       </div>
       <div class="price-tabs__panel" id="pt-panel" role="tabpanel" aria-labelledby="pt0" aria-live="polite">
         <div class="price-tabs__top">

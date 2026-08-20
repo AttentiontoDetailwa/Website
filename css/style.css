@@ -1789,7 +1789,7 @@ fieldset { margin: 0; padding: 0; border: 0; }
 
 /* Both phone-only blocks are hidden by default and switched on inside the
    query below, so no desktop browser ever lays them out. */
-.ba, .ba__hint, .hero__acts, .hero__sign, .hero__trust, .page-banner__sign,
+.ba, .ba__hint, .hero__acts, .hero__intro, .hero__trust,
 .price-tabs, .action-rail, .u-phone-only { display: none; }
 
 @media (max-width: 40em) {
@@ -1887,42 +1887,22 @@ fieldset { margin: 0; padding: 0; border: 0; }
     color: var(--text);
     margin-bottom: 0.15rem;
   }
-  .hero__sign { margin-top: 1.2rem; }
 
   /* Mark and slogan. The mark is ink, not cyan: on this cream the card colour
      sits at 1.25:1 and a cyan stroke would be decoration you cannot see. */
-  /* The text is wrapped in a span rather than sitting loose next to the mark:
-     contiguous text and the <em> would each become their own flex item, and
-     the line broke into two ragged columns with the rule running the width of
-     one of them. */
-  .hero__sign {
-    display: flex; align-items: flex-start; gap: 0.6rem;
-    /* display is what switches it on — it is none by default above 40em. */
-    margin-top: 1.4rem;
-    font-family: var(--font-display);
-    font-size: 0.88rem; font-weight: 600;
-    color: var(--muted);
-  }
-  .hero__sign svg { width: 30px; height: 17px; flex: none; margin-top: 0.28rem; color: var(--text); }
-  /* Her line leads and the business name settles under it — the introduction
-     is the thing worth reading, and running them at the same weight would
-     make two competing lines out of one signature. */
-  .hero__sign-text  { display: block; }
-  .hero__sign-line  {
+  /* Sits between the photograph and the buttons: the before/after raises the
+     question of who is turning up, and this answers it before the ask. */
+  .hero__intro {
     display: block;
-    font-size: 0.94rem; font-weight: 600;
-    line-height: 1.4;
+    margin-top: 1rem;
+    font-family: var(--font-display);
+    font-size: 0.98rem; font-weight: 600;
+    line-height: 1.45;
     color: var(--text);
   }
-  .hero__sign-line em {
+  .hero__intro em {
     font-style: normal;
     box-shadow: inset 0 -0.32em 0 var(--accent-bright);
-  }
-  .hero__sign-slogan {
-    display: block;
-    margin-top: 0.2rem;
-    font-size: 0.78rem; font-weight: 500;
-    color: var(--muted);
   }
 
   /* Under the photo, where the eye lands once it has read the before/after. */
@@ -2037,6 +2017,12 @@ fieldset { margin: 0; padding: 0; border: 0; }
     color: var(--accent-bright);
     border-color: rgba(133, 229, 232, 0.45);
   }
+  /* Faded rather than removed, so the chip does not pop in and out as the
+     divider crosses it. */
+  .ba__tags span {
+    transition: opacity 0.18s var(--ease);
+  }
+  .ba__tags span.is-hidden { opacity: 0; }
   .home .ba__hint {
     display: block;
     margin-top: 0.7rem;
@@ -2078,26 +2064,23 @@ fieldset { margin: 0; padding: 0; border: 0; }
     border-radius: 999px;
     box-shadow: var(--shadow);
   }
+  /* Labels only. The figures were up here so all three prices stayed on
+     screen at once; they are back in the panel now and the control is a
+     plain switch again. */
   .price-tabs__seg button {
-    flex: 1; min-height: 54px; padding: 0.35rem 0.2rem;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center; gap: 1px;
+    flex: 1; min-height: 48px; padding: 0 0.3rem;
+    display: flex; align-items: center; justify-content: center;
     border: 0; border-radius: 999px; background: none;
-    font-family: var(--font-display); color: var(--text);
-    transition: background 0.16s var(--ease);
+    font-family: var(--font-display); color: var(--muted);
+    white-space: nowrap;
+    transition: background 0.16s var(--ease), color 0.16s var(--ease);
   }
   .price-tabs__seg .lbl {
-    font-size: 0.7rem; font-weight: 600; letter-spacing: -0.01em;
-    color: var(--muted); white-space: nowrap;
-  }
-  .price-tabs__seg .fig {
-    font-size: 1rem; font-weight: 800; letter-spacing: -0.03em;
-    font-variant-numeric: tabular-nums;
+    font-size: 0.88rem; font-weight: 700; letter-spacing: -0.01em;
   }
   /* The card colour as a fill with ink on it — the rule the rest of the
      stylesheet runs on. It is never type on this ground. */
   .price-tabs__seg button[aria-selected="true"]      { background: var(--accent-bright); color: var(--accent-ink); }
-  .price-tabs__seg button[aria-selected="true"] .lbl { color: var(--accent-ink); font-weight: 700; }
 
   .price-tabs__panel {
     margin-top: 0.9rem; padding: 1.25rem 1.15rem;
@@ -2113,7 +2096,7 @@ fieldset { margin: 0; padding: 0; border: 0; }
   .price-tabs__name { font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; letter-spacing: -0.02em; }
   .price-tabs__amt  {
     margin-left: auto;
-    font-family: var(--font-display); font-size: 1.45rem; font-weight: 800;
+    font-family: var(--font-display); font-size: 1.75rem; font-weight: 800;
     letter-spacing: -0.04em; font-variant-numeric: tabular-nums; white-space: nowrap;
   }
   .price-tabs__fits { margin-top: 0.75rem; font-size: 0.92rem; color: var(--muted); }
@@ -2199,6 +2182,18 @@ fieldset { margin: 0; padding: 0; border: 0; }
      under that, which on a phone is a paragraph, a pause, a link, a pause. */
   .split, .area-grid { gap: 1.1rem; }
   .split__copy .textlink, .split > div > .textlink { margin-top: 0.85rem; }
+  /* The who-I-am paragraph is the second half of that section's job, so it
+     runs at full text colour rather than dropping to the muted body grey. */
+  .who { margin-top: 1rem; color: var(--text); font-size: 0.97rem; }
+  /* The link now sits under the photograph rather than under the copy. It is
+     a separate phone-only element, so the one in the copy column goes. */
+  .split__copy .textlink { display: none; }
+  /* .split--stats gives the frame order:2 below 899px so the photograph drops
+     under the copy. A default-order link therefore sorted ahead of the photo,
+     which is the opposite of what was asked. It takes order:3 — the slot the
+     stat row used to hold before it came out of this section. */
+  .split > .textlink.u-phone-only { display: inline-block; order: 3; margin-top: 0.2rem; }
+  .frame--tall .portrait-placeholder { aspect-ratio: 4 / 3; }
   .frame--tall img { aspect-ratio: 16 / 10; object-fit: cover; }
   /* Three cells across a 335px column leaves 74px of usable width each, and
      "TURNAROUND" is a single 10-letter word — uppercase with the house 0.1em
@@ -2276,6 +2271,14 @@ fieldset { margin: 0; padding: 0; border: 0; }
      the accent resolves to ink, so it was reading as part of the sentence.
      It becomes a chip: the card colour as a fill with ink on it. */
   .band-grid { gap: 1.5rem; }
+  /* The photo sat square-cornered and flush, the one image on the page not
+     built like the rest of the site's imagery. Same radius and shadow as
+     every other figure now, and a band rather than a portrait so it does not
+     take a screen on its own. */
+  .band-media {
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
   .band-media img { aspect-ratio: 16 / 10; }
   .band-list li {
     grid-template-columns: 1.9rem 1fr;
@@ -2422,23 +2425,6 @@ fieldset { margin: 0; padding: 0; border: 0; }
     padding-inline: 0.9rem;
   }
 
-  /* Same mark and slogan as the home hero. On ink the mark can be the card
-     colour — the accent is type on a dark ground, which is the half of the
-     rule the cream side never gets. */
-  /* A grid sibling of the copy column and the card, not a child of the copy.
-     Hidden above 40em, and a display:none paragraph at the end of that column
-     was enough to stop the lede's bottom margin collapsing out of it — 21px of
-     desktop banner appearing out of an element that renders nothing. A grid
-     item cannot do that: grid items do not margin-collapse with anything. */
-  .page-banner__sign {
-    display: flex; align-items: center; gap: 0.55rem;
-    margin-top: 0.4rem;
-    font-family: var(--font-display);
-    font-size: 0.86rem; font-weight: 600;
-    color: rgba(255, 255, 255, 0.66);
-  }
-  .page-banner__sign svg { width: 30px; height: 17px; flex: none; color: var(--accent-bright); }
-  .page-banner__sign em { font-style: normal; color: #FFFFFF; }
   /* The supporting block under each headline — spec list, photo sheet,
      portrait, steps — carried desktop padding, which on a phone made it read
      as a slab rather than a card. */
@@ -2458,6 +2444,7 @@ fieldset { margin: 0; padding: 0; border: 0; }
      The one accent doing both jobs at once, in the one control that follows
      you down every page. */
   .has-rail .action-rail {
+    --rail-shadow: 0 2px 6px rgba(10, 13, 14, 0.18), 0 14px 34px -12px rgba(10, 13, 14, 0.6);
     /* Not just position — .action-rail is display:none by default above this
        breakpoint, and this rule is what switches it on. */
     display: block;
@@ -2471,11 +2458,11 @@ fieldset { margin: 0; padding: 0; border: 0; }
     pointer-events: none;
   }
   .action-rail__bar { pointer-events: auto; }
+  /* Two buttons rather than one split pill, at the proportions the split had:
+     the call sized to its own content, the quote taking the rest. */
   .action-rail__bar {
     display: grid; grid-template-columns: auto 1fr;
-    border-radius: 999px;
-    overflow: hidden;
-    box-shadow: 0 2px 6px rgba(10, 13, 14, 0.18), 0 14px 34px -12px rgba(10, 13, 14, 0.6);
+    gap: 0.5rem;
   }
   .action-rail__bar--single { grid-template-columns: 1fr; }
 
@@ -2487,22 +2474,15 @@ fieldset { margin: 0; padding: 0; border: 0; }
     font-family: var(--font-display);
     font-size: 1rem; font-weight: 700; letter-spacing: -0.01em;
   }
+  .action-rail__call,
+  .action-rail__quote { border-radius: 999px; box-shadow: var(--rail-shadow); }
   .action-rail__call {
-    padding-inline: 1.15rem 1rem;
+    padding-inline: 1.15rem 1.25rem;
     background: var(--ink);
     color: var(--accent-bright);
   }
   .action-rail__call svg { width: 18px; height: 18px; }
-  /* A hairline of the accent between the two halves, so the split reads as
-     one control divided rather than two buttons pushed together. */
-  .action-rail__call::after {
-    content: "";
-    position: absolute; right: 0; top: 20%; bottom: 20%;
-    width: 1px; background: rgba(133, 229, 232, 0.35);
-  }
-  .action-rail__call { position: relative; }
   .action-rail__call--wide { padding-inline: 1.4rem; }
-  .action-rail__call--wide::after { display: none; }
   .action-rail__quote {
     padding-inline: 1rem;
     background: var(--accent-bright);
