@@ -880,12 +880,14 @@ p:last-child { margin-bottom: 0; }
 .split--stats > .stat-row { margin-top: 0; }
 @media (max-width: 899px) {
   .split--stats > .frame    { order: 2; }
-  .split--stats > .stat-row { order: 3; }
+  .split--stats > .stat-row,
+  .split--stats > .split__links { order: 3; }
 }
 @media (min-width: 900px) {
   .split--stats { row-gap: 2.5rem; }
   .split--stats > .split__copy { grid-column: 1; grid-row: 1; align-self: end; }
-  .split--stats > .stat-row    { grid-column: 1; grid-row: 2; align-self: start; }
+  .split--stats > .stat-row,
+  .split--stats > .split__links { grid-column: 1; grid-row: 2; align-self: start; }
   .split--stats > .frame       { grid-column: 2; grid-row: 1 / span 2; }
 }
 
@@ -1758,6 +1760,12 @@ fieldset { margin: 0; padding: 0; border: 0; }
 .split__copy .textlink,
 .split > div > .textlink { margin-top: 1.4rem; }
 
+/* Two routes out of this section — the checklist and the method — so they are
+   set as a small stack rather than a row: side by side they read as one
+   sentence with an arrow dropped in the middle of it. */
+.split__links { display: grid; justify-items: start; gap: 0.55rem; margin-top: 1.4rem; }
+.split__links .textlink { margin-top: 0; }
+
 /* --- 21. Scroll reveals -------------------------------------------------
    .has-reveal is set by js/reveal.js, so none of this applies unless the
    script has run and the reader has not asked for reduced motion. Opacity
@@ -2229,12 +2237,9 @@ fieldset { margin: 0; padding: 0; border: 0; }
   .split__copy .textlink, .split > div > .textlink { margin-top: 0.85rem; }
   /* The link now sits under the photograph rather than under the copy. It is
      a separate phone-only element, so the one in the copy column goes. */
-  .split__copy .textlink { display: none; }
   /* .split--stats gives the frame order:2 below 899px so the photograph drops
-     under the copy. A default-order link therefore sorted ahead of the photo,
-     which is the opposite of what was asked. It takes order:3 — the slot the
-     stat row used to hold before it came out of this section. */
-  .split > .textlink.u-phone-only { display: inline-block; order: 3; margin-top: 0.2rem; }
+     under the copy; the link pair carries order:3 to land beneath it. */
+  .split__links { gap: 0.5rem; margin-top: 1rem; }
   .frame--tall .portrait-placeholder { aspect-ratio: 4 / 3; }
   .frame--tall img { aspect-ratio: 16 / 10; object-fit: cover; }
   /* Three cells across a 335px column leaves 74px of usable width each, and
