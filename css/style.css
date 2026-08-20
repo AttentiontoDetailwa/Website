@@ -1460,6 +1460,9 @@ fieldset { margin: 0; padding: 0; border: 0; }
   padding: 0.85rem 0;
   border-bottom: 1px solid var(--line);
 }
+/* The rule divides one row from the next, and the card ends after the last
+   row, so it has nothing left to divide. */
+.hours li:last-child { border-bottom: 0; }
 .hours span { color: var(--muted); }
 
 /* --- 16. About ---------------------------------------------------------- */
@@ -1564,10 +1567,13 @@ fieldset { margin: 0; padding: 0; border: 0; }
 .footer-bottom .spacer { margin-left: auto; }
 
 /* --- 18. Page banner (interior pages) ---------------------------------- */
-/* Opens the same way the home hero does now: warm ground, pill eyebrow, heavy
-   two-tone headline, and whatever that page is actually about carried in a
-   white card beside it. The concentric arc and the accent tick belonged to the
-   technical treatment and are gone. */
+/* Pill eyebrow, heavy two-tone headline, and whatever that page is actually
+   about carried in a card beside it. The concentric arc and the accent tick
+   belonged to the technical treatment and are gone.
+
+   Everything below is still shared, because section 18b builds the photo
+   banner on top of it — but contact is the only page that gets this as it
+   stands. Anything added here lands on the photo pages too. */
 /* Ground and token flip come from the shared ink-band rule in section 3b. */
 .page-banner {
   position: relative;
@@ -1604,11 +1610,6 @@ fieldset { margin: 0; padding: 0; border: 0; }
     grid-template-columns: minmax(0, 1.4fr) minmax(14rem, 0.6fr);
     align-items: end;
   }
-  /* The card is a photograph, not a spec list — it needs room to read. The
-     About headline is the shortest of the four, so the column can give it up. */
-  .page-banner__grid:has(.page-banner__card) {
-    grid-template-columns: minmax(0, 1fr) minmax(20rem, 0.9fr);
-  }
 }
 .page-banner h1 {
   font-size: clamp(2.2rem, 4vw, 3.2rem);
@@ -1617,88 +1618,15 @@ fieldset { margin: 0; padding: 0; border: 0; }
 }
 .page-banner h1 em { font-style: normal; color: var(--accent); }
 
-/* Each page fills the banner's second column with whatever that page is
-   actually about — figures on pricing, frames on the gallery, a voice on
-   about, the next three steps on contact. Same hairline grammar throughout. */
+/* Contact is the only page still opening on this banner — services, the
+   gallery and about open on a photograph instead, section 18b — so the spec
+   card, the contact sheet and the business card that used to fill the second
+   column here are gone with them.
 
-/* Services — the figures, in a white card. */
-.page-banner__spec {
-  list-style: none; margin: 0;
-  padding: 0.4rem 1.6rem;
-  background: var(--surface);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-}
-.page-banner__spec li {
-  display: flex; align-items: baseline; justify-content: space-between; gap: 1.25rem;
-  padding-block: 1.1rem;
-  border-top: 1px solid var(--line);
-}
-.page-banner__spec li:first-child { border-top: 0; }
-.page-banner__spec li:last-child { border-bottom: 0; }
-.page-banner__spec span {
-  font-family: var(--font-display);
-  font-size: 1rem; font-weight: 400; letter-spacing: 0; text-transform: none;
-  color: var(--muted);
-  flex: none;
-}
-.page-banner__spec strong {
-  font-family: var(--font-display);
-  font-size: 1.15rem; font-weight: 800; letter-spacing: -0.02em;
-  color: var(--text);
-  text-align: right;
-}
-
-/* Gallery — a contact sheet. The page is photographs, so the banner is too.
-   Frames repeat below with full alt text, so these are decorative. */
-.page-banner__sheet { margin: 0; }
-.page-banner__sheet-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
-  background: none;
-  border: 0;
-}
-.page-banner__sheet-grid img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  border-radius: var(--radius-sm);
-  box-shadow: var(--shadow);
-}
-/* Full width, a 2x2 of 4:3 frames would be half a phone screen tall and push
-   the actual gallery under the fold — so below the split it runs as a strip. */
-@media (max-width: 899px) {
-  .page-banner__sheet-grid { grid-template-columns: repeat(4, 1fr); }
-  .page-banner__sheet-grid img { aspect-ratio: 1; }
-}
-.page-banner__sheet figcaption {
-  display: flex; align-items: center; gap: 0.6rem;
-  margin-top: 0.9rem;
-  font-family: var(--font-display);
-  font-size: 1rem; font-weight: 500; letter-spacing: 0; text-transform: none;
-  color: var(--muted);
-}
-.page-banner__sheet figcaption i {
-  width: 5px; height: 5px; flex: none;
-  border-radius: 50%;
-  background: var(--accent);
-}
-
-/* About — her actual business card. It carries the name, the number and the
-   service area in one object, which is more of an introduction than any line
-   of copy would be. */
-.page-banner__card { align-self: center; max-width: 33rem; }
-.page-banner__card img {
-  display: block;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-}
-
-/* Contact — what happens after the form. Answering that above the fold is
-   what gets it filled in. Arrows rather than 01/02/03: the form below numbers
-   its own groups, and two numbered sequences on one screen read as one. */
+   What is left is contact's: what happens after the form. Answering that above
+   the fold is what gets it filled in. Arrows rather than 01/02/03, because the
+   form below numbers its own groups and two numbered sequences on one screen
+   read as one. */
 .page-banner__next-label {
   display: inline-flex; align-items: center;
   margin: 0 0 0.9rem;
@@ -1734,6 +1662,104 @@ fieldset { margin: 0; padding: 0; border: 0; }
   font-size: 1.06rem; font-weight: 600; letter-spacing: -0.01em;
   color: var(--text);
 }
+
+
+/* --- 18b. Photo banner (services, gallery, about) ----------------------- */
+/* Three of the four interior pages open on a photograph instead of on the
+   gradient. The gradient was the same on all four, so the only thing telling
+   you which page you had landed on was the words — and a lit black field with
+   a soft glow in the corner is the one part of this site that could have come
+   from anywhere. A different car on each page fixes both at once, and it puts
+   the actual work above the fold on pages that were opening with type.
+
+   Contact keeps the plain ink band on purpose: it is the one interior page
+   where the fold has a job other than persuading, and a photograph in front of
+   a form is decoration in the way of the thing you came to do.
+
+   The ground and the token flip still come from the ink-band rule in section
+   3b, so `em` is already cyan and the ledes are already the translucent white.
+   All this variant does is put a picture behind that and take the gradient
+   off. Everything stacks explicitly: picture 0, scrim 1, copy 2 — the scrim is
+   a pseudo-element, which generates after .shell and would otherwise paint
+   over the headline. */
+.page-banner--photo {
+  background-image: none;
+  /* The photographs are 900px wide phone snaps. Full-bleed on a desktop they
+     upscale about 1.4x, which the scrim mostly hides; if the originals turn up
+     at full resolution they should be dropped in over these. */
+}
+.page-banner--photo .page-banner__shot { position: absolute; inset: 0; z-index: 0; }
+.page-banner--photo .page-banner__shot img {
+  display: block;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  /* On a phone the frame is taller than it is wide and the whole photograph
+     fits, so this does nothing. On a desktop the band is a ~19% horizontal
+     slice of a portrait phone photo, and where that slice falls decides
+     whether you are looking at a truck or at a texture. Each page sets
+     --shot-y in its own markup, next to the photograph it picked. */
+  object-position: center var(--shot-y, 50%);
+}
+/* A vertical ramp to solid ink rather than an even wash. The type never sits
+   on the picture — it sits on ink that the picture fades into, which is the
+   same white-on-#0A0D0E the ink bands already run at, ~19:1. Reaching solid at
+   74% is deliberate: every line has to clear 4.5:1 against the brightest frame
+   in the set, not against the one that happens to be dark. The second layer
+   pulls the left edge down so the copy column holds up on wide screens, where
+   the vertical ramp alone is doing less work. */
+.page-banner--photo::after {
+  content: "";
+  position: absolute; inset: 0; z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(10, 13, 14, 0.30) 0%, rgba(10, 13, 14, 0.86) 38%, #0A0D0E 74%),
+    linear-gradient(90deg, rgba(10, 13, 14, 0.60), rgba(10, 13, 14, 0) 72%);
+}
+/* Tall, with the copy sitting at the bottom of the frame. The picture needs
+   room above the type or it reads as a texture rather than as a car. */
+.page-banner--photo .shell {
+  z-index: 2;
+  padding-block: clamp(7rem, 16vw, 11rem) clamp(2rem, 4vw, 3rem);
+}
+/* The photograph replaces the second column, so there is no grid left to run —
+   the copy is the whole banner and the picture is behind it. */
+.page-banner--photo .page-banner__grid { display: block; }
+.page-banner--photo .page-banner__arc { display: none; }
+.page-banner--photo h1 { max-width: 20ch; }
+.page-banner--photo .lede { max-width: 46ch; }
+/* On the photograph the pill loses its edges — a 15% white wash over a picture
+   is a smudge. The page name goes back to plain cyan type with a dot, which is
+   also the one place the eyebrow can be type rather than a tag without costing
+   anything, because the ground under it here is solid ink. */
+.page-banner--photo .eyebrow {
+  background: none;
+  padding: 0;
+  color: var(--accent);
+  gap: 0.55rem;
+}
+.page-banner--photo .eyebrow::before {
+  content: "";
+  width: 6px; height: 6px; flex: none;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* Services — the three figures the white card used to carry, as one line on a
+   hairline. The card cannot come along: a cream slab in front of a photograph
+   covers the half of the picture worth looking at. */
+.page-banner__facts {
+  display: flex; flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  margin: 1.5rem 0 0;
+  padding: 1.1rem 0 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+  /* The rule is a divider, not a margin — run it the full width of the shell
+     and it sits a foot wider than the lede it is dividing from. This is the
+     width the three facts actually take. */
+  max-width: 36rem;
+}
+.page-banner__facts li { font-size: 1rem; color: var(--muted); }
+.page-banner__facts b { color: var(--text); font-weight: 700; }
 
 
 /* --- 19. Misc ----------------------------------------------------------- */
@@ -2245,15 +2271,14 @@ fieldset { margin: 0; padding: 0; border: 0; }
   /* Cards on an ink ground inherit --surface at 5% white. At desktop size,
      against a lot of surrounding black, that reads as a card; on a phone,
      where the card is most of the screen, it is a dark box on a dark ground
-     you can barely make out — which is what made the services and contact
-     openings look flat and the add-ons hard to read. These go cream.
+     you can barely make out — which is what made the contact opening look
+     flat and the add-ons hard to read. These go cream.
      The band works by re-pointing tokens on the subtree, so the honest way to
      undo it for one component is to re-point them back rather than override
      .addon__name, .addon__price and .addon p one at a time — the literals
      below are the :root values, which the band has already overwritten by the
      time this rule is read. Keep them in step with section 1 if those change. */
   .section--ink .addon,
-  .page-banner__spec,
   .page-banner__steps {
     --surface: #FFFFFF;
     --text:    #18201F;
@@ -2615,13 +2640,21 @@ fieldset { margin: 0; padding: 0; border: 0; }
     padding-inline: 0.9rem;
   }
 
-  /* The supporting block under each headline — spec list, photo sheet,
-     portrait, steps — carried desktop padding, which on a phone made it read
-     as a slab rather than a card. */
-  .page-banner__spec { padding: 0.2rem 1.1rem; }
-  .page-banner__spec li { padding-block: 0.85rem; }
-  .page-banner__spec span   { font-size: 0.92rem; }
-  .page-banner__spec strong { font-size: 1.05rem; }
+  /* The steps card under the Contact headline carried desktop padding, which
+     on a phone made it read as a slab rather than a card. */
+
+  /* The photo banner runs the other way round: the section gives up its
+     padding and the shell takes it back, because the picture needs height
+     above the type and the type wants to sit near the bottom of it. 8.5rem
+     puts the eyebrow just past halfway down a 375px screen, which leaves the
+     car readable and still lands the headline and the lede above the fold.
+
+     The hairline the eyebrow picks up two rules above is for a pill on flat
+     ink. There is no pill here, so it comes back off. */
+  .page-banner--photo { padding-block: 0; }
+  .page-banner--photo .shell { padding-block: 8.5rem 2rem; }
+  .page-banner--photo .eyebrow { border: 0; padding-inline: 0; }
+  .page-banner__facts { gap: 0.4rem 1.2rem; font-size: 0.95rem; }
 
   /* --- the rail --------------------------------------------------------- */
   /* 52px button + 0.6rem of rail padding top and bottom = 73px. The old 64px

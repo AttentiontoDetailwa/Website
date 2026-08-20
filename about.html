@@ -64,8 +64,14 @@
 
 <main id="main">
 
-<section class="page-banner">
-  <div class="page-banner__arc" aria-hidden="true"></div>
+<!-- --shot-y aims the desktop crop. See section 18b of the stylesheet. -->
+<section class="page-banner page-banner--photo" style="--shot-y: 34%">
+  <div class="page-banner__shot">
+    <picture>
+      <source srcset="assets/audi-after-dash.webp" type="image/webp">
+      <img src="assets/audi-after-dash.jpg" alt="An Audi TT dash, vents and console after detailing, every crevice done by hand" fetchpriority="high" width="900" height="1200">
+    </picture>
+  </div>
   <div class="shell page-banner__grid">
     <div>
       <p class="eyebrow">About</p>
@@ -74,12 +80,6 @@
         Attention to Detail is one person with a van full of equipment and a habit of
         not leaving until the vents are clean.
       </p>
-    </div>
-    <div class="frame page-banner__card">
-      <picture>
-        <source srcset="assets/card.webp" type="image/webp">
-        <img src="assets/card.jpg" alt="Attention to Detail business card: Ava Bright, any time any place, serving Bonney Lake, Buckley and Enumclaw WA" fetchpriority="high" width="532" height="313">
-      </picture>
     </div>
   </div>
 </section>

@@ -3,13 +3,17 @@
    Nothing is wired up in the markup: this walks <main> on load and promotes
    every real photo to a button. Excluded on purpose:
      · anything inside .hero — the home page showcase is a composed layout
-     · aria-hidden images — the gallery banner collage repeats photos that
-       already appear (and open) further down the page
+     · anything inside .page-banner — the photograph three of the interior
+       pages now open on is the ground the headline is printed on, not a
+       picture on offer, and a hero you can click open is a surprise
+     · aria-hidden images — decorative repeats of photos that already appear
+       (and open) further down the page
    With JS off the page is unchanged, which is the same deal form-steps.js
    makes with the quote form. */
 (function () {
   var photos = [].slice.call(document.querySelectorAll('#main img')).filter(function (img) {
     return !img.closest('.hero') &&
+           !img.closest('.page-banner') &&
            !img.closest('[aria-hidden="true"]') &&
            img.getAttribute('aria-hidden') !== 'true';
   });

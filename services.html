@@ -64,22 +64,32 @@
 
 <main id="main">
 
-<section class="page-banner">
-  <div class="page-banner__arc" aria-hidden="true"></div>
+<!-- --shot-y aims the desktop crop. See section 18b of the stylesheet. -->
+<section class="page-banner page-banner--photo" style="--shot-y: 30%">
+  <div class="page-banner__shot">
+    <picture>
+      <source srcset="assets/work-f150-rear.webp" type="image/webp">
+      <img src="assets/work-f150-rear.jpg" alt="The back seat and floor of an F-150 after cleaning, door open onto the grass" fetchpriority="high" width="900" height="1200">
+    </picture>
+  </div>
   <div class="shell page-banner__grid">
     <div>
       <p class="eyebrow">Services &amp; pricing</p>
       <h1>An interior deep clean, <em>done all the way through.</em></h1>
       <p class="lede">
-        Interiors are the only thing I do. Here's what happens, what it costs, and
-        what you can add.
+        Interiors are the only thing I do. No exterior, no wax packages. One complete
+        clean, priced by the size of the car.
       </p>
+      <!-- The three figures the white card used to carry. They stay above the
+           fold because the price is the first question; the card itself cannot,
+           because a cream slab in front of the photograph covers the half of it
+           worth looking at. -->
+      <ul class="page-banner__facts">
+        <li>From <b>$120</b></li>
+        <li><b>Steam cleaned</b>, every job</li>
+        <li><b>Full interior</b>, no tiers</li>
+      </ul>
     </div>
-    <ul class="page-banner__spec">
-      <li><span>Starting at</span><strong>$120</strong></li>
-      <li><span>Every job</span><strong>Steam cleaned</strong></li>
-      <li><span>Scope</span><strong>Full interior</strong></li>
-    </ul>
   </div>
 </section>
 
@@ -91,7 +101,7 @@
       <h2>Everything on this list, on every vehicle.</h2>
       <p class="lede" style="margin-top:1.1rem">
         There's no bronze/silver/gold ladder here. A car gets the complete job or it
-        doesn't get booked. Size changes the price — never the scope. The only other
+        doesn't get booked, and size changes the price, not the list. The only other
         thing I offer is a shampoo-only visit, for cars where the rest is already fine.
       </p>
     </div>
@@ -288,8 +298,8 @@
       <p class="eyebrow">Add-ons</p>
       <h2>Three things worth adding.</h2>
       <p class="lede" style="margin-top:1.1rem">
-        Optional, priced flat, and picked right on the quote form. I'll tell you if I
-        think you don't need one.
+        Flat priced and picked right on the quote form. I'll tell you if I think you
+        don't need one.
       </p>
 
       <ul class="addons addons--stack" aria-label="Add-on services">
