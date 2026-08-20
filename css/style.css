@@ -1728,6 +1728,13 @@ fieldset { margin: 0; padding: 0; border: 0; }
   .cta-band .btn-row .btn { width: 100%; }
 }
 
+/* The link under a split's copy used to carry margin-top:1.4rem as an inline
+   style on the markup, which no stylesheet rule could outrank — so the phone
+   block could not tighten it. It lives here now, at the value the inline style
+   set, and section 20 overrides it for phones. */
+.split__copy .textlink,
+.split > div > .textlink { margin-top: 1.4rem; }
+
 /* --- 21. Scroll reveals -------------------------------------------------
    .has-reveal is set by js/reveal.js, so none of this applies unless the
    script has run and the reader has not asked for reduced motion. Opacity
@@ -1736,18 +1743,27 @@ fieldset { margin: 0; padding: 0; border: 0; }
    ------------------------------------------------------------------------ */
 .has-reveal [data-reveal] {
   opacity: 0;
-  transform: translateY(14px);
   transition: opacity 0.55s var(--ease), transform 0.55s var(--ease);
   /* The browser gets told what is about to change, and then told to forget:
      leaving will-change on a long page keeps a layer alive for every
      revealed block. */
   will-change: opacity, transform;
 }
+/* In from the side, alternating down the page. The distance is deliberately
+   short: a long slide on a phone reads as the layout being unstable, and
+   anything further than this is visibly still moving when you start reading. */
+.has-reveal [data-reveal="left"]  { transform: translateX(-26px); }
+.has-reveal [data-reveal="right"] { transform: translateX(26px); }
 .has-reveal [data-reveal].is-shown {
   opacity: 1;
   transform: none;
   will-change: auto;
 }
+/* transform does not change layout but it does extend the scrollable area, so
+   a block waiting 26px off to the right would give the page a sideways scroll
+   until it arrived. clip, not hidden: hidden would make this a scroll
+   container and break the sticky header. */
+.has-reveal body { overflow-x: clip; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
@@ -1770,7 +1786,7 @@ fieldset { margin: 0; padding: 0; border: 0; }
 
 /* Both phone-only blocks are hidden by default and switched on inside the
    query below, so no desktop browser ever lays them out. */
-.ba, .ba__hint, .hero__acts, .price-tabs, .action-rail, .u-phone-only { display: none; }
+.ba, .ba__hint, .hero__acts, .hero__sign, .price-tabs, .action-rail, .u-phone-only { display: none; }
 
 @media (max-width: 40em) {
 
@@ -1823,6 +1839,43 @@ fieldset { margin: 0; padding: 0; border: 0; }
   /* Headline, then the proof. The paragraph was five lines of phone screen
      between the two, saying what the photograph says faster. */
   .home .hero__sub     { display: none; }
+  /* The price, in the card colour, on the photograph that earns it. Ink type
+     on a cyan fill — the rule the site runs on for the accent on a light
+     ground, and the one place in the hero the colour gets to be a block. */
+  .ba__price {
+    position: absolute; z-index: 2;
+    right: 0.7rem; bottom: 0.7rem;
+    margin: 0;
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+    background: var(--accent-bright);
+    color: var(--accent-ink);
+    font-family: var(--font-display);
+    font-size: 0.82rem; font-weight: 600;
+  }
+  .ba__price b { font-size: 1.02rem; font-weight: 800; letter-spacing: -0.02em; }
+
+  /* Mark and slogan. The mark is ink, not cyan: on this cream the card colour
+     sits at 1.25:1 and a cyan stroke would be decoration you cannot see. */
+  /* The text is wrapped in a span rather than sitting loose next to the mark:
+     contiguous text and the <em> would each become their own flex item, and
+     the line broke into two ragged columns with the rule running the width of
+     one of them. */
+  .hero__sign {
+    display: flex; align-items: center; gap: 0.55rem;
+    /* display is what switches it on — it is none by default above 40em. */
+    margin-top: 1.4rem;
+    font-family: var(--font-display);
+    font-size: 0.88rem; font-weight: 600;
+    color: var(--muted);
+  }
+  .hero__sign svg { width: 30px; height: 17px; flex: none; color: var(--text); }
+  .hero__sign em {
+    font-style: normal;
+    color: var(--text);
+    box-shadow: inset 0 -0.32em 0 var(--accent-bright);
+  }
+
   /* Under the photo, where the eye lands once it has read the before/after. */
   .home .hero__acts    { display: grid; gap: 0.6rem; margin-top: 1.2rem; }
   .home .hero__acts .btn { width: 100%; }
@@ -2093,7 +2146,10 @@ fieldset { margin: 0; padding: 0; border: 0; }
   }
   /* The split's desktop gutter is up to 4.5rem, which on a phone is just
      dead space between a paragraph and the photo under it. */
-  .split, .area-grid { gap: 1.75rem; }
+  /* The link sat 42px under the paragraph and the photograph another 28px
+     under that, which on a phone is a paragraph, a pause, a link, a pause. */
+  .split, .area-grid { gap: 1.1rem; }
+  .split__copy .textlink, .split > div > .textlink { margin-top: 0.85rem; }
   .frame--tall img { aspect-ratio: 16 / 10; object-fit: cover; }
   /* Three cells across a 335px column leaves 74px of usable width each, and
      "TURNAROUND" is a single 10-letter word — uppercase with the house 0.1em
@@ -2164,6 +2220,32 @@ fieldset { margin: 0; padding: 0; border: 0; }
   }
   .footer-bottom .spacer { margin-left: 0; }
 
+  /* --- the deep-clean checklist ------------------------------------------ */
+  /* Seven rows at desktop padding, under a 4/5 photograph that took most of a
+     screen on its own. The photo comes down to a band, the rows tighten, and
+     the index stops being a number in accent-coloured text — on this ground
+     the accent resolves to ink, so it was reading as part of the sentence.
+     It becomes a chip: the card colour as a fill with ink on it. */
+  .band-grid { gap: 1.5rem; }
+  .band-media img { aspect-ratio: 16 / 10; }
+  .band-list li {
+    grid-template-columns: 1.9rem 1fr;
+    gap: 0.15rem 0.85rem;
+    padding-block: 0.95rem;
+  }
+  .band-list b {
+    display: grid; place-items: center;
+    width: 1.9rem; height: 1.9rem;
+    border-radius: 7px;
+    background: var(--accent-bright);
+    color: var(--accent-ink);
+    font-size: 0.76rem; font-weight: 800; letter-spacing: 0.02em;
+  }
+  .band-list strong { font-size: 1rem; margin-bottom: 0.2rem; }
+  .band-list span   { font-size: 0.87rem; line-height: 1.5; }
+  /* On an ink band the chip inverts: the accent goes back to being the type. */
+  .section--ink .band-list b { background: rgba(133, 229, 232, 0.14); color: var(--accent-bright); }
+
   /* --- the other four pages --------------------------------------------- */
   /* The home page gets the segmented control instead of the cards; services is
      the page you go to *for* the detail, so the cards stay — just at phone
@@ -2205,11 +2287,42 @@ fieldset { margin: 0; padding: 0; border: 0; }
   .portrait-placeholder { aspect-ratio: 3 / 2; padding: 1.5rem; }
   .about-hero { gap: 1.75rem; }
 
-  /* Contact: the vehicle options are the one thing on that form you tap rather
-     than type, so they get proper row height and stop being desktop cards. */
-  .option { padding: 1rem 1rem; min-height: 60px; }
-  .option__label { font-size: 0.98rem; }
-  .option__price { font-size: 0.95rem; }
+  /* Contact: the vehicle and add-on options are the one thing on that form you
+     tap rather than type, so they get proper row height. They were also the
+     odd thing out on the page — square-cornered boxes filled with the page
+     ground, while every other repeated unit on the site is a white surface on
+     a soft shadow. Same construction as the add-on pills and the city list
+     now, with the figure as a chip in the card colour, so the form reads as
+     part of the site rather than as a form. */
+  .option {
+    align-items: center;
+    padding: 0.85rem 1rem;
+    min-height: 60px;
+    background: var(--surface);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow);
+  }
+  .option:hover { background: var(--surface); }
+  .option__body { flex-direction: row; align-items: center; gap: 0.75rem; }
+  .option__label { font-size: 0.96rem; line-height: 1.35; }
+  .option__price {
+    margin-left: auto;
+    flex: none;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    background: var(--accent-bright);
+    color: var(--accent-ink);
+    font-size: 0.82rem; font-weight: 800; letter-spacing: -0.01em;
+  }
+  /* The grid draws its own hairlines with a 1px gap over a --line background
+     and a border round the set. That construction only works while the cells
+     are edge to edge; once they became separated cards the background showed
+     through the gaps as a grey slab behind them. */
+  .option-grid {
+    gap: 0.6rem;
+    background: none;
+    border: 0;
+  }
   .field-grid { gap: 1rem; }
   .form-layout { gap: 2rem; }
 

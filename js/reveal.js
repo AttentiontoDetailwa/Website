@@ -44,7 +44,10 @@
     if (el.getBoundingClientRect().top < fold) {
       el.classList.add('is-shown');
     } else {
-      el.setAttribute('data-reveal', '');
+      /* Alternating sides, counted across the whole page rather than within a
+         section, so the rhythm carries from one block to the next as you
+         scroll rather than restarting. */
+      el.setAttribute('data-reveal', pending.length % 2 ? 'right' : 'left');
       pending.push(el);
     }
   });
