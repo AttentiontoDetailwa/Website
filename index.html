@@ -235,17 +235,17 @@
   <div class="shell split split--center split--stats">
     <div class="split__copy">
       <p class="eyebrow">How I clean &middot; Who I am</p>
-      <h2>Only me, and as little product as your car needs.</h2>
+      <h2>I quote the job, and I'm the one who sees it through.</h2>
       <p class="lede" style="margin-top:1.1rem">
-        I'm Ava. There's no crew and no one else learning on your car &mdash; the person
-        who quotes it is the person who cleans it.
+        I'm Ava. Attention to Detail is my business, so every car gets the same care and
+        the same pride &mdash; there's no crew and no one else learning on yours.
       </p>
       <p style="margin-top:1.2rem">
-        The fastest way to lift a stain is usually the fastest way to fade a dash and
-        stiffen a seat, so I lean on steam instead of a shelf of chemicals. Your interior
-        comes out clean without giving up years to get there.
+        Most of that work is steam. Reaching for a harsh chemical is the quick way to lift
+        a stain, and the quick way to fade a dash and stiffen a seat on the way past. Steam
+        takes longer and leaves your interior with its years intact, which is what makes a
+        deep clean worth what you paid for it.
       </p>
-      <a class="textlink" href="services.html#how-i-clean">How I do that &rarr;</a>
     </div>
 
     <div class="frame frame--tall">
@@ -259,11 +259,14 @@
       </div>
     </div>
 
-    <!-- Phone only, and a sibling of the frame rather than a child of it:
-         .frame clips its overflow, so a link inside would be cut off on
-         desktop. On desktop this is display:none, so the split is still a
-         two-item grid and its columns are unchanged. -->
-    <a class="textlink u-phone-only" href="services.html#how-i-clean">How I do that &rarr;</a>
+    <!-- A direct child of the split rather than of the copy column. On desktop
+         .split--stats puts it at row 2 column 1, under the copy, which is the
+         slot the stat row used to hold. On a phone it takes order:3 and lands
+         under the photograph. One copy of the links, both places. -->
+    <div class="split__links">
+      <a class="textlink" href="services.html#deep-clean">What's in a deep clean &rarr;</a>
+      <a class="textlink" href="services.html#how-i-clean">Why steam, and what it saves &rarr;</a>
+    </div>
   </div>
 </section>
 
