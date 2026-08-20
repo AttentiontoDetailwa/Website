@@ -1973,6 +1973,15 @@ fieldset { margin: 0; padding: 0; border: 0; }
     font-style: normal;
     box-shadow: inset 0 -0.32em 0 var(--accent-bright);
   }
+  /* The route to her page is the end of her own sentence rather than a button
+     under it — a second full-width button beside "Get my free quote" competed
+     with the one action the hero is for. */
+  .hero__intro a {
+    white-space: nowrap;
+    font-weight: 700;
+    border-bottom: 2px solid var(--accent-bright);
+    padding-bottom: 1px;
+  }
 
   /* Under the photo, where the eye lands once it has read the before/after. */
   .home .hero__acts    { display: grid; gap: 0.6rem; margin-top: 1.2rem; }
@@ -2447,10 +2456,31 @@ fieldset { margin: 0; padding: 0; border: 0; }
   .form-layout { gap: 2rem; }
   .form-card { text-align: center; }
   .form-card .field { text-align: center; }
-  .form-card label,
+  /* :not(.option) matters. .option is a <label>, so a bare label rule here
+     overrode its display:flex and dropped the checkbox onto its own line
+     above the words instead of beside them. */
+  .form-card label:not(.option),
   .form-card .fieldset__legend,
-  .form-card .hint,
   .form-card .form-note { display: block; text-align: center; }
+
+  /* The hints under the fields go. On a phone they turn a nine-field form
+     into a wall — a line of grey under every input, each one as long as the
+     label above it. What they say is worth keeping, so it moves into the
+     placeholder or the label rather than sitting under the box.
+     The two that are not field hints — the add-ons note and the one under
+     the submit — stay, because they answer a question at the point it gets
+     asked rather than explaining a box. */
+  .form-card .hint { display: none; }
+  /* Two exceptions: the note under the add-ons and the one under the submit
+     answer a question at the point it gets asked rather than explaining a
+     box, so they stay. */
+  .form-card fieldset .hint { display: block; }
+  /* What the field hints were carrying moves into the labels. */
+  .req-alt { font-weight: 500; color: var(--muted); }
+
+  /* Checkbox beside the words, vertically centred on them. */
+  .form-card .option { display: flex; align-items: center; text-align: left; }
+  .form-card .option input { align-self: center; margin-top: 0; }
   .form-card .input,
   .form-card .select,
   .form-card .textarea { text-align: left; }
