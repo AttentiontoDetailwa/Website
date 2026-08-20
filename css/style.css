@@ -1859,29 +1859,35 @@ fieldset { margin: 0; padding: 0; border: 0; }
   }
   .ba__price b { font-size: 1.02rem; font-weight: 800; letter-spacing: -0.02em; }
 
-  /* Three facts, hairline-separated rather than boxed — the hero already has
-     a photograph, a price chip and two buttons in it, and three more cards
-     would be the fourth object competing for the same screen. */
+  /* Two facts, built the way every other repeated unit on this site is built:
+     a white surface on a soft shadow, figure over label, centred. Same
+     construction as the stat row further down the page, so the hero is not
+     inventing a third way to present a number. */
   .hero__trust {
-    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.75rem;
-    margin: 1.4rem 0 0;
-    padding: 0.9rem 0 0;
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem;
+    margin: 1.3rem 0 0;
+    padding: 0;
     list-style: none;
-    border-top: 1px solid var(--line);
+    border-top: 0;
   }
   .hero__trust li {
+    padding: 0.9rem 0.6rem;
+    background: var(--surface);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow);
+    text-align: center;
     font-size: 0.76rem; line-height: 1.3;
     color: var(--muted);
   }
   .hero__trust b {
     display: block;
     font-family: var(--font-display);
-    font-size: 1.15rem; font-weight: 800; letter-spacing: -0.03em;
+    font-size: 1.3rem; font-weight: 800; letter-spacing: -0.03em;
     color: var(--text);
-    margin-bottom: 0.1rem;
+    margin-bottom: 0.15rem;
   }
-  .hero__sign { margin-top: 1.1rem; }
+  .hero__sign { margin-top: 1.2rem; }
 
   /* Mark and slogan. The mark is ink, not cyan: on this cream the card colour
      sits at 1.25:1 and a cyan stroke would be decoration you cannot see. */
@@ -1890,18 +1896,33 @@ fieldset { margin: 0; padding: 0; border: 0; }
      the line broke into two ragged columns with the rule running the width of
      one of them. */
   .hero__sign {
-    display: flex; align-items: center; gap: 0.55rem;
+    display: flex; align-items: flex-start; gap: 0.6rem;
     /* display is what switches it on — it is none by default above 40em. */
     margin-top: 1.4rem;
     font-family: var(--font-display);
     font-size: 0.88rem; font-weight: 600;
     color: var(--muted);
   }
-  .hero__sign svg { width: 30px; height: 17px; flex: none; color: var(--text); }
-  .hero__sign em {
-    font-style: normal;
+  .hero__sign svg { width: 30px; height: 17px; flex: none; margin-top: 0.28rem; color: var(--text); }
+  /* Her line leads and the business name settles under it — the introduction
+     is the thing worth reading, and running them at the same weight would
+     make two competing lines out of one signature. */
+  .hero__sign-text  { display: block; }
+  .hero__sign-line  {
+    display: block;
+    font-size: 0.94rem; font-weight: 600;
+    line-height: 1.4;
     color: var(--text);
+  }
+  .hero__sign-line em {
+    font-style: normal;
     box-shadow: inset 0 -0.32em 0 var(--accent-bright);
+  }
+  .hero__sign-slogan {
+    display: block;
+    margin-top: 0.2rem;
+    font-size: 0.78rem; font-weight: 500;
+    color: var(--muted);
   }
 
   /* Under the photo, where the eye lands once it has read the before/after. */
