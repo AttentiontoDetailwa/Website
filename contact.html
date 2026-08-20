@@ -129,7 +129,7 @@
             <input class="input" id="date" name="date" type="date" required>
           </div>
           <div class="field">
-            <label for="time">Preferred time <span class="req">*</span></label>
+            <label for="time">Preferred time <span class="req">*</span> <span class="req-alt">(a request, not a locked slot)</span></label>
             <input class="input" id="time" name="time" type="time" min="08:00" max="18:00" step="900" required>
           </div>
         </div>
@@ -169,11 +169,11 @@
         <div class="contact-group" data-contact-group>
           <div class="field-grid field-grid--2">
             <div class="field">
-              <label for="phone">Phone number</label>
+              <label for="phone">Phone number <span class="req-alt">or</span></label>
               <input class="input" id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(206) 555-0148">
             </div>
             <div class="field">
-              <label for="email">Email</label>
+              <label for="email">Email <span class="req-alt">&mdash; either one</span></label>
               <input class="input" id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@email.com">
             </div>
           </div>
