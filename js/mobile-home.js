@@ -19,9 +19,29 @@
     var handle = document.getElementById('ba-handle');
     var dragging = false;
 
+    var tags = frame.querySelectorAll('.ba__tags span');
+
     var paint = function () {
-      clip.style.width = range.value + '%';
-      handle.style.left = range.value + '%';
+      var pct = +range.value;
+      clip.style.width = pct + '%';
+      handle.style.left = pct + '%';
+
+      /* The labels sit in the top corners of the frame, but each one only
+         tells the truth about the half it is over. Drag the divider left of
+         the "Before" chip and that chip is sitting on the after photograph
+         calling it before. Each is measured against the divider in percent of
+         the frame and hidden once the divider has passed it. */
+      if (tags.length === 2) {
+        var w = frame.getBoundingClientRect().width;
+        if (!w) return;
+        var before = tags[0].getBoundingClientRect();
+        var after = tags[1].getBoundingClientRect();
+        var frameLeft = frame.getBoundingClientRect().left;
+        var beforeEndsAt = ((before.right - frameLeft) / w) * 100;
+        var afterStartsAt = ((after.left - frameLeft) / w) * 100;
+        tags[0].classList.toggle('is-hidden', pct < beforeEndsAt);
+        tags[1].classList.toggle('is-hidden', pct > afterStartsAt);
+      }
     };
 
     var setFromX = function (clientX) {
