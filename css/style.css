@@ -344,17 +344,27 @@ p:last-child { margin-bottom: 0; }
   white-space: nowrap;
   color: var(--text);
 }
-/* Header lockup: the business name, a tyre as the separator, then whose
-   business it is. One row rather than a stacked name and strapline — the tyre
-   only reads as a separator with a word either side of it. White casing,
-   accent rim, sized to the cap height of the words it sits between. */
+/* Header lockup, two lines: the business name, then her name and the
+   strapline underneath with a tyre between them. The tyre is white casing
+   with an accent rim, sized to the cap height of the words it sits between —
+   it only reads as a separator with a word either side of it, which is what
+   puts it on the lower line: the top line is one phrase, the lower line is
+   two, and the top line is the one with no room to spare next to the
+   toggle. */
 .site-header .brand__text {
-  flex-direction: row;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+}
+.brand__line {
+  display: flex;
   align-items: center;
   gap: 0.5rem;
-  /* One line, always. Wrapping puts the tyre at the end of a line with
-     nothing after it, which is the one arrangement where it stops reading as
-     a separator. */
+  /* Both halves stay on the row. Left to wrap, "Any time, any place" breaks
+     after "any" and the bar grows a third line to hold one word. */
+  white-space: nowrap;
+  /* Never wraps: a wrapped line leaves the tyre stranded at the end of a row
+     with nothing after it to separate from. */
   flex-wrap: nowrap;
 }
 .brand__tire { width: 15px; height: 15px; flex: none; color: currentColor; }
@@ -1863,23 +1873,34 @@ fieldset { margin: 0; padding: 0; border: 0; }
   .has-rail .header__cta    { display: none; }
   .has-rail .brand__name    { display: inline; font-size: 0.92rem; }
   .has-rail .brand          { gap: 0.55rem; }
-  /* The mark comes off on phones. The lockup already carries a tyre, and a car
-     silhouette next to a tyre is two vehicle glyphs in a 333px bar — dropping
-     it is also the 43px that lets the whole row fit on one line beside a 44px
-     toggle. The wordmark stays the home link and keeps its aria-label. */
-  .has-rail .brand__mark    { display: none; }
-  /* Mark, two words and the tyre between them, next to a 44px toggle: the row
-     needs every pixel, so the gaps come in and the type comes down a step. */
-  .site-header .brand__text { gap: 0.4rem; }
-  .brand__tire              { width: 13px; height: 13px; }
-  .brand__who               { font-size: 0.88rem; }
+  /* Mark, both words, the tyre between them and the strapline underneath, all
+     beside a 44px toggle. The top line needs 214px of the 239px going spare,
+     so the type comes down a step and the gaps come in. */
+  .has-rail .brand__mark    { display: block; width: 36px; height: 20px; }
+  .has-rail .brand__name    { font-size: 0.95rem; }
+  /* At 0.74rem the lower line ended 1px short of the toggle. A step down buys
+     about 11px, which is the difference between fitting and looking like it
+     only just fitted. */
+  .brand__line              { gap: 0.35rem; }
+  .brand__tire              { width: 11px; height: 11px; }
+  .brand__who               { font-size: 0.7rem; color: var(--muted-dim); }
+  /* The 560px rule takes the strapline off small screens; it is half of the
+     lower line now, so it comes back. */
+  .site-header .brand__tag  { display: block; font-size: 0.7rem; margin-top: 0; }
+
+  /* Spread out: a two-line lockup needs the bar to grow with it rather than
+     squeeze it, and the toggle wants air either side. */
+  .site-header__inner       { min-height: 74px; gap: 0.8rem; padding-block: 0.4rem; }
 }
 
 /* Below 360px — a small phone, and where a reader at 400% zoom lands — the
    full lockup needs 224px of a 213px slot and runs into the toggle. The tyre
    and her name give way; the business name is the part that has to survive. */
+/* Below 360px — a small phone, and where a reader at 400% zoom lands — the
+   lower line runs into the toggle. The strapline gives way and her name
+   stays, since the name is the part that is not already in the footer. */
 @media (max-width: 22.5em) {
-  .brand__tire, .brand__who { display: none; }
+  .brand__tire, .site-header .brand__tag { display: none; }
 }
 
 /* The phone layout continues. (The 360px query above is a narrow exception
