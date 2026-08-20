@@ -1749,9 +1749,12 @@ fieldset { margin: 0; padding: 0; border: 0; }
      revealed block. */
   will-change: opacity, transform;
 }
-/* In from the side, alternating down the page. The distance is deliberately
-   short: a long slide on a phone reads as the layout being unstable, and
-   anything further than this is visibly still moving when you start reading. */
+/* Everything rises. */
+.has-reveal [data-reveal="up"] { transform: translateY(14px); }
+/* Except the deep-clean checklist, which is dealt out from alternating sides.
+   The distance is deliberately short: a long slide reads as the layout being
+   unstable, and anything further is visibly still moving when you start
+   reading the line. */
 .has-reveal [data-reveal="left"]  { transform: translateX(-26px); }
 .has-reveal [data-reveal="right"] { transform: translateX(26px); }
 .has-reveal [data-reveal].is-shown {
@@ -1786,7 +1789,8 @@ fieldset { margin: 0; padding: 0; border: 0; }
 
 /* Both phone-only blocks are hidden by default and switched on inside the
    query below, so no desktop browser ever lays them out. */
-.ba, .ba__hint, .hero__acts, .hero__sign, .price-tabs, .action-rail, .u-phone-only { display: none; }
+.ba, .ba__hint, .hero__acts, .hero__sign, .hero__trust, .page-banner__sign,
+.price-tabs, .action-rail, .u-phone-only { display: none; }
 
 @media (max-width: 40em) {
 
@@ -1854,6 +1858,30 @@ fieldset { margin: 0; padding: 0; border: 0; }
     font-size: 0.82rem; font-weight: 600;
   }
   .ba__price b { font-size: 1.02rem; font-weight: 800; letter-spacing: -0.02em; }
+
+  /* Three facts, hairline-separated rather than boxed — the hero already has
+     a photograph, a price chip and two buttons in it, and three more cards
+     would be the fourth object competing for the same screen. */
+  .hero__trust {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin: 1.4rem 0 0;
+    padding: 0.9rem 0 0;
+    list-style: none;
+    border-top: 1px solid var(--line);
+  }
+  .hero__trust li {
+    font-size: 0.76rem; line-height: 1.3;
+    color: var(--muted);
+  }
+  .hero__trust b {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.15rem; font-weight: 800; letter-spacing: -0.03em;
+    color: var(--text);
+    margin-bottom: 0.1rem;
+  }
+  .hero__sign { margin-top: 1.1rem; }
 
   /* Mark and slogan. The mark is ink, not cyan: on this cream the card colour
      sits at 1.25:1 and a cyan stroke would be decoration you cannot see. */
@@ -2363,6 +2391,33 @@ fieldset { margin: 0; padding: 0; border: 0; }
   .page-banner__grid  { gap: 1.6rem; }
   .page-banner .eyebrow { margin-bottom: 0.7rem; }
   .page-banner .lede { font-size: 0.97rem; }
+
+  /* The eyebrow was a soft cyan wash with cyan type — legible, but it read as
+     a grey blob at this size against all that black. A hairline of the accent
+     around it makes it a deliberate object, without lifting the ground behind
+     the type. */
+  .page-banner .eyebrow {
+    border: 1px solid rgba(133, 229, 232, 0.32);
+    padding-inline: 0.9rem;
+  }
+
+  /* Same mark and slogan as the home hero. On ink the mark can be the card
+     colour — the accent is type on a dark ground, which is the half of the
+     rule the cream side never gets. */
+  /* A grid sibling of the copy column and the card, not a child of the copy.
+     Hidden above 40em, and a display:none paragraph at the end of that column
+     was enough to stop the lede's bottom margin collapsing out of it — 21px of
+     desktop banner appearing out of an element that renders nothing. A grid
+     item cannot do that: grid items do not margin-collapse with anything. */
+  .page-banner__sign {
+    display: flex; align-items: center; gap: 0.55rem;
+    margin-top: 0.4rem;
+    font-family: var(--font-display);
+    font-size: 0.86rem; font-weight: 600;
+    color: rgba(255, 255, 255, 0.66);
+  }
+  .page-banner__sign svg { width: 30px; height: 17px; flex: none; color: var(--accent-bright); }
+  .page-banner__sign em { font-style: normal; color: #FFFFFF; }
   /* The supporting block under each headline — spec list, photo sheet,
      portrait, steps — carried desktop padding, which on a phone made it read
      as a slab rather than a card. */

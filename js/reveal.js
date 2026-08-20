@@ -26,7 +26,7 @@
     '.price-tabs', '.price-card', '.addon', '.gallery figure', '.ba-card',
     '.city-list', '.map-placeholder', '.review', '.google-bar', '.marquee',
     '.cta-band .shell', '.page-banner__spec', '.page-banner__steps',
-    '.page-banner__sheet', '.page-banner__card', '.checklist', '.footer-col'
+    '.page-banner__sheet', '.page-banner__card', '.band-list li', '.footer-col'
   ].join(',');
 
   var nodes = [].slice.call(document.querySelectorAll(SELECTOR));
@@ -44,10 +44,18 @@
     if (el.getBoundingClientRect().top < fold) {
       el.classList.add('is-shown');
     } else {
-      /* Alternating sides, counted across the whole page rather than within a
-         section, so the rhythm carries from one block to the next as you
-         scroll rather than restarting. */
-      el.setAttribute('data-reveal', pending.length % 2 ? 'right' : 'left');
+      /* Everything rises. The one exception is the deep-clean checklist, whose
+         seven steps come in from alternating sides — they are a numbered
+         sequence, so the side they enter from reads as the list being dealt
+         out. Counted within the list, not across the page, so the alternation
+         is always 01 left, 02 right whatever else has scrolled past. */
+      var band = el.parentElement && el.parentElement.classList.contains('band-list');
+      if (band) {
+        var row = [].indexOf.call(el.parentElement.children, el);
+        el.setAttribute('data-reveal', row % 2 ? 'right' : 'left');
+      } else {
+        el.setAttribute('data-reveal', 'up');
+      }
       pending.push(el);
     }
   });
