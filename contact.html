@@ -106,13 +106,41 @@
            older and a long form is where they give up, so this asks only for
            what she needs to price the job and turn up at the right driveway.
            Everything else she covers on the confirmation call. -->
-      <div class="field-grid">
+      <!-- Two steps. Who you are first, then the car and the appointment —
+           the short half asks for what someone already knows by heart, so the
+           longer half is only reached by people who have started.
+           Both steps are plain markup: with the script absent they are simply
+           two stacked groups and the form still submits in one pass. -->
+      <p class="form-progress" data-form-progress hidden>
+        <span data-progress-label>Step 1 of 2</span> &middot; <span data-progress-name>About you</span>
+      </p>
 
+      <div class="form-step" data-step="1">
+        <div class="field-grid">
         <div class="field">
           <label for="name">Full name <span class="req">*</span></label>
           <input class="input" id="name" name="name" type="text" autocomplete="name" placeholder="Jane Miller" required>
         </div>
 
+        <div class="contact-group" data-contact-group>
+          <div class="field-grid field-grid--2">
+            <div class="field">
+              <label for="phone">Phone number <span class="req-alt">or</span></label>
+              <input class="input" id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(206) 555-0148">
+            </div>
+            <div class="field">
+              <label for="email">Email <span class="req-alt">&mdash; either one</span></label>
+              <input class="input" id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@email.com">
+            </div>
+          </div>
+          <span class="hint">One of these two is enough — whichever you'd rather I use.</span>
+        </div>
+
+        </div>
+      </div>
+
+      <div class="form-step" data-step="2">
+        <div class="field-grid">
         <div class="field">
           <label for="vehicle">Vehicle make and model <span class="req">*</span></label>
           <input class="input" id="vehicle" name="vehicle" type="text" placeholder="2018 Chrysler 300" required>
@@ -166,20 +194,6 @@
              checks them as a pair, with the message hanging on the wrapper
              rather than on whichever field got blamed. They sit side by side
              so the choice is visible before anyone reads the hint. -->
-        <div class="contact-group" data-contact-group>
-          <div class="field-grid field-grid--2">
-            <div class="field">
-              <label for="phone">Phone number <span class="req-alt">or</span></label>
-              <input class="input" id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" placeholder="(206) 555-0148">
-            </div>
-            <div class="field">
-              <label for="email">Email <span class="req-alt">&mdash; either one</span></label>
-              <input class="input" id="email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@email.com">
-            </div>
-          </div>
-          <span class="hint">One of these two is enough — whichever you'd rather I use.</span>
-        </div>
-
         <div class="field">
           <label for="notes">Anything else I should know?</label>
           <textarea class="textarea" id="notes" name="notes" placeholder="Dog hair, a spill in the back seat, stains you want gone, a smell you can't find, a gate code — anything that helps me come prepared."></textarea>
@@ -213,6 +227,12 @@
           <span class="hint" style="display:block;margin-top:.7rem">Not sure? Leave them unchecked — I'll tell you if I think the car needs one.</span>
         </fieldset>
 
+        </div>
+      </div>
+
+      <div class="form-nav" data-form-nav hidden>
+        <button class="btn btn--ghost" type="button" data-step-back hidden>Back</button>
+        <button class="btn btn--primary" type="button" data-step-next>Next &mdash; the car</button>
       </div>
 
       <div class="form-foot">

@@ -193,4 +193,104 @@
         'action attribute and this posts for real.]</p>' +
       '</div>';
   });
+
+  /* ---- two steps ------------------------------------------------------- */
+
+  /* Who you are, then the car and the appointment. The markup is two plain
+     groups and a hidden nav: none of this exists until the script runs, so
+     with JavaScript off the form is one page that still submits in one pass —
+     which is also why the submit button lives outside the steps and is only
+     hidden once stepping is on. */
+  (function () {
+    var steps = Array.prototype.slice.call(form.querySelectorAll('[data-step]'));
+    var nav = form.querySelector('[data-form-nav]');
+    var progress = form.querySelector('[data-form-progress]');
+    if (steps.length !== 2 || !nav) return;
+
+    var nextBtn = nav.querySelector('[data-step-next]');
+    var backBtn = nav.querySelector('[data-step-back]');
+    var foot = form.querySelector('.form-foot');
+    var label = progress && progress.querySelector('[data-progress-label]');
+    var name = progress && progress.querySelector('[data-progress-name]');
+    var NAMES = ['About you', 'The car and the appointment'];
+    var at = 0;
+
+    nav.hidden = false;
+    if (progress) progress.hidden = false;
+
+    function render(focusFirst) {
+      steps.forEach(function (step, i) { step.hidden = i !== at; });
+      backBtn.hidden = at === 0;
+      nextBtn.hidden = at === 1;
+      if (foot) foot.hidden = at === 0;
+      if (label) label.textContent = 'Step ' + (at + 1) + ' of 2';
+      if (name) name.textContent = NAMES[at];
+
+      if (focusFirst) {
+        /* Move focus into the step that just appeared, or a keyboard or
+           screen-reader user is left where the button used to be. */
+        var target = steps[at].querySelector('input, select, textarea');
+        if (target) target.focus({ preventScroll: true });
+        var top = form.getBoundingClientRect().top + window.scrollY - 90;
+        window.scrollTo({ top: top, behavior: 'auto' });
+      }
+    }
+
+    /* Only the fields on this step are judged. Running the form's own pass
+       here would fail on the car and the date before either has been asked
+       for. Same showError/messageFor the submit pass uses, so a reader sees
+       one kind of error message wherever it comes from. */
+    function stepIsValid(i) {
+      var first = null;
+
+      Array.prototype.slice.call(steps[i].querySelectorAll('input, select, textarea'))
+        .forEach(function (control) {
+          if (control.type === 'hidden' || control.disabled) return;
+          if (contactWrap && contactWrap.contains(control)) return;
+          if (!control.checkValidity()) {
+            showError(control, messageFor(control));
+            if (!first) first = control;
+          } else {
+            clearError(control);
+          }
+        });
+
+      if (i === 0 && contactWrap) {
+        var emailField = contactWrap.querySelector('input[type="email"]');
+        if (emailField && !emailField.checkValidity()) {
+          showError(emailField, messageFor(emailField));
+          if (!first) first = emailField;
+        } else if (emailField) {
+          clearError(emailField);
+        }
+        if (!contactGiven()) {
+          showContactError();
+          if (!first) first = contactPair[0];
+        } else {
+          clearContactError();
+        }
+      }
+
+      if (first) first.focus();
+      return !first;
+    }
+
+    nextBtn.addEventListener('click', function () {
+      if (!stepIsValid(0)) return;
+      at = 1;
+      render(true);
+    });
+
+    backBtn.addEventListener('click', function () { at = 0; render(true); });
+
+    /* No 'invalid' listener here. An earlier version used one to jump to the
+       failing step, but the form is novalidate and every check in this file
+       goes through checkValidity() — which fires 'invalid' itself. The
+       listener caught the step-1 checks and advanced to step 2 on exactly the
+       clicks that were supposed to be blocked. Submit is only reachable from
+       step 2, so there is nothing left for it to do. */
+
+    render(false);
+  })();
+
 })();

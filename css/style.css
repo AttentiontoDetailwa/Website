@@ -362,14 +362,17 @@ p:last-child { margin-bottom: 0; }
   flex-direction: column;
   line-height: 1.2;
 }
-.brand__tire { width: 15px; height: 15px; flex: none; color: currentColor; }
+.brand__tire { width: 30px; height: 30px; flex: none; color: currentColor; }
+/* Set to the height of the two lines it sits beside, not to either one of
+   them — it is the other half of the lockup, not a caption on it. */
 .brand__who {
   font-family: var(--font-display);
-  font-size: 0.95rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
   white-space: nowrap;
-  color: var(--muted);
+  color: var(--text);
 }
 
 .brand__tag {
@@ -1765,11 +1768,41 @@ fieldset { margin: 0; padding: 0; border: 0; }
 .split__copy .textlink,
 .split > div > .textlink { margin-top: 1.4rem; }
 
-/* Two routes out of this section — the checklist and the method — so they are
-   set as a small stack rather than a row: side by side they read as one
-   sentence with an arrow dropped in the middle of it. */
-.split__links { display: grid; justify-items: start; gap: 0.55rem; margin-top: 1.4rem; }
-.split__links .textlink { margin-top: 0; }
+
+/* --- 20b. Stepped quote form -------------------------------------------
+   The steps are hidden with the hidden attribute from JS, so none of this
+   applies until the script runs.
+   ------------------------------------------------------------------------ */
+.form-progress {
+  margin: 0 0 1.4rem;
+  font-family: var(--font-display);
+  font-size: 0.76rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted);
+}
+.form-progress [data-progress-name] { color: var(--text); }
+.form-nav { display: grid; gap: 0.6rem; margin-top: 1.6rem; }
+.form-nav .btn { width: 100%; }
+
+/* Two routes out of the who-I-am section, set as rows with a rule between
+   them rather than two bare arrows stacked up — at a glance they were reading
+   as one link that had wrapped. */
+.split__links {
+  display: grid;
+  justify-items: stretch;
+  gap: 0;
+  margin-top: 1.5rem;
+  border-top: 1px solid var(--line);
+}
+.split__links .textlink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 0;
+  min-height: 52px;
+  border-bottom: 1px solid var(--line);
+}
 
 /* --- 21. Scroll reveals -------------------------------------------------
    .has-reveal is set by js/reveal.js, so none of this applies unless the
@@ -1873,19 +1906,38 @@ fieldset { margin: 0; padding: 0; border: 0; }
      toggle. At full size that came to 244px and ran under the toggle, so the
      mark, the name and both gaps each give up a little rather than any one of
      them shrinking to nothing. */
-  .has-rail .brand__mark    { display: block; width: 30px; height: 17px; }
+  /* Her name is set to the height of the pair beside it, and the tyre with it.
+     That costs width the bar does not have, so the mark comes off again — the
+     tyre is the graphic in the lockup now, and a car silhouette next to a tyre
+     was two vehicle glyphs anyway. */
+  .has-rail .brand__mark    { display: none; }
   .has-rail .brand           { gap: 0.4rem; }
-  .has-rail .brand__name    { font-size: 0.85rem; }
+  /* The stacked pair gives up a step so her name can have the height. It is
+     the supporting half of the lockup now rather than the lead. */
+  .has-rail .brand__name    { font-size: 0.8rem; }
   .site-header .brand__text { gap: 0.3rem; }
-  .brand__tire              { width: 11px; height: 11px; }
-  .brand__who               { font-size: 0.7rem; color: var(--muted-dim); }
+  .brand__tire              { width: 20px; height: 20px; }
+  .brand__who               { font-size: 1.65rem; font-weight: 700; line-height: 1; color: var(--text); }
   /* The 560px rule takes the strapline off small screens; it is the second
      line of the lockup now, so it comes back. */
-  .site-header .brand__tag  { display: block; font-size: 0.7rem; margin-top: 0; }
+  .site-header .brand__tag  { display: block; font-size: 0.64rem; margin-top: 0; }
 
   /* Spread out: a two-line lockup needs the bar to grow with it rather than
-     squeeze it, and the toggle wants air either side. */
-  .site-header__inner       { min-height: 74px; gap: 0.8rem; padding-block: 0.4rem; }
+     squeeze it, and the toggle wants air either side.
+
+     The width rule matters more than it looks. .shell on phones carries a
+     21px auto margin (from width:calc(100% - 2.5rem)) on top of its own 21px
+     padding, so the bar's content was sitting 43px in on each side and the
+     lockup was fighting for room that the gutter had already taken. The bar
+     takes a single 20px gutter instead, which is 45px back. */
+  .site-header__inner {
+    width: 100%;
+    margin-inline: 0;
+    padding-inline: 1.25rem;
+    min-height: 74px;
+    gap: 0.8rem;
+    padding-block: 0.4rem;
+  }
 }
 
 /* Below 360px — a small phone, and where a reader at 400% zoom lands — the
@@ -2124,7 +2176,7 @@ fieldset { margin: 0; padding: 0; border: 0; }
     -webkit-overflow-scrolling: touch;
   }
   .home .gallery--feature::-webkit-scrollbar { display: none; }
-  .home .gallery--feature figure { flex: 0 0 66%; scroll-snap-align: start; }
+  .home .gallery--feature figure { flex: 0 0 72%; scroll-snap-align: center; }
   .home .gallery--feature img { aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--radius-sm); }
 
   /* --- pricing ---------------------------------------------------------- */
@@ -2264,7 +2316,7 @@ fieldset { margin: 0; padding: 0; border: 0; }
      a separate phone-only element, so the one in the copy column goes. */
   /* .split--stats gives the frame order:2 below 899px so the photograph drops
      under the copy; the link pair carries order:3 to land beneath it. */
-  .split__links { gap: 0.5rem; margin-top: 1rem; }
+  .split__links { margin-top: 1.2rem; }
   .frame--tall .portrait-placeholder { aspect-ratio: 4 / 3; }
   .frame--tall img { aspect-ratio: 16 / 10; object-fit: cover; }
   /* Three cells across a 335px column leaves 74px of usable width each, and
@@ -2400,8 +2452,27 @@ fieldset { margin: 0; padding: 0; border: 0; }
   .ba-card__foot h3   { font-size: 1.05rem; }
   .ba-card__foot span { white-space: normal; font-size: 0.9rem; }
 
-  .gallery { gap: 0.5rem; }
-  .gallery figure img { aspect-ratio: 1; object-fit: cover; }
+  /* Every gallery swipes. Two-up grids meant a page of thumbnails you scroll
+     past; one photo at a time, snapping, means each one is actually looked at,
+     and the page stops being a wall of small squares. The rail hangs into the
+     gutters so the next photo peeks in and the gesture is visible without a
+     caption telling anyone to swipe. */
+  .gallery {
+    display: flex;
+    grid-template-columns: none;
+    gap: 0.6rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-inline: 1.25rem;
+    margin-inline: -1.25rem;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+  }
+  .gallery::-webkit-scrollbar { display: none; }
+  .gallery figure { flex: 0 0 84%; scroll-snap-align: center; }
+  .gallery figure img { aspect-ratio: 4 / 3; object-fit: cover; }
+  .gallery--tall figure img { aspect-ratio: 3 / 4; }
   /* The captions are set over the photograph, and at this size they cover a
      third of it to say what the photograph already shows. */
   .gallery figcaption, .gallery--feature figcaption { display: none; }
