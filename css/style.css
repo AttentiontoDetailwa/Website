@@ -2,25 +2,43 @@
    Attention to Detail — Interior Auto Detailing
    Standard tier mockup · stylesheet
 
-   Direction: warm sand ground, espresso bands, brand cyan off Ava's card,
-   Archivo throughout — built with the craft discipline of a marque site
-   (BMW, Porsche, Lamborghini):
+   Direction: warm cream ground, near-black bands, and one colour — the cyan
+   off Ava's business card. Plus Jakarta Sans throughout. Read at arm's length
+   on a phone, so everything is sized for that first:
 
-     · sharp geometry — 2px radii, square buttons, no soft blobs
-     · no drop shadows — elevation comes from hairlines and ground contrast
-     · hairline-divided columns instead of floating cards
-     · calm headline weights, wide-tracked uppercase labels
-     · photography given room, with hairline gaps so grids read as one wall
-     · slow, restrained transitions
+     · rounded geometry — 18px radii, 12 for small parts, 26 for large
+     · white cards lifted off the tinted ground on one soft shadow
+     · hairlines divide columns; they do not lift anything
+     · calm headline weights, sentence case, no uppercase in user-facing text
+       beyond the small wide-tracked step labels
+     · photography given room, before and after shown as a pair
+     · slow, restrained transitions, all on var(--ease)
 
-   Every text/ground pairing here is checked at 4.5:1 or better.
+   The cyan is spent about six times a page, which is what makes it read as
+   her colour rather than a default link colour. The rule that does it:
+
+       on the cream ground   the cyan is a FILL, with ink type on it
+       on the ink bands      the cyan is the TYPE
+
+   Every text/ground pairing here is checked at 4.5:1 or better, and the
+   ratios are recorded in the token comments so a later change can be checked
+   against them rather than guessed.
+
+   Sections are numbered below and each one opens with the reasoning behind
+   it — read that before editing the section. Section 20 is the phone layout
+   and it comes last on purpose: it is walled off at 40em so nothing in it can
+   reach the desktop or tablet view.
+
+   This replaced an earlier marque direction — 2px radii, no shadows, hairline
+   columns, Archivo. The current design is the opposite of it on every one of
+   those points. Nothing here is a leftover from it.
    ========================================================================== */
 
 /* --- 1. Tokens ----------------------------------------------------------- */
 /* Warm near-white ground, white surfaces lifted on soft shadow, rounded
-   geometry, one deep teal doing the work. Elevation comes from shadow and
-   radius rather than hairlines — the opposite of the marque treatment this
-   replaced, and much friendlier to read at arm's length. */
+   geometry, and the card cyan kept for the few places it can carry. Elevation
+   comes from shadow and radius rather than hairlines, which is much friendlier
+   to read at arm's length. */
 :root {
   --paper:         #F2EDE4;  /* ground */
   --paper-alt:     #E6DFD2;  /* the warm band that alternates against it */
