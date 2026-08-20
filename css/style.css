@@ -344,35 +344,11 @@ p:last-child { margin-bottom: 0; }
   white-space: nowrap;
   color: var(--text);
 }
-/* Header lockup: the business name with its
-   strapline under it, and beside that pair a tyre and whose business it is.
-   The tyre is white casing with an accent rim, sized to the cap height of the
-   name it sits next to. */
+/* Header lockup: the business name with its strapline under it. */
 .site-header .brand__text {
-  flex-direction: row;
-  align-items: center;
-  gap: 0.55rem;
-  /* Nothing wraps. Left to it, "Any time, any place" breaks after "any" and
-     the bar grows a row to hold one word. */
-  flex-wrap: nowrap;
-  white-space: nowrap;
-}
-.brand__stack {
-  display: flex;
   flex-direction: column;
-  line-height: 1.2;
-}
-.brand__tire { width: 30px; height: 30px; flex: none; color: currentColor; }
-/* Set to the height of the two lines it sits beside, not to either one of
-   them — it is the other half of the lockup, not a caption on it. */
-.brand__who {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1;
-  white-space: nowrap;
-  color: var(--text);
+  align-items: flex-start;
+  gap: 0.05rem;
 }
 
 .brand__tag {
@@ -1906,21 +1882,12 @@ fieldset { margin: 0; padding: 0; border: 0; }
      toggle. At full size that came to 244px and ran under the toggle, so the
      mark, the name and both gaps each give up a little rather than any one of
      them shrinking to nothing. */
-  /* Her name is set to the height of the pair beside it, and the tyre with it.
-     That costs width the bar does not have, so the mark comes off again — the
-     tyre is the graphic in the lockup now, and a car silhouette next to a tyre
-     was two vehicle glyphs anyway. */
-  .has-rail .brand__mark    { display: none; }
-  .has-rail .brand           { gap: 0.4rem; }
-  /* The stacked pair gives up a step so her name can have the height. It is
-     the supporting half of the lockup now rather than the lead. */
-  .has-rail .brand__name    { font-size: 0.8rem; }
-  .site-header .brand__text { gap: 0.3rem; }
-  .brand__tire              { width: 20px; height: 20px; }
-  .brand__who               { font-size: 1.65rem; font-weight: 700; line-height: 1; color: var(--text); }
+  .has-rail .brand__mark    { display: block; width: 34px; height: 19px; }
+  .has-rail .brand           { gap: 0.55rem; }
+  .has-rail .brand__name    { font-size: 0.95rem; }
   /* The 560px rule takes the strapline off small screens; it is the second
      line of the lockup now, so it comes back. */
-  .site-header .brand__tag  { display: block; font-size: 0.64rem; margin-top: 0; }
+  .site-header .brand__tag  { display: block; font-size: 0.72rem; margin-top: 0; }
 
   /* Spread out: a two-line lockup needs the bar to grow with it rather than
      squeeze it, and the toggle wants air either side.
@@ -1940,19 +1907,9 @@ fieldset { margin: 0; padding: 0; border: 0; }
   }
 }
 
-/* Below 360px — a small phone, and where a reader at 400% zoom lands — the
-   full lockup needs 224px of a 213px slot and runs into the toggle. The tyre
-   and her name give way; the business name is the part that has to survive. */
-/* Below 360px — a small phone, and where a reader at 400% zoom lands — the
-   row runs into the toggle. The tyre and her name give way; the stacked pair
-   is the part that has to survive. */
-@media (max-width: 22.5em) {
-  .brand__tire, .brand__who { display: none; }
-}
-
-/* The phone layout continues. (The 360px query above is a narrow exception
-   inside it, so it has to open and close on its own rather than swallow
-   everything that follows.) */
+/* The phone layout continues. (It is split in two here only because a narrow
+   360px exception used to sit between the halves; the exception is gone with
+   the tyre it was there to drop.) */
 @media (max-width: 40em) {
 
   /* --- hero ------------------------------------------------------------- */
@@ -2452,12 +2409,13 @@ fieldset { margin: 0; padding: 0; border: 0; }
   .ba-card__foot h3   { font-size: 1.05rem; }
   .ba-card__foot span { white-space: normal; font-size: 0.9rem; }
 
-  /* Every gallery swipes. Two-up grids meant a page of thumbnails you scroll
-     past; one photo at a time, snapping, means each one is actually looked at,
-     and the page stops being a wall of small squares. The rail hangs into the
-     gutters so the next photo peeks in and the gesture is visible without a
-     caption telling anyone to swipe. */
-  .gallery {
+  /* The job walkthrough swipes: it is a sequence — before, before, after,
+     after — and one frame at a time is how a sequence is read. The finished
+     interiors stay a grid, because that section is a body of work and the
+     point of it is how much there is. The rail hangs into the gutters so the
+     next photo peeks in and the gesture is visible without a caption telling
+     anyone to swipe. */
+  .gallery--tall {
     display: flex;
     grid-template-columns: none;
     gap: 0.6rem;
@@ -2469,13 +2427,45 @@ fieldset { margin: 0; padding: 0; border: 0; }
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-x: contain;
   }
-  .gallery::-webkit-scrollbar { display: none; }
-  .gallery figure { flex: 0 0 84%; scroll-snap-align: center; }
-  .gallery figure img { aspect-ratio: 4 / 3; object-fit: cover; }
-  .gallery--tall figure img { aspect-ratio: 3 / 4; }
-  /* The captions are set over the photograph, and at this size they cover a
-     third of it to say what the photograph already shows. */
+  .gallery--tall::-webkit-scrollbar { display: none; }
+  .gallery--tall figure { flex: 0 0 84%; scroll-snap-align: center; }
+  .gallery--tall figure img { aspect-ratio: 3 / 4; object-fit: cover; }
+
+  .gallery { gap: 0.5rem; }
+  .gallery figure img { aspect-ratio: 1; object-fit: cover; }
+
+  /* Captions come off the photographs — at this size they cover a third of
+     the image to say what the image already shows. The one thing worth
+     keeping is which half of the job you are looking at, so on the
+     walkthrough the Before/After word survives as a corner chip and the rest
+     of the caption goes. Same chip as the slider in the home hero. */
   .gallery figcaption, .gallery--feature figcaption { display: none; }
+  .gallery--tall figure { position: relative; }
+  .gallery--tall figcaption {
+    display: block;
+    /* inset:auto on the two edges the base rule pins. It sets
+       `inset: auto 0 0 0`, so without this the chip keeps the full width and
+       height of the tile — and with a backdrop-filter on it, that blurred the
+       whole photograph instead of the 60px behind the word. */
+    position: absolute;
+    inset: 0.6rem auto auto 0.6rem;
+    padding: 0.32rem 0.6rem;
+    border-radius: 3px;
+    background: rgba(10, 13, 14, 0.72);
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    font-family: var(--font-display);
+    font-size: 0; /* hides the " — mats & pedals" half without a second element */
+  }
+  .gallery--tall .ba-tag {
+    font-size: 0.62rem; font-weight: 700;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.9);
+  }
+  /* The two afters carry the accent, the way the slider's after chip does. */
+  .gallery--tall figure:nth-child(n+3) figcaption { border-color: rgba(133, 229, 232, 0.45); }
+  .gallery--tall figure:nth-child(n+3) .ba-tag { color: var(--accent-bright); }
 
   /* About's portrait is 4/5 of a full-width column — nearly a whole screen of
      placeholder before any copy. */
