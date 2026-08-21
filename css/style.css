@@ -118,6 +118,10 @@
      shadow disappears, and lifting the white cards off the cream is most of
      the reason the ground is tinted at all. */
   --shadow:        0 1px 2px rgba(18, 25, 26, 0.06), 0 16px 36px -18px rgba(18, 25, 26, 0.30);
+  /* The same shadow one step further off the ground, for the cards that
+     respond to a cursor. Cast longer and a little darker rather than just
+     bigger — a card that rises should also throw further. */
+  --shadow-lift:   0 2px 4px rgba(18, 25, 26, 0.07), 0 28px 52px -20px rgba(18, 25, 26, 0.42);
   --shell:         1160px;
   --shell-narrow:  820px;
 
@@ -225,6 +229,7 @@ p:last-child { margin-bottom: 0; }
   --accent-tint:   rgba(133, 229, 232, 0.15);
   /* Shadow is a light-ground device. On ink it only shows up as a smudge. */
   --shadow:        none;
+  --shadow-lift:   none;
   background: var(--bg);
   color: var(--text);
 }
@@ -926,15 +931,29 @@ p:last-child { margin-bottom: 0; }
   display: flex; flex-direction: column;
   padding: clamp(2rem, 3vw, 2.4rem) clamp(1.6rem, 2.5vw, 2rem);
   background: var(--surface);
-  border: 1.5px solid transparent;
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  transition: transform 0.18s var(--ease);
+  transition: transform 0.24s var(--ease), box-shadow 0.24s var(--ease);
 }
-.price-card:hover { transform: translateY(-2px); }
-/* The middle tier already carries the filled button in the markup — the
-   border just finishes the emphasis that was half-made. */
-.price-card:nth-child(2) { border-color: var(--accent); }
+/* The middle tier used to carry a hairline of --accent as well, which on the
+   cream ground is ink — a black rectangle drawn around one of three white
+   cards, and by some distance the heaviest thing in the section. The filled
+   button already in its markup was making the same point in the one colour
+   this ground allows, so the emphasis is left to that. The 1.5px transparent
+   border that reserved the space for it went with it. */
+
+/* These are the cards you act on, and the whole card is the target rather
+   than just the button at the bottom of it, so the whole card answers. It
+   rises and the shadow lengthens underneath it — elevation on this site is
+   shadow and radius, so a hover raises those rather than drawing an edge,
+   which is what the removed border was doing permanently. */
+.price-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lift);
+}
+/* And the vehicle pulls forward. Four pixels, on the one element in the
+   section that can move without anything else having to move with it. */
+.price-card:hover .price-card__icon { transform: translateX(4px); }
 .price-card__tag {
   position: absolute; top: clamp(2rem, 3vw, 2.4rem); right: clamp(1.6rem, 2.5vw, 2rem);
   font-family: var(--font-display);
@@ -942,7 +961,12 @@ p:last-child { margin-bottom: 0; }
   letter-spacing: 0; text-transform: none;
   color: var(--accent);
 }
-.price-card__icon { width: 52px; height: 30px; color: var(--accent); margin-bottom: 1.4rem; }
+.price-card__icon {
+  width: 52px; height: 30px;
+  color: var(--accent);
+  margin-bottom: 1.4rem;
+  transition: transform 0.24s var(--ease);
+}
 .price-card h3 {
   /* Was 1.15rem -- a hair under the lede beside it, so the tier name read as
      body copy. It is the thing the reader is choosing between; it leads. */
@@ -1008,6 +1032,13 @@ p:last-child { margin-bottom: 0; }
   color: var(--accent);
 }
 .addon p { margin: 0; color: var(--muted); line-height: 1.6; }
+/* The add-on cards get the shadow and not the lift. There is nothing in one
+   to press — a card that rises under the cursor is promising a target it does
+   not have — but they are priced items sitting in a row, and the shadow is
+   enough to say which one you are reading. On the ink bands --shadow-lift is
+   none along with --shadow, so this quietly does nothing there. */
+.addon { transition: box-shadow 0.24s var(--ease); }
+.addon:hover { box-shadow: var(--shadow-lift); }
 
 /* Stacked — for the add-on list sitting in one half of a split, beside a
    photo, where three across would be far too narrow. Doubled class so it
