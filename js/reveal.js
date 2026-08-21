@@ -25,8 +25,7 @@
     '.section-head', '.split__copy', '.frame', '.stat-row',
     '.price-tabs', '.price-card', '.addon', '.gallery figure', '.ba-card',
     '.city-list', '.map-placeholder', '.review', '.google-bar', '.marquee',
-    '.cta-band .shell', '.page-banner__spec', '.page-banner__steps',
-    '.page-banner__sheet', '.page-banner__card', '.band-list li', '.footer-col'
+    '.cta-band .shell', '.page-banner__steps', '.band-list li', '.footer-col'
   ].join(',');
 
   var nodes = [].slice.call(document.querySelectorAll(SELECTOR));
@@ -68,10 +67,34 @@
     /* Peers in the same row come in one after another rather than together.
        Capped, so a long gallery never holds its last tile back. */
     if (order > 0) el.style.transitionDelay = Math.min(order, 4) * 70 + 'ms';
-    /* data-reveal stays on the element. Removing it here would drop the rule
-       carrying the transition at the same moment the element is meant to
-       start transitioning, so it would snap from 0 to 1 instead of fading.
-       .is-shown wins on specificity, which is all that is needed. */
+
+    /* data-reveal cannot come off here — dropping it now would take away the
+       rule carrying the transition at the moment the element is meant to
+       start transitioning, and it would snap from 0 to 1 instead of fading.
+       It comes off when the fade has finished instead, because until it does
+       the element belongs to the reveal: `.has-reveal [data-reveal].is-shown`
+       pins transform to none at a specificity no `:hover` in the stylesheet
+       can clear, and the transition list on it is opacity and transform only.
+       That is what was killing the lift on the price cards — every card that
+       faded in on the way down the page had a dead hover afterwards. Once the
+       reveal is over it should stop owning the element. */
+    var settled = false;
+    function settle() {
+      if (settled) return;
+      settled = true;
+      el.removeEventListener('transitionend', onEnd);
+      el.removeAttribute('data-reveal');
+      el.style.transitionDelay = '';
+    }
+    function onEnd(e) { if (e.propertyName === 'opacity') settle(); }
+    el.addEventListener('transitionend', onEnd);
+    /* And a backstop on a timer, because transitionend is not guaranteed to
+       arrive — a background tab, an element that never gets composited, an
+       interrupted transition — and a reveal that never settles is a card with
+       a dead hover for the rest of the session. 0.55s is the duration in
+       section 21 of the stylesheet; change one and change the other. */
+    setTimeout(settle, Math.min(order, 4) * 70 + 550 + 60);
+
     el.classList.add('is-shown');
   }
 
