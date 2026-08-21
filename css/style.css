@@ -1286,7 +1286,6 @@ p:last-child { margin-bottom: 0; }
   color: var(--text);
 }
 .req { color: var(--accent); }
-.hint { font-size: 0.94rem; line-height: 1.5; color: var(--muted-dim); }
 
 /* Filled fields — a bare underline is a weak "type here" signal, so each field
    is a filled block on the sand ground. No outer panel: the layout stays open
@@ -1418,7 +1417,6 @@ fieldset { margin: 0; padding: 0; border: 0; }
   padding-top: 2.25rem;
   border-top: 1px solid var(--line);
 }
-.form-foot p { font-size: 0.87rem; color: var(--muted-dim); margin: 0; max-width: 34ch; }
 
 
 /* Success state after the form posts. Replaces the form outright — leaving the
@@ -2598,19 +2596,12 @@ fieldset { margin: 0; padding: 0; border: 0; }
   .form-card .fieldset__legend,
   .form-card .form-note { display: block; text-align: center; }
 
-  /* The hints under the fields go. On a phone they turn a nine-field form
-     into a wall — a line of grey under every input, each one as long as the
-     label above it. What they say is worth keeping, so it moves into the
-     placeholder or the label rather than sitting under the box.
-     The two that are not field hints — the add-ons note and the one under
-     the submit — stay, because they answer a question at the point it gets
-     asked rather than explaining a box. */
-  .form-card .hint { display: none; }
-  /* Two exceptions: the note under the add-ons and the one under the submit
-     answer a question at the point it gets asked rather than explaining a
-     box, so they stay. */
-  .form-card fieldset .hint { display: block; }
-  /* What the field hints were carrying moves into the labels. */
+  /* The grey line under every input turned a nine-field form into a wall, so
+     it went — first on phones, then everywhere, and the .hint class with it.
+     What those lines were carrying is in the labels and the placeholders now:
+     the year in "Vehicle year, make and model", the driveway in the address
+     placeholder, "optional" in the add-ons legend, the hours in the rail
+     beside the form. This is what the label side of that costs. */
   .req-alt { font-weight: 500; color: var(--muted); }
 
   /* Checkbox beside the words, vertically centred on them. */

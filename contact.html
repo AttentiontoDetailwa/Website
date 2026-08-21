@@ -117,6 +117,11 @@
           <input class="input" id="name" name="name" type="text" autocomplete="name" placeholder="Jane Miller" required>
         </div>
 
+        <!-- Either one is enough — no single required attribute can say "one
+             of these two", so they share a wrapper and quote-form.js checks
+             them as a pair, with the message hanging on the wrapper rather
+             than on whichever field got blamed. They sit side by side so the
+             choice is visible without a hint line under them. -->
         <div class="contact-group" data-contact-group>
           <div class="field-grid field-grid--2">
             <div class="field">
@@ -136,15 +141,14 @@
       <div class="form-step" data-step="2">
         <div class="field-grid">
         <div class="field">
-          <label for="vehicle">Vehicle make and model <span class="req">*</span></label>
+          <label for="vehicle">Vehicle year, make and model <span class="req">*</span></label>
           <input class="input" id="vehicle" name="vehicle" type="text" placeholder="2018 Chrysler 300" required>
-          <span class="hint">Year too, if you know it — it helps me plan how long to book.</span>
         </div>
 
         <!-- Scheduling. The time input is clamped to trading hours so nobody
-             requests 6am and waits a day to be told no. The hint carries the
-             hours and the "this is a request" caveat, which would otherwise
-             only turn up in the error message. -->
+             requests 6am and waits a day to be told no, and the caveat that
+             this is a request rides in the label rather than under the field.
+             The hours themselves are in the rail beside the form. -->
         <div class="field-grid field-grid--2">
           <div class="field">
             <label for="date">Preferred date <span class="req">*</span></label>
@@ -155,13 +159,11 @@
             <input class="input" id="time" name="time" type="time" min="08:00" max="18:00" step="900" required>
           </div>
         </div>
-        <span class="hint" style="margin-top:-1.4rem">I work every day, 8am&nbsp;&ndash;&nbsp;6pm. I'll confirm your time or offer the closest I have.</span>
 
         <!-- Location. -->
         <div class="field">
           <label for="address">Where will the vehicle be? <span class="req">*</span></label>
           <input class="input" id="address" name="address" type="text" autocomplete="street-address" placeholder="Street address — home, work, wherever it's parked" required>
-          <span class="hint">I come to you, so I need to know where "you" is. Driveway, apartment lot, work parking — all fine.</span>
         </div>
 
         <div class="field">
@@ -183,18 +185,13 @@
           </select>
         </div>
 
-        <!-- Contact. Either one is enough — no single required attribute can
-             say "one of these two", so they share a wrapper and quote-form.js
-             checks them as a pair, with the message hanging on the wrapper
-             rather than on whichever field got blamed. They sit side by side
-             so the choice is visible without a hint line under them. -->
         <div class="field">
           <label for="notes">Anything else I should know?</label>
           <textarea class="textarea" id="notes" name="notes" placeholder="Dog hair, a spill in the back seat, a smell you can't find, a gate code."></textarea>
         </div>
 
         <fieldset>
-          <legend class="fieldset__legend">Add-ons</legend>
+          <legend class="fieldset__legend">Add-ons (optional)</legend>
           <div class="option-grid option-grid--3">
             <label class="option">
               <input type="checkbox" name="addons" value="shampoo">
@@ -218,7 +215,6 @@
               </span>
             </label>
           </div>
-          <span class="hint" style="display:block;margin-top:.7rem">Not sure? Leave them unchecked — I'll tell you if I think the car needs one.</span>
         </fieldset>
 
         </div>
@@ -229,9 +225,12 @@
         <button class="btn btn--primary" type="button" data-step-next>Next &mdash; the car</button>
       </div>
 
+      <!-- Button only. What this used to say underneath — nothing due now, a
+           confirmation inside 24 hours — is the "what happens next" card at the
+           top of this page, so it was being read twice. quote-form.js hides
+           this whole block on step one, so the div stays. -->
       <div class="form-foot">
         <button class="btn btn--primary" type="submit">Request my appointment</button>
-        <p>No payment now. I'll contact you within 24 hours to confirm and give you a final price.</p>
       </div>
     </form>
 
