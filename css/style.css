@@ -884,18 +884,15 @@ p:last-child { margin-bottom: 0; }
    row 1, stats to the start of row 2) so that when the photo is the taller of
    the columns the slack falls outside the pair instead of opening a gap down
    the middle of it. */
-.split--stats > .stat-row { margin-top: 0; }
 @media (max-width: 899px) {
-  .split--stats > .frame    { order: 2; }
-  .split--stats > .stat-row,
+  .split--stats > .frame        { order: 2; }
   .split--stats > .split__links { order: 3; }
 }
 @media (min-width: 900px) {
   .split--stats { row-gap: 2.5rem; }
-  .split--stats > .split__copy { grid-column: 1; grid-row: 1; align-self: end; }
-  .split--stats > .stat-row,
+  .split--stats > .split__copy  { grid-column: 1; grid-row: 1; align-self: end; }
   .split--stats > .split__links { grid-column: 1; grid-row: 2; align-self: start; }
-  .split--stats > .frame       { grid-column: 2; grid-row: 1 / span 2; }
+  .split--stats > .frame        { grid-column: 2; grid-row: 1 / span 2; }
 }
 
 /* Both columns finish on the same line: the photo takes its height from the
@@ -1039,6 +1036,28 @@ p:last-child { margin-bottom: 0; }
    none along with --shadow, so this quietly does nothing there. */
 .addon { transition: box-shadow 0.24s var(--ease); }
 .addon:hover { box-shadow: var(--shadow-lift); }
+
+/* An add-on card on an ink band inherits --surface at 5% white, which is a
+   dark box on a dark ground: the name and the price hold up, but the line of
+   copy under them — the part that says what the add-on is for — sits at 74%
+   white on near-black and reads as an afterthought. These are the three things
+   on that page someone might actually add to the job, so they go cream and
+   carry ink type at full strength, the same as they have on phones.
+
+   The band works by re-pointing tokens on the subtree, so the honest way to
+   undo it for one component is to re-point them back rather than override
+   .addon__name, .addon__price and .addon p one at a time. The literals are the
+   :root values from section 1 — keep them in step if those change. On this
+   ground --text is 14.2:1 and --muted is 8.6:1. */
+.section--ink .addon {
+  --surface: #FFFFFF;
+  --text:    #18201F;
+  --muted:   #3B4443;
+  --accent:  #0A0D0E;
+  --line:    rgba(18, 25, 26, 0.12);
+  background: var(--paper);
+  color: var(--text);
+}
 
 /* Stacked — for the add-on list sitting in one half of a split, beside a
    photo, where three across would be far too narrow. Doubled class so it
@@ -1339,22 +1358,26 @@ fieldset { margin: 0; padding: 0; border: 0; }
 /* Three-across boxes. The 1px grid gap shows the background through as the
    internal dividers, and the border closes the block on all four sides so it
    reads as one framed unit rather than a floating table. */
+/* Separated cards, not a hairline table. These are the one thing on the form
+   you tap rather than type, and as edge-to-edge cells filled with the page
+   ground they were the odd unit out on a site where every other repeated
+   thing is a white surface on a soft shadow. */
 .option-grid {
   display: grid;
-  gap: 1px;
-  background: var(--line);
-  border: 1px solid var(--line);
+  gap: 0.6rem;
 }
 .option-grid > * { min-width: 0; }
 @media (min-width: 35em) { .option-grid--3 { grid-template-columns: repeat(3, 1fr); } }
 .option {
-  display: flex; align-items: stretch; gap: 0.9rem;
-  padding: 1.35rem 1.25rem;
-  background: var(--bg);
+  display: flex; align-items: flex-start; gap: 0.9rem;
+  padding: 1.15rem 1.15rem;
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow);
   cursor: pointer;
-  transition: background 0.45s var(--ease);
+  transition: box-shadow 0.24s var(--ease);
 }
-.option:hover { background: var(--surface); }
+.option:hover { box-shadow: var(--shadow-lift); }
 .option input {
   align-self: flex-start;
   margin: 0.25rem 0 0;
@@ -1369,12 +1392,20 @@ fieldset { margin: 0; padding: 0; border: 0; }
   gap: 0.5rem;
 }
 .option__label { font-size: 1.05rem; line-height: 1.4; }
+/* The figure as a chip in the card colour rather than as bold text. On this
+   ground the cyan can only be a fill, and a price is the one number on the
+   form worth spending it on. Ink on #85E5E8 is 13.3:1. */
 .option__price {
+  align-self: flex-start;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: var(--accent-bright);
+  color: var(--accent-ink);
   font-family: var(--font-display);
-  font-size: 0.94rem; letter-spacing: 0.02em;
-  color: var(--accent); font-weight: 600;
+  font-size: 0.82rem; font-weight: 800; letter-spacing: -0.01em;
 }
-.option:has(input:checked) { background: var(--surface); }
+/* The card is already a white surface, so a checked one cannot answer with a
+   background. The native box is doing that; this just firms up the label. */
 .option:has(input:checked) .option__label { font-weight: 600; }
 
 /* Photo upload — the real input sits inside the label, so the whole panel is
@@ -1507,50 +1538,33 @@ fieldset { margin: 0; padding: 0; border: 0; }
 .portrait-placeholder svg { width: 34px; height: 34px; color: var(--muted-dim); margin-bottom: 1rem; }
 .portrait-placeholder p { font-size: 0.89rem; color: var(--muted-dim); max-width: 24ch; margin: 0; }
 
-/* The stats were the last of the marque treatment left standing: columns split
-   by a 1px grid gap bleeding a hairline through, boxed top and bottom, with a
-   500-weight numeral and a label that never set a weight at all. Nothing else
-   on the page is built that way any more — repeated peer units are white
-   surfaces on soft shadow (.review, .city-list, .google-bar), display numerals
-   run 800 at -0.03em (.google-bar__score b, .addon__price), and every uppercase
-   micro-label runs 600. Same three facts, house construction. The top margin
-   lives here rather than in two inline styles that had drifted apart between
-   index and about. */
-.stat-row {
-  display: grid;
-  gap: 1.25rem;
-  margin-top: 2.5rem;
+/* What she will be held to, under her story. This replaced a row of three
+   figures in tiles, and the shape is the point: big numerals in boxes are how
+   a page performs credibility when it has none to show, and on a one-person
+   mobile round the numbers available are either unverifiable or already said
+   somewhere else. Three sentences on hairlines make a claim you can check
+   against the rest of the site instead, and they sit in the copy column as
+   part of the reading rather than as a panel bolted under it.
+
+   No card, no shadow: this is the tail of a paragraph, not a peer unit. */
+.promises {
+  list-style: none;
+  margin: 2.5rem 0 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
 }
-/* auto-fit rather than repeat(3, 1fr). This row sits in the copy half of a
-   split, so its width tracks the split, not the viewport: at 1280 it has 458px
-   on the home page and 554px on About, and the moment the split goes two-up
-   around 900 it drops to ~360. A fixed three columns tore "Quote turnaround"
-   out of its tile at those widths, and a bare 1fr let the widest label push its
-   own column past the other two. auto-fit takes three across wherever three fit
-   and folds to two where they don't, with no new breakpoint. */
-@media (min-width: 640px) { .stat-row { grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr)); } }
-.stat {
-  padding: 1.25rem 1rem;
-  border: 0;
-  border-radius: var(--radius);
-  background: var(--surface);
-  box-shadow: var(--shadow);
+.promises li {
+  padding-block: 1.05rem;
+  border-bottom: 1px solid var(--line);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--muted);
 }
-.stat b {
-  display: block;
+.promises b {
   font-family: var(--font-display);
-  font-size: 1.7rem; font-weight: 800; letter-spacing: -0.03em;
-  line-height: 1.15;
-  color: var(--accent);
-  margin-bottom: 0.4rem;
-}
-.stat span {
-  display: block;
-  font-family: var(--font-display);
-  font-size: 0.8rem; font-weight: 600;
-  line-height: 1.45;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--muted-dim);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text);
 }
 
 /* --- 17. Footer --------------------------------------------------------- */
@@ -2297,17 +2311,15 @@ fieldset { margin: 0; padding: 0; border: 0; }
   .addons--compact .addon__name  { font-size: 0.86rem; font-weight: 600; }
   .addons--compact .addon__price { font-size: 0.86rem; font-weight: 800; }
 
-  /* Cards on an ink ground inherit --surface at 5% white. At desktop size,
-     against a lot of surrounding black, that reads as a card; on a phone,
-     where the card is most of the screen, it is a dark box on a dark ground
-     you can barely make out — which is what made the contact opening look
-     flat and the add-ons hard to read. These go cream.
+  /* The contact banner's steps card inherits --surface at 5% white from the
+     band. At desktop size, against a lot of surrounding black, that reads as a
+     card; on a phone, where the card is most of the screen, it is a dark box
+     on a dark ground you can barely make out. It goes cream.
      The band works by re-pointing tokens on the subtree, so the honest way to
      undo it for one component is to re-point them back rather than override
-     .addon__name, .addon__price and .addon p one at a time — the literals
-     below are the :root values, which the band has already overwritten by the
-     time this rule is read. Keep them in step with section 1 if those change. */
-  .section--ink .addon,
+     the type colours one at a time — the literals below are the :root values,
+     which the band has already overwritten by the time this rule is read.
+     Keep them in step with section 1 if those change. */
   .page-banner__steps {
     --surface: #FFFFFF;
     --text:    #18201F;
@@ -2326,15 +2338,8 @@ fieldset { margin: 0; padding: 0; border: 0; }
   .price-note   { font-size: 0.88rem; }
 
   /* --- the rest --------------------------------------------------------- */
-  /* Three-up rather than stacked: the base grid only goes 3-across at 640px,
-     so on a phone these three short facts were 302px of column.
-     minmax(0,1fr) for the same reason as the footer — a plain fr floors at
-     min-content, and "Quote turnaround" on the about page pushed the row 33px
-     past the viewport and gave the whole document a sideways scroll. */
-  .stat-row {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.5rem; margin-top: 1.5rem; text-align: center;
-  }
+  .promises { margin-top: 1.6rem; }
+  .promises li { padding-block: 0.9rem; font-size: 0.97rem; }
   /* The split's desktop gutter is up to 4.5rem, which on a phone is just
      dead space between a paragraph and the photo under it. */
   /* The link sat 42px under the paragraph and the photograph another 28px
@@ -2348,23 +2353,6 @@ fieldset { margin: 0; padding: 0; border: 0; }
   .split__links { margin-top: 1.2rem; }
   .frame--tall .portrait-placeholder { aspect-ratio: 4 / 3; }
   .frame--tall img { aspect-ratio: 16 / 10; object-fit: cover; }
-  /* Three cells across a 335px column leaves 74px of usable width each, and
-     "TURNAROUND" is a single 10-letter word — uppercase with the house 0.1em
-     tracking it needs 84px, so the label ran out past the white card on the
-     home and about pages. Dropping to a size that fits uppercase would put it
-     at 10px, and forcing a break gave "TURNAROU / ND".
-     Sentence case is the fix: "turnaround" is 63px at a legible 0.74rem and
-     the line breaks at the space, like a phrase rather than a word cut in
-     half. The uppercase micro-label is a desktop-scale device — at 11px in a
-     74px cell it has stopped doing its job anyway. */
-  .stat      { padding: 1rem 0.5rem; }
-  .stat b    { font-size: 1.35rem; margin-bottom: 0.3rem; }
-  .stat span {
-    font-size: 0.74rem;
-    letter-spacing: 0.01em;
-    text-transform: none;
-    line-height: 1.35;
-  }
   /* The condensed phone paragraph, on the home page and on services. Full
      text colour rather than muted — at 0.97rem the grey was doing more fading
      than hierarchy, and var(--text) resolves correctly on both grounds: ink
@@ -2544,42 +2532,18 @@ fieldset { margin: 0; padding: 0; border: 0; }
   .portrait-placeholder { aspect-ratio: 3 / 2; padding: 1.5rem; }
   .about-hero { gap: 1.75rem; }
 
-  /* Contact: the vehicle and add-on options are the one thing on that form you
-     tap rather than type, so they get proper row height. They were also the
-     odd thing out on the page — square-cornered boxes filled with the page
-     ground, while every other repeated unit on the site is a white surface on
-     a soft shadow. Same construction as the add-on pills and the city list
-     now, with the figure as a chip in the card colour, so the form reads as
-     part of the site rather than as a form. */
+  /* One card per row down here, so the label and the price sit on one line
+     with the chip pushed to the end, and the row gets a tap-sized height.
+     Everything else about these — the surface, the radius, the shadow, the
+     chip — is in section 15 and applies at every width. */
   .option {
     align-items: center;
     padding: 0.85rem 1rem;
     min-height: 60px;
-    background: var(--surface);
-    border-radius: var(--radius-sm);
-    box-shadow: var(--shadow);
   }
-  .option:hover { background: var(--surface); }
   .option__body { flex-direction: row; align-items: center; gap: 0.75rem; }
   .option__label { font-size: 0.96rem; line-height: 1.35; }
-  .option__price {
-    margin-left: auto;
-    flex: none;
-    padding: 0.25rem 0.6rem;
-    border-radius: 999px;
-    background: var(--accent-bright);
-    color: var(--accent-ink);
-    font-size: 0.82rem; font-weight: 800; letter-spacing: -0.01em;
-  }
-  /* The grid draws its own hairlines with a 1px gap over a --line background
-     and a border round the set. That construction only works while the cells
-     are edge to edge; once they became separated cards the background showed
-     through the gaps as a grey slab behind them. */
-  .option-grid {
-    gap: 0.6rem;
-    background: none;
-    border: 0;
-  }
+  .option__price { margin-left: auto; flex: none; }
   .field-grid { gap: 1rem; }
   /* Centred form. The controls stay full width and their typed text stays
      left-aligned — centring what someone types is the one part of a form you

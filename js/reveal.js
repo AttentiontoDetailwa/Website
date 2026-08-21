@@ -22,7 +22,7 @@
      every paragraph — reveal everything and it reads as a page that cannot
      keep still. */
   var SELECTOR = [
-    '.section-head', '.split__copy', '.frame', '.stat-row',
+    '.section-head', '.split__copy', '.frame', '.promises',
     '.price-tabs', '.price-card', '.addon', '.gallery figure', '.ba-card',
     '.city-list', '.map-placeholder', '.review', '.google-bar', '.marquee',
     '.cta-band .shell', '.page-banner__steps', '.band-list li', '.footer-col'
