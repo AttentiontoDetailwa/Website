@@ -22,7 +22,7 @@
   var index = 0;
 
   /* --- Caption ----------------------------------------------------------- */
-  /* The visible figcaption if the photo has one ("Before — mats & pedals"),
+  /* The visible figcaption if the photo has one ("Before \u00b7 mats & pedals"),
      otherwise the alt text, which is written as a description on this site. */
   function tidy(value) {
     return (value || '').replace(/\s+/g, ' ').trim();
@@ -40,7 +40,7 @@
       return tidy(child.textContent);
     }).filter(Boolean);
 
-    var text = parts.length > 1 ? parts.join(' — ') : tidy(cap.textContent);
+    var text = parts.length > 1 ? parts.join(' \u00b7 ') : tidy(cap.textContent);
     return text || img.getAttribute('alt') || '';
   }
 

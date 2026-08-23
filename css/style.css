@@ -384,6 +384,22 @@ p:last-child { margin-bottom: 0; }
 }
 
 .nav { display: flex; align-items: center; gap: 1.6rem; }
+
+/* Measured at 1280 the row was exactly full: brand, five links, phone and
+   button spanned 1041px inside a 1040px shell. .brand carries flex-shrink and
+   min-width:0, so it was the piece that gave — the wordmark overflowed its own
+   box by 20px and ended 5px from "Home", which is why the business name read
+   as a sixth menu item rather than as the brand.
+
+   Space cannot simply be added to a full row, so it is taken from the nav's
+   own rhythm and given to the lockup: the links close up a little, the brand
+   stops shrinking, and the gap after it is the widest on the bar. That order
+   is the point — a brand needs more air after it than the menu has inside it.
+   Desktop only; below 1260px the nav is a drawer and none of this applies. */
+@media (min-width: 1260px) {
+  .brand { flex: none; gap: 0.95rem; padding-right: 1.35rem; }
+  .nav { gap: 1.22rem; }
+}
 /* :not(.btn) throughout — the drawer's quote button is an <a> inside .nav, and
    a bare `.nav a` out-specifies `.btn--primary`, so without this the button
    picks up the nav's link colour and its ink type turns into white-on-cyan the
@@ -921,6 +937,18 @@ p:last-child { margin-bottom: 0; }
 .frame { overflow: hidden; border-radius: var(--radius); box-shadow: var(--shadow); }
 .frame img { width: 100%; }
 .frame--tall img { aspect-ratio: 4 / 5; object-fit: cover; }
+/* A person, not a car interior. .frame--tall gets letterboxed to 16/10 on
+   phones in section 20 because a tall shot of a footwell eats the screen —
+   but the same crop takes the top of someone's head off. This keeps 4:5
+   everywhere, and section 20 has the matching opt-out. */
+.frame--portrait img { aspect-ratio: 4 / 5; object-fit: cover; }
+/* Both photographs and the map link out to her Google listing. An <a> is
+   inline by default, which would leave a few pixels of descender gap under the
+   image inside the frame's overflow:hidden — block removes it. The visible
+   affordance is still the button under the map; these are a convenience for
+   anyone who tries the picture first, which people do. */
+.frame-link, .map-link { display: block; }
+.frame-link:focus-visible, .map-link:focus-visible { outline-offset: 4px; }
 
 /* --- 10. Pricing -------------------------------------------------------- */
 /* A spec sheet, not a set of cards: hairline columns, oversized figures. */
@@ -1126,6 +1154,23 @@ p:last-child { margin-bottom: 0; }
    gap does. */
 
 /* --- 13. Service area --------------------------------------------------- */
+
+/* The service-area map on the about page. It replaced a dashed placeholder box
+   that had the same aspect ratio, so the rail does not move. Same radius and
+   shadow as every other framed image on the site — it is a photograph of where
+   she goes, and it should sit like one. */
+.map-shot {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.map-note { margin-top: 0.9rem; font-size: 0.95rem; color: var(--muted); }
+/* Google's terms want the data credit visible alongside their imagery. Small
+   and quiet, but present. */
+.map-credit { margin-top: 0.5rem; font-size: 0.78rem; color: var(--muted); }
 .area-grid { display: grid; gap: clamp(2.5rem, 5vw, 4.5rem); align-items: center; }
 @media (min-width: 900px) { .area-grid { grid-template-columns: 1fr 1fr; } }
 /* Cities read as pills rather than a hairline table. */
@@ -1144,20 +1189,6 @@ p:last-child { margin-bottom: 0; }
   text-transform: none;
 }
 .city-list svg { width: 17px; height: 17px; color: var(--accent); }
-
-.map-placeholder {
-  position: relative;
-  aspect-ratio: 4 / 3;
-  display: grid; place-items: center;
-  text-align: center;
-  padding: 2rem;
-  border: 0;
-  border-radius: var(--radius);
-  background: var(--surface);
-  box-shadow: var(--shadow);
-}
-.map-placeholder svg { width: 30px; height: 30px; color: var(--accent); margin-bottom: 1rem; }
-.map-placeholder p { font-size: 1rem; color: var(--muted); max-width: 26ch; margin: 0; }
 
 /* --- 14. CTA band ------------------------------------------------------- */
 /* The one black block on the page below the header — an inset rounded card
@@ -1190,14 +1221,14 @@ p:last-child { margin-bottom: 0; }
       rgba(10, 13, 14, 0.92) 0%,
       rgba(10, 13, 14, 0.80) 52%,
       rgba(10, 13, 14, 0.90) 100%),
-    url("../assets/audi-after-dash.jpg");
+    url("../assets/audi-after-dash-900.jpg");
   background-image:
     linear-gradient(180deg,
       rgba(10, 13, 14, 0.92) 0%,
       rgba(10, 13, 14, 0.80) 52%,
       rgba(10, 13, 14, 0.90) 100%),
-    image-set(url("../assets/audi-after-dash.webp") type("image/webp"),
-              url("../assets/audi-after-dash.jpg")  type("image/jpeg"));
+    image-set(url("../assets/audi-after-dash-900.webp") type("image/webp"),
+              url("../assets/audi-after-dash-900.jpg")  type("image/jpeg"));
   background-position: 50% 62%;
   background-size: cover;
   background-repeat: no-repeat;
@@ -1479,47 +1510,66 @@ fieldset { margin: 0; padding: 0; border: 0; }
 .hours span { color: var(--muted); }
 
 /* --- 16. About ---------------------------------------------------------- */
-.about-hero { display: grid; gap: clamp(2.5rem, 6vw, 5rem); align-items: center; }
+/* align-items was center, which floated the photograph halfway down a copy
+   column three paragraphs taller than it — the picture of her ended up level
+   with the middle of her own story. Top-aligned, she meets the heading, and
+   the space under the photo becomes somewhere the quick facts can live. */
+.about-hero { display: grid; gap: clamp(2.5rem, 6vw, 5rem); align-items: start; }
 @media (min-width: 900px) { .about-hero { grid-template-columns: 0.85fr 1.15fr; } }
-.portrait-placeholder {
-  aspect-ratio: 4 / 5;
-  display: grid; place-items: center;
-  text-align: center;
-  padding: 2rem;
-  border: 1px dashed var(--line-strong);
-}
-.portrait-placeholder svg { width: 34px; height: 34px; color: var(--muted-dim); margin-bottom: 1rem; }
-.portrait-placeholder p { font-size: 0.89rem; color: var(--muted-dim); max-width: 24ch; margin: 0; }
 
-/* What she will be held to, under her story. This replaced a row of three
-   figures in tiles, and the shape is the point: big numerals in boxes are how
-   a page performs credibility when it has none to show, and on a one-person
-   mobile round the numbers available are either unverifiable or already said
-   somewhere else. Three sentences on hairlines make a claim you can check
-   against the rest of the site instead, and they sit in the copy column as
-   part of the reading rather than as a panel bolted under it.
-
-   No card, no shadow: this is the tail of a paragraph, not a peer unit. */
-.promises {
-  list-style: none;
-  margin: 2.5rem 0 0;
-  padding: 0;
-  border-top: 1px solid var(--line);
+/* Both columns finish on the same line. The story is what sets the height —
+   it is prose and cannot be asked to stretch — so the photograph is the piece
+   that gives: the facts keep their natural height and the frame takes whatever
+   is left over. flex-basis 0 plus min-height 0 is what lets it shrink below
+   the image's own aspect ratio; without those the picture would set a floor
+   and push the column past the story again. The crop stays honest because the
+   image is object-fit: cover and she is centred in it with room overhead. */
+@media (min-width: 900px) {
+  .about-hero { align-items: stretch; }
+  .about-col { display: flex; flex-direction: column; min-height: 0; }
+  .about-col .frame { flex: 1 1 0; min-height: 0; }
+  .about-col .frame img { height: 100%; width: 100%; aspect-ratio: auto; object-fit: cover; }
+  .about-col .frame-link { height: 100%; }
+  .about-col .frame picture { display: block; height: 100%; }
+  .about-facts { flex: none; }
 }
-.promises li {
-  padding-block: 1.05rem;
+
+/* Five facts under her photograph: who and when, then the three commitments
+   that used to be .promises in the copy column.
+
+   This page once carried a row of three figures in tiles — 100+ cars, 1
+   detailer, 24-hour quotes. Big numerals in boxes are how a page performs
+   credibility when it has none to show, and two of those three were restating
+   something already on screen. Hairline rows make claims you can check against
+   the rest of the site instead, and they belong under the photograph rather
+   than beside the story, where three more paragraphs would have been competing
+   with the three already there.
+
+   An index, not an argument: a label and a half-line each, short enough to be
+   read by someone who is not going to read the prose next to them. */
+/* Photo and facts are one grid item, stacked — the frame clips its own
+   overflow, so the list cannot live inside it. */
+.about-col { min-width: 0; }
+.about-facts { list-style: none; margin: 1.6rem 0 0; padding: 0; }
+.about-facts li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 0.8rem;
   border-bottom: 1px solid var(--line);
-  font-size: 1rem;
-  line-height: 1.6;
+  font-size: 0.97rem;
   color: var(--muted);
 }
-.promises b {
+.about-facts li:first-child { border-top: 1px solid var(--line); }
+.about-facts b {
   font-family: var(--font-display);
   font-weight: 700;
   letter-spacing: -0.01em;
   color: var(--text);
+  white-space: nowrap;
 }
-
+.about-facts span { text-align: right; }
 /* --- 17. Footer --------------------------------------------------------- */
 /* Ink footer — the ground and the token flip both come from the shared
    ink-band rule in section 3b, so there is nothing to set here. No top
@@ -1816,6 +1866,12 @@ fieldset { margin: 0; padding: 0; border: 0; }
    The chevron is a rotated corner rather than an SVG so it inherits colour and
    costs no request. It uses --accent, which is ink on this cream ground: the
    cyan is a fill here, never type, and a cyan chevron would break that. */
+/* The section sits on --paper-alt rather than the plain cream. It used to run
+   straight into the closing band, which is also cream behind its ink card, so
+   the two read as one long stretch of ground with a dark rectangle floating in
+   it. The half-step down separates the FAQ from the band below and from the
+   ink section above, and it does the white cards a favour on the way: they sit
+   at more contrast against --paper-alt than they did against --paper. */
 .faq { display: grid; gap: 0.85rem; }
 .faq__item {
   background: var(--surface);
@@ -2155,14 +2211,14 @@ fieldset { margin: 0; padding: 0; border: 0; }
     background-position: center;
   }
   .ba__shot--before {
-    background-image: url("../assets/audi-before-seat.jpg");
-    background-image: image-set(url("../assets/audi-before-seat.webp") type("image/webp"),
-                                url("../assets/audi-before-seat.jpg")  type("image/jpeg"));
+    background-image: url("../assets/audi-before-seat-900.jpg");
+    background-image: image-set(url("../assets/audi-before-seat-900.webp") type("image/webp"),
+                                url("../assets/audi-before-seat-900.jpg")  type("image/jpeg"));
   }
   .ba__shot--after {
-    background-image: url("../assets/audi-after-wheel.jpg");
-    background-image: image-set(url("../assets/audi-after-wheel.webp") type("image/webp"),
-                                url("../assets/audi-after-wheel.jpg")  type("image/jpeg"));
+    background-image: url("../assets/audi-after-wheel-900.jpg");
+    background-image: image-set(url("../assets/audi-after-wheel-900.webp") type("image/webp"),
+                                url("../assets/audi-after-wheel-900.jpg")  type("image/jpeg"));
   }
   .ba__clip   { position: absolute; inset: 0; width: 50%; overflow: hidden; will-change: width; }
   /* Not the stock round knob with two chevrons in it. The divider is the tool:
@@ -2383,8 +2439,11 @@ fieldset { margin: 0; padding: 0; border: 0; }
   .price-note   { font-size: 0.88rem; }
 
   /* --- the rest --------------------------------------------------------- */
-  .promises { margin-top: 1.6rem; }
-  .promises li { padding-block: 0.9rem; font-size: 0.97rem; }
+  /* Label and detail sit on one line at desktop width. In a 290px column the
+     detail wraps under itself and the row reads as two ragged columns, so the
+     pair stacks instead — label, then detail, left-aligned under it. */
+  .about-facts li { flex-direction: column; align-items: flex-start; gap: 0.15rem; padding-block: 0.7rem; }
+  .about-facts span { text-align: left; }
   /* The split's desktop gutter is up to 4.5rem, which on a phone is just
      dead space between a paragraph and the photo under it. */
   /* The link sat 42px under the paragraph and the photograph another 28px
@@ -2398,6 +2457,8 @@ fieldset { margin: 0; padding: 0; border: 0; }
   .split__links { margin-top: 1.2rem; }
   .frame--tall .portrait-placeholder { aspect-ratio: 4 / 3; }
   .frame--tall img { aspect-ratio: 16 / 10; object-fit: cover; }
+  /* Portraits stay portrait — see the note in section 9. */
+  .frame--portrait img { aspect-ratio: 4 / 5; }
   /* The condensed phone paragraph, on the home page and on services. Full
      text colour rather than muted — at 0.97rem the grey was doing more fading
      than hierarchy, and var(--text) resolves correctly on both grounds: ink
@@ -2405,7 +2466,6 @@ fieldset { margin: 0; padding: 0; border: 0; }
   .u-phone-only { color: var(--text); font-size: 0.97rem; margin-top: 1.1rem; }
   .city-list { gap: 0.5rem; margin: 1.1rem 0; }
   .city-list li { padding: 0.5rem 0.95rem; font-size: 0.9rem; }
-  .home .map-placeholder { display: none; }   /* about.html shows a real one */
 
   /* Four stacked columns was 1,344px of footer nobody scrolls to.
      minmax(0,1fr) rather than 1fr: a plain fr floors at min-content, and
