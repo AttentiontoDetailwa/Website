@@ -576,8 +576,12 @@ p:last-child { margin-bottom: 0; }
   line-height: 1.65;
   color: var(--muted);
   max-width: 34rem;
-  margin-bottom: 2.2rem;
+  /* Was 2.2rem, the gap before the buttons. The gallery link now sits between
+     the two and reads as the tail of this sentence, so the paragraph closes
+     tight and the link carries the gap instead. */
+  margin-bottom: 0.5rem;
 }
+.hero__link { margin-bottom: 1.9rem; }
 .hero .btn-row { margin-bottom: 2.4rem; }
 
 /* Was a hairline-divided spec strip. Now three plain lines under the buttons —
@@ -2033,8 +2037,22 @@ fieldset { margin: 0; padding: 0; border: 0; }
   .hero__grid    { padding-block: 1.6rem 2.2rem; gap: 0; }
   .home .hero .btn-row { display: none; }
   /* Headline, then the proof. The paragraph was five lines of phone screen
-     between the two, saying what the photograph says faster. */
+     between the two, saying what the photograph says faster — that part still
+     holds, so it stays hidden. What went with it was the only words on the
+     first screen that named the service, which left a stranger reaching the
+     price having read a metaphor and looked at a picture. One line replaces
+     it, above the photograph, short enough not to reopen the problem. */
   .home .hero__sub     { display: none; }
+  .hero .hero__line {
+    margin: 0 0 1.4rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    /* Full text colour rather than the muted grey the desktop paragraph
+       takes — the same call this block already made for .u-phone-only, since
+       at phone sizes the grey does more fading than ranking. Ink on cream is
+       14.23:1, against 8.6:1 for the muted it replaces. */
+    color: var(--text);
+  }
   /* The price, in the card colour, on the photograph that earns it. Ink type
      on a cyan fill — the rule the site runs on for the accent on a light
      ground, and the one place in the hero the colour gets to be a block. */
