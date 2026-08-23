@@ -6,10 +6,21 @@
 <title>About Ava | Attention to Detail — Interior Auto Detailing</title>
 <meta name="description" content="Ava Bright is the owner and only detailer at Attention to Detail. Mobile interior detailing across all of Pierce County, WA. Over 100 cars detailed.">
 <meta name="theme-color" content="#0A0D0E">
+
+<!-- Root-relative on purpose: these are requested from every URL depth, and a
+     crawler asks for /favicon.ico whether it is linked or not. The SVG is what
+     modern browsers pick and it stays sharp at any size; the .ico is a heavier
+     cut of the same mark, because the header's hairline stroke closes up into a
+     smudge at 16px. -->
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
 <link rel="canonical" href="https://attentiontodetailwa.com/about">
 
 <meta property="og:type" content="profile">
 <meta property="og:site_name" content="Attention to Detail">
+<meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://attentiontodetailwa.com/about">
 <meta property="og:title" content="About Ava | Attention to Detail">
 <meta property="og:description" content="Ava is the only detailer. The same person cleans your car every time.">
@@ -165,12 +176,12 @@
       <h3>Find me on Google</h3>
       <div class="map-placeholder">
         <div>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m9 4-6 2.5v13L9 17l6 2.5 6-2.5V4l-6 2.5L9 4Zm0 0v13m6-10.5v13"/></svg>
-          <p>Google Business Profile map and reviews embed here once the listing is verified.</p>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-5.3 7-11a7 7 0 1 0-14 0c0 5.7 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+          <p>The listing is under <b>Attention to Detail Auto</b> — same phone, same hours, same me.</p>
         </div>
       </div>
       <div class="btn-row" style="margin-top:1.1rem">
-        <a class="btn btn--ghost btn--sm btn--block" href="#">Open in Google Maps</a>
+        <a class="btn btn--ghost btn--sm btn--block" href="https://maps.google.com/?cid=9363730081657717898" target="_blank" rel="noopener">Open in Google Maps</a>
       </div>
     </div>
   </div>
@@ -234,7 +245,12 @@
           <li><a href="tel:+12065656741">(206) 565-6741</a></li>
           <li><a href="mailto:avabright2006@gmail.com">avabright2006@gmail.com</a></li>
           <li><a href="contact.html">Request a quote</a></li>
-          <li><a href="#">Google Business Profile</a></li>
+          <!-- The Google listing is filed under "Attention to Detail Auto" — the
+               name on the profile, not the name on the site. Linking it from
+               every page is the one signal that ties the two together for
+               anyone checking she is real. -->
+          <li><a href="https://maps.google.com/?cid=9363730081657717898" target="_blank" rel="noopener">Find me on Google</a></li>
+          <li><a href="https://www.facebook.com/ava.bright.378199" target="_blank" rel="noopener">Facebook</a></li>
         </ul>
       </div>
     </div>

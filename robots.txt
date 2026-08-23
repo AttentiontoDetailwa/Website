@@ -1,0 +1,14 @@
+# Everything a customer would want to find, a crawler is welcome to read.
+User-agent: *
+Allow: /
+
+# The option galleries, the handover guide and the thank-you page each carry
+# their own <meta name="robots" content="noindex"> instead of a Disallow line
+# here, which looks backwards and isn't. A Disallow stops a crawler opening the
+# page at all — and a page it never opens is a page whose noindex it never
+# reads, so the URL can still land in the index off a stray link, listed with no
+# description. Letting it crawl the page and be told no is the only combination
+# that actually keeps it out. A Disallow line would also publish the paths, and
+# robots.txt is the first file anyone curious types.
+
+Sitemap: https://attentiontodetailwa.com/sitemap.xml

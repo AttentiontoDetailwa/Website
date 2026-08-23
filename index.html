@@ -6,10 +6,21 @@
 <title>Attention to Detail | Mobile Interior Auto Detailing — Pierce County, WA</title>
 <meta name="description" content="Mobile interior auto detailing across Pierce County, WA. I come to you and steam clean the whole interior, from $120. Free quote back within 24 hours.">
 <meta name="theme-color" content="#0A0D0E">
+
+<!-- Root-relative on purpose: these are requested from every URL depth, and a
+     crawler asks for /favicon.ico whether it is linked or not. The SVG is what
+     modern browsers pick and it stays sharp at any size; the .ico is a heavier
+     cut of the same mark, because the header's hairline stroke closes up into a
+     smudge at 16px. -->
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
 <link rel="canonical" href="https://attentiontodetailwa.com/">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Attention to Detail">
+<meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://attentiontodetailwa.com/">
 <meta property="og:title" content="Attention to Detail | Mobile Interior Auto Detailing">
 <meta property="og:description" content="Interior detailing that comes to you, anywhere in Pierce County. From $120.">
@@ -26,13 +37,29 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "AutoDetailing",
+  "@type": "AutoWash",
+  "@id": "https://attentiontodetailwa.com/#business",
   "name": "Attention to Detail",
+  "alternateName": "Attention to Detail Auto",
+  "url": "https://attentiontodetailwa.com/",
+  "image": "https://attentiontodetailwa.com/assets/ba-driver.jpg",
+  "logo": "https://attentiontodetailwa.com/assets/logo-banner.jpg",
   "description": "Mobile interior auto detailing serving all of Pierce County, Washington. Steam cleaning in every job.",
   "telephone": "+1-206-565-6741",
   "email": "avabright2006@gmail.com",
   "founder": { "@type": "Person", "name": "Ava Bright" },
   "priceRange": "$50-$200",
+  "currenciesAccepted": "USD",
+  "address": {
+    "@type": "PostalAddress",
+    "addressRegion": "WA",
+    "addressCountry": "US"
+  },
+  "hasMap": "https://maps.google.com/?cid=9363730081657717898",
+  "sameAs": [
+    "https://maps.google.com/?cid=9363730081657717898",
+    "https://www.facebook.com/ava.bright.378199"
+  ],
   "openingHoursSpecification": {
     "@type": "OpeningHoursSpecification",
     "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
@@ -477,7 +504,12 @@
           <li><a href="tel:+12065656741">(206) 565-6741</a></li>
           <li><a href="mailto:avabright2006@gmail.com">avabright2006@gmail.com</a></li>
           <li><a href="contact.html">Request a quote</a></li>
-          <li><a href="#">Google Business Profile</a></li>
+          <!-- The Google listing is filed under "Attention to Detail Auto" — the
+               name on the profile, not the name on the site. Linking it from
+               every page is the one signal that ties the two together for
+               anyone checking she is real. -->
+          <li><a href="https://maps.google.com/?cid=9363730081657717898" target="_blank" rel="noopener">Find me on Google</a></li>
+          <li><a href="https://www.facebook.com/ava.bright.378199" target="_blank" rel="noopener">Facebook</a></li>
         </ul>
       </div>
     </div>

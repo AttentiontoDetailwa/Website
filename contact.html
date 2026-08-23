@@ -6,10 +6,21 @@
 <title>Request a Quote | Attention to Detail — Interior Auto Detailing</title>
 <meta name="description" content="Request an interior detailing appointment anywhere in Pierce County, WA. One short form, open seven days a week, 8am to 6pm. Confirmed within 24 hours.">
 <meta name="theme-color" content="#0A0D0E">
+
+<!-- Root-relative on purpose: these are requested from every URL depth, and a
+     crawler asks for /favicon.ico whether it is linked or not. The SVG is what
+     modern browsers pick and it stays sharp at any size; the .ico is a heavier
+     cut of the same mark, because the header's hairline stroke closes up into a
+     smudge at 16px. -->
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
 <link rel="canonical" href="https://attentiontodetailwa.com/contact">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Attention to Detail">
+<meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://attentiontodetailwa.com/contact">
 <meta property="og:title" content="Request a Quote | Attention to Detail">
 <meta property="og:description" content="Two minutes to request an appointment. Confirmation and final quote within 24 hours.">
@@ -90,11 +101,25 @@
   <div class="shell form-layout">
 
     <form class="form-card" id="quote" data-quote novalidate
-          action="https://formspree.io/f/REPLACE_WITH_FORM_ID" method="POST">
+          name="quote" method="POST" action="thanks.html"
+          data-netlify="true" data-netlify-honeypot="_gotcha">
 
-      <!-- Formspree plumbing. _subject sets the email subject Ava sees;
-           _gotcha is Formspree's honeypot - bots fill it, humans never see it. -->
-      <input type="hidden" name="_subject" value="New quote request from the website">
+      <!-- Netlify Forms plumbing. Netlify finds this form by parsing the
+           deployed HTML at deploy time, which is why it has to be real markup
+           with a name on it — and why a site with no build step is the easy
+           case. The submission is named in the Netlify dashboard by the form's
+           name, "quote".
+
+           form-name is how the POST identifies itself on the way back; without
+           it Netlify has nothing to file the submission under and rejects it.
+           _gotcha is the honeypot named in data-netlify-honeypot above: bots
+           fill it, humans never see it, and Netlify drops anything that
+           arrives with it filled in.
+
+           Where the reply goes is not set here. It's a per-site setting in
+           Netlify — Forms, then form notifications — so Ava can change the
+           address herself without touching a file. -->
+      <input type="hidden" name="form-name" value="quote">
       <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
 
       <!-- One page, no stepper, no length switch. A lot of Ava's customers are
@@ -327,7 +352,12 @@
           <li><a href="tel:+12065656741">(206) 565-6741</a></li>
           <li><a href="mailto:avabright2006@gmail.com">avabright2006@gmail.com</a></li>
           <li><a href="contact.html">Request a quote</a></li>
-          <li><a href="#">Google Business Profile</a></li>
+          <!-- The Google listing is filed under "Attention to Detail Auto" — the
+               name on the profile, not the name on the site. Linking it from
+               every page is the one signal that ties the two together for
+               anyone checking she is real. -->
+          <li><a href="https://maps.google.com/?cid=9363730081657717898" target="_blank" rel="noopener">Find me on Google</a></li>
+          <li><a href="https://www.facebook.com/ava.bright.378199" target="_blank" rel="noopener">Facebook</a></li>
         </ul>
       </div>
     </div>
