@@ -42,14 +42,6 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Do I bring the car to you?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "The other way round — I come to you. Your driveway, your work car park, wherever it's parked. I bring my own power and water, so there's nothing you need to have hooked up and nothing you need to lend me."
-      }
-    },
-    {
-      "@type": "Question",
       "name": "How long does it take?",
       "acceptedAnswer": {
         "@type": "Answer",
@@ -61,7 +53,7 @@
       "name": "Do I need to be home while you work?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. If I can get to the car and get into it, you can be at work, asleep or out. Plenty of people leave the keys and come back to it done."
+        "text": "No. If I can get to the car and get into it, you can be at work, asleep or out — plenty of people leave the keys and come back to it done. I bring my own power and water too, so there's nothing you need to have hooked up and nothing you need to lend me."
       }
     },
     {
@@ -417,9 +409,10 @@
 </section>
 
 <!-- ============================ FAQ ============================ -->
-<!-- Eight questions she actually gets asked, in the order they get asked, and
+<!-- Seven questions she actually gets asked, in the order they get asked, and
      none of them repeating something the page already settled — steam and the
-     add-ons are both covered at length above, so they are not here.
+     add-ons are covered at length above, and every page on the site already
+     says she drives to you, so none of the three are here.
      <details> rather than a hand-rolled accordion: it opens and closes with no
      JavaScript at all, arrow keys and screen readers already know what it is,
      and the answers are real DOM either way, so a crawler reads a closed one.
@@ -433,17 +426,6 @@
 
     <div class="faq">
       <details class="faq__item" open>
-        <summary>Do I bring the car to you?</summary>
-        <div class="faq__body">
-          <p>
-            The other way round &mdash; I come to you. Your driveway, your work car
-            park, wherever it's parked. I bring my own power and water, so there's
-            nothing you need to have hooked up and nothing you need to lend me.
-          </p>
-        </div>
-      </details>
-
-      <details class="faq__item">
         <summary>How long does it take?</summary>
         <div class="faq__body">
           <p>
@@ -459,7 +441,9 @@
         <div class="faq__body">
           <p>
             No. If I can get to the car and get into it, you can be at work, asleep
-            or out. Plenty of people leave the keys and come back to it done.
+            or out &mdash; plenty of people leave the keys and come back to it done.
+            I bring my own power and water too, so there's nothing you need to have
+            hooked up and nothing you need to lend me.
           </p>
         </div>
       </details>
