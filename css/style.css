@@ -1866,6 +1866,12 @@ fieldset { margin: 0; padding: 0; border: 0; }
    The chevron is a rotated corner rather than an SVG so it inherits colour and
    costs no request. It uses --accent, which is ink on this cream ground: the
    cyan is a fill here, never type, and a cyan chevron would break that. */
+/* The section sits on --paper-alt rather than the plain cream. It used to run
+   straight into the closing band, which is also cream behind its ink card, so
+   the two read as one long stretch of ground with a dark rectangle floating in
+   it. The half-step down separates the FAQ from the band below and from the
+   ink section above, and it does the white cards a favour on the way: they sit
+   at more contrast against --paper-alt than they did against --paper. */
 .faq { display: grid; gap: 0.85rem; }
 .faq__item {
   background: var(--surface);

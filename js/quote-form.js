@@ -78,7 +78,7 @@
       // rangeUnderflow/Overflow fire on the 8am-6pm clamp, and "this one's
       // needed" would be a confusing thing to say to someone who typed 7am.
       if (control.validity.rangeUnderflow || control.validity.rangeOverflow) {
-        return 'I work 8am to 6pm — pick a time in there and I\'ll make it fit.';
+        return 'I work 8am to 6pm. Pick a time in there and I\'ll make it fit.';
       }
       return 'Give me a preferred time.';
     }
