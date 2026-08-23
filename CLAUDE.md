@@ -107,27 +107,34 @@ design change is done: load the page in the preview, screenshot it at 375px
 form, the lightbox or the swipe galleries, click through it — those four are
 where the regressions have been.
 
-## Branches and what a push costs
+## Publishing, and what a deploy costs
 
-Netlify bills this site in credits, and the meters are not evenly weighted. A
-**production deploy is 15 credits**; a **branch deploy or a deploy preview is
-0**. Her whole month of traffic at 500 visitors is about 22. So the expensive
-thing on this project is not her customers, it is us pushing.
+`attentiontodetailwa.com` is served from the **client repo**, remote `ava`
+(`AttentiontoDetailwa/Website`) — not from `origin`. Netlify watches `ava` and
+nothing else, so pushing `origin` changes nothing on the live site and costs
+nothing. That is worth knowing in both directions: work pushed to `origin` is
+backed up but not published, and the only thing that reaches a customer is a
+push to `ava`.
 
-Work on `dev`. Push to `dev` as often as you like — it costs nothing and it
-serves a live `dev--<site>.netlify.app` URL, which is the right link to send Ava
-when she wants to see a change. Merge `dev` into `main` only when a batch is
-settled and meant to go live.
+What goes to `ava` is a **filtered** tree. `CLAUDE.md`, `.claude/`, `handoff/`,
+`design-options/`, `hero-options/` and `mobile-options/` are stripped, because
+that repo is public and all of it is internal — `handoff/` carries her billing
+terms. Never `git push ava main` from this repo; publish the filtered tree as a
+commit on top of `ava/main` instead.
 
-Netlify deploys per push, not per commit, so five commits pushed together are
-one deploy and five commits pushed separately are five. Batch them.
+Netlify bills in credits and the meters are uneven. A **production deploy is 15
+credits**; a **branch deploy or deploy preview is 0**; her whole month of traffic
+at 500 visitors is about 22. So the expensive thing here is publishing, not her
+customers reading. Netlify deploys per push rather than per commit, so a batch of
+five commits published together is one deploy and five published separately is
+five. Batch them.
 
-Two things that are free and worth remembering: a failed deploy costs nothing,
-and rolling back to a previous production deploy costs nothing.
+Free is 300 credits a month and its failure mode is a hard stop: at zero, every
+project on the account pauses and visitors get "Site not available". That is the
+reason to care, not the arithmetic.
 
-The free tier is 300 credits a month and its failure mode is a hard stop — at
-zero, every project on the account pauses and visitors get "Site not available".
-That is the reason to care about this, not the arithmetic.
+Work on `dev` and merge to `main` when a batch is settled. Neither costs
+anything; the publish step is the one that does.
 
 ## Commits
 
