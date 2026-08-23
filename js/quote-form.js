@@ -1,4 +1,4 @@
-/* Quote form — validation and the demo submit state.
+/* Quote form — validation.
 
    The form is one page of fields with no stepper and no length switch: it
    submits fine with this file absent, and everything below only sharpens the
@@ -171,27 +171,17 @@
     if (control.checkValidity()) clearError(control);
   });
 
-  /* Until the Formspree endpoint is pasted in, a real submit would post to a
-     dead URL and show an error page — bad in a demo. Intercept only in that
-     case and show the success state instead. Once the ID is real, this does
-     nothing and the form posts normally. */
+  /* The only reason to touch a submit now is a field that isn't right. The
+     form posts to Netlify for real, and the reader lands on thanks.html — so
+     there is no success state to fake here, and nothing to intercept once
+     every field passes. The browser is told novalidate so that the pass above,
+     which shows every gap at once, is what the reader sees instead of the
+     browser's own one-at-a-time bubbles. */
   form.addEventListener('submit', function (e) {
     var bad = firstBad();
-    if (bad) {
-      e.preventDefault();
-      bad.focus();
-      return;
-    }
-    if ((form.getAttribute('action') || '').indexOf('REPLACE_WITH_FORM_ID') === -1) return;
+    if (!bad) return;
     e.preventDefault();
-    form.innerHTML =
-      '<div class="form-sent">' +
-        '<p class="form-sent__label">Request sent</p>' +
-        '<h2>Thanks — I\'ll be in touch within 24 hours.</h2>' +
-        '<p>You\'ll get a confirmation and a final price before I start. Nothing is due now.</p>' +
-        '<p class="form-sent__note">[Demo mode — paste the Formspree endpoint into the form\'s ' +
-        'action attribute and this posts for real.]</p>' +
-      '</div>';
+    bad.focus();
   });
 
   /* ---- two steps ------------------------------------------------------- */

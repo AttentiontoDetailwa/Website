@@ -6,10 +6,21 @@
 <title>Services &amp; Pricing | Attention to Detail — Interior Auto Detailing</title>
 <meta name="description" content="What's included in an interior deep clean, add-on options, and starting prices by vehicle size. Steam cleaning in every job. Mobile detailing across Pierce County, WA.">
 <meta name="theme-color" content="#0A0D0E">
+
+<!-- Root-relative on purpose: these are requested from every URL depth, and a
+     crawler asks for /favicon.ico whether it is linked or not. The SVG is what
+     modern browsers pick and it stays sharp at any size; the .ico is a heavier
+     cut of the same mark, because the header's hairline stroke closes up into a
+     smudge at 16px. -->
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/site.webmanifest">
 <link rel="canonical" href="https://attentiontodetailwa.com/services">
 
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Attention to Detail">
+<meta property="og:locale" content="en_US">
 <meta property="og:url" content="https://attentiontodetailwa.com/services">
 <meta property="og:title" content="Services &amp; Pricing | Attention to Detail">
 <meta property="og:description" content="Interior deep clean from $120. Steam cleaned, with barely any chemicals.">
@@ -22,6 +33,80 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/lightbox.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://attentiontodetailwa.com/services#faq",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do I bring the car to you?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The other way round — I come to you. Your driveway, your work car park, wherever it's parked. I bring my own power and water, so there's nothing you need to have hooked up and nothing you need to lend me."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does it take?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Two to three hours for most cars. A three-row SUV, heavy pet hair or a car that's had a rough year runs longer, and I'll tell you which one yours is when I confirm the time — you won't find out on the day."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need to be home while you work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. If I can get to the car and get into it, you can be at work, asleep or out. Plenty of people leave the keys and come back to it done."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I pay, and when?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cash, Venmo or Zelle, once the car is finished and you've looked at it. Nothing is due when you book and I don't take a deposit. I'm not set up for card payments — worth knowing before I turn up."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you wash the outside too?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No — interiors only, and that's deliberate. It's the half most places rush to get to the paint, and it's the half you actually sit in."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if the car is worse than I described?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Then the price moves, and you see the new number in writing before anything is booked. I'd rather have that conversation over a message than in your driveway with the vacuum already running."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you come to my town?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Anywhere in Pierce County — Bonney Lake, Sumner, Puyallup, Tacoma, Orting, Buckley and Enumclaw are the usual ones. If you're a reasonable drive past the county line, ask anyway. It's usually a yes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How soon can you get to me?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Send the form and I'll come back within 24 hours with a confirmation and a final price. If you're in a hurry, calling is faster than the form — I can usually tell you there and then whether a day is open."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body class="has-rail has-price-tabs">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -331,6 +416,115 @@
   </div>
 </section>
 
+<!-- ============================ FAQ ============================ -->
+<!-- Eight questions she actually gets asked, in the order they get asked, and
+     none of them repeating something the page already settled — steam and the
+     add-ons are both covered at length above, so they are not here.
+     <details> rather than a hand-rolled accordion: it opens and closes with no
+     JavaScript at all, arrow keys and screen readers already know what it is,
+     and the answers are real DOM either way, so a crawler reads a closed one.
+     The first is left open so the pattern is obvious without a hint line. -->
+<section class="section" id="faq">
+  <div class="shell shell--narrow">
+    <div class="section-head section-head--center">
+      <p class="eyebrow">Before you book</p>
+      <h2>Questions I get asked.</h2>
+    </div>
+
+    <div class="faq">
+      <details class="faq__item" open>
+        <summary>Do I bring the car to you?</summary>
+        <div class="faq__body">
+          <p>
+            The other way round &mdash; I come to you. Your driveway, your work car
+            park, wherever it's parked. I bring my own power and water, so there's
+            nothing you need to have hooked up and nothing you need to lend me.
+          </p>
+        </div>
+      </details>
+
+      <details class="faq__item">
+        <summary>How long does it take?</summary>
+        <div class="faq__body">
+          <p>
+            Two to three hours for most cars. A three-row SUV, heavy pet hair or a
+            car that's had a rough year runs longer, and I'll tell you which one
+            yours is when I confirm the time &mdash; you won't find out on the day.
+          </p>
+        </div>
+      </details>
+
+      <details class="faq__item">
+        <summary>Do I need to be home while you work?</summary>
+        <div class="faq__body">
+          <p>
+            No. If I can get to the car and get into it, you can be at work, asleep
+            or out. Plenty of people leave the keys and come back to it done.
+          </p>
+        </div>
+      </details>
+
+      <details class="faq__item">
+        <summary>How do I pay, and when?</summary>
+        <div class="faq__body">
+          <p>
+            Cash, Venmo or Zelle, once the car is finished and you've looked at it.
+            Nothing is due when you book and I don't take a deposit. I'm not set up
+            for card payments &mdash; worth knowing before I turn up.
+          </p>
+        </div>
+      </details>
+
+      <details class="faq__item">
+        <summary>Do you wash the outside too?</summary>
+        <div class="faq__body">
+          <p>
+            No &mdash; interiors only, and that's deliberate. It's the half most
+            places rush to get to the paint, and it's the half you actually sit in.
+          </p>
+        </div>
+      </details>
+
+      <details class="faq__item">
+        <summary>What if the car is worse than I described?</summary>
+        <div class="faq__body">
+          <p>
+            Then the price moves, and you see the new number in writing before
+            anything is booked. I'd rather have that conversation over a message
+            than in your driveway with the vacuum already running.
+          </p>
+        </div>
+      </details>
+
+      <details class="faq__item">
+        <summary>Do you come to my town?</summary>
+        <div class="faq__body">
+          <p>
+            Anywhere in Pierce County &mdash; Bonney Lake, Sumner, Puyallup, Tacoma,
+            Orting, Buckley and Enumclaw are the usual ones. If you're a reasonable
+            drive past the county line, ask anyway. It's usually a yes.
+          </p>
+        </div>
+      </details>
+
+      <details class="faq__item">
+        <summary>How soon can you get to me?</summary>
+        <div class="faq__body">
+          <p>
+            Send the form and I'll come back within 24 hours with a confirmation and
+            a final price. If you're in a hurry, calling is faster than the form
+            &mdash; I can usually tell you there and then whether a day is open.
+          </p>
+        </div>
+      </details>
+    </div>
+
+    <p class="faq__foot">
+      Something not on this list? <a class="textlink" href="contact.html">Ask me on the form &rarr;</a>
+    </p>
+  </div>
+</section>
+
 <section class="cta-band">
   <div class="shell shell--narrow">
     <h2>Nothing else to pick. Just book it.</h2>
@@ -389,7 +583,12 @@
           <li><a href="tel:+12065656741">(206) 565-6741</a></li>
           <li><a href="mailto:avabright2006@gmail.com">avabright2006@gmail.com</a></li>
           <li><a href="contact.html">Request a quote</a></li>
-          <li><a href="#">Google Business Profile</a></li>
+          <!-- The Google listing is filed under "Attention to Detail Auto" — the
+               name on the profile, not the name on the site. Linking it from
+               every page is the one signal that ties the two together for
+               anyone checking she is real. -->
+          <li><a href="https://maps.google.com/?cid=9363730081657717898" target="_blank" rel="noopener">Find me on Google</a></li>
+          <li><a href="https://www.facebook.com/ava.bright.378199" target="_blank" rel="noopener">Facebook</a></li>
         </ul>
       </div>
     </div>

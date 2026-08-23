@@ -1114,63 +1114,12 @@ p:last-child { margin-bottom: 0; }
   .gallery--feature > figure:first-child figcaption { font-size: 1.05rem; padding: 3rem 1.5rem 1.35rem; }
 }
 
-/* --- 12. Reviews -------------------------------------------------------- */
-.reviews { display: grid; gap: 1.25rem; background: none; border: 0; }
-@media (min-width: 860px) { .reviews { grid-template-columns: repeat(3, 1fr); } }
-.review {
-  display: flex; flex-direction: column;
-  padding: clamp(1.8rem, 2.6vw, 2.1rem) clamp(1.6rem, 2.4vw, 1.9rem);
-  background: var(--surface);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-}
-.stars { display: flex; gap: 0.15rem; color: #E0A32E; margin-bottom: 1.1rem; }
-.stars svg { width: 18px; height: 18px; }
-.review blockquote { margin: 0 0 1.5rem; font-size: 1.06rem; line-height: 1.6; color: var(--text); }
-.review__who { margin-top: auto; display: flex; align-items: center; gap: 0.8rem; }
-.review__avatar {
-  width: 40px; height: 40px; flex: none;
-  display: grid; place-items: center;
-  border: 0;
-  border-radius: 999px;
-  background: var(--accent-tint);
-  font-family: var(--font-display); font-weight: 700; font-size: 0.95rem;
-  color: var(--accent);
-}
-.review__name {
-  font-family: var(--font-display);
-  font-size: 1rem; font-weight: 700;
-  letter-spacing: -0.01em; text-transform: none;
-}
-.review__meta { font-size: 0.95rem; color: var(--muted); }
-
-/* Placeholder styling — deliberately obvious, swapped for real reviews. */
-.is-placeholder blockquote { color: var(--muted); font-style: italic; }
-.placeholder-flag {
-  display: inline-block;
-  font-family: var(--font-display);
-  font-size: 0.85rem; font-weight: 600;
-  letter-spacing: 0; text-transform: none;
-  color: var(--muted);
-  border: 1px dashed var(--line-strong);
-  border-radius: 999px;
-  padding: 0.3rem 0.85rem;
-  margin-bottom: 1.2rem;
-}
-
-.google-bar {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 1.25rem 2rem;
-  margin-top: 1.5rem;
-  padding: 1.5rem 1.8rem;
-  background: var(--surface);
-  border: 0;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-}
-.google-bar__score { display: flex; align-items: center; gap: 0.9rem; }
-.google-bar__score b { font-family: var(--font-display); font-size: 1.5rem; font-weight: 800; letter-spacing: -0.03em; }
-.google-bar p { font-size: 1rem; color: var(--muted); margin: 0; }
-.google-bar .btn { margin-left: auto; }
+/* 12 was Reviews — review cards, a star row and a Google score bar, all built
+   and never used by a page. Ava does not want reviews on the site, so it was
+   58 lines styling a section that is not coming. The numbers after it are left
+   alone deliberately: CLAUDE.md and a good few comments in here refer to
+   sections by number, and renumbering to close a gap would cost more than the
+   gap does. */
 
 /* --- 13. Service area --------------------------------------------------- */
 .area-grid { display: grid; gap: clamp(2.5rem, 5vw, 4.5rem); align-items: center; }
@@ -1450,8 +1399,9 @@ fieldset { margin: 0; padding: 0; border: 0; }
 }
 
 
-/* Success state after the form posts. Replaces the form outright — leaving the
-   fields on screen after a send reads as "did that work?" */
+/* Confirmation block on thanks.html, where the form posts to. It used to
+   replace the form in place; a real POST leaves the page, so the reassurance
+   moved to the page that catches it rather than being deleted. */
 .form-sent { padding: clamp(2rem, 4vw, 3rem) 0; }
 .form-sent__label {
   font-family: var(--font-display);
@@ -1462,7 +1412,6 @@ fieldset { margin: 0; padding: 0; border: 0; }
 }
 .form-sent h2 { margin-bottom: 1rem; }
 .form-sent p { color: var(--muted); max-width: 52ch; }
-.form-sent__note { font-size: 0.83rem; color: var(--muted-dim); margin-top: 1.5rem; }
 
 /* Error state. The palette had no failure colour — this is the one addition,
    a deep brick that holds 4.5:1 on both the sand ground and white fields. */
@@ -1706,6 +1655,23 @@ fieldset { margin: 0; padding: 0; border: 0; }
   color: var(--text);
 }
 
+/* Only the 404 puts links inside this card. On every other page the steps
+   describe what happens next and nothing in them is clickable, so there is no
+   link affordance here to inherit — and on this white ground the cyan is a
+   fill rather than a type colour, which rules out the usual move of colouring
+   them. That leaves an underline, which is the honest one anyway: these three
+   are the whole point of that page. */
+.page-banner__steps p a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--line-strong);
+  transition: text-decoration-color 0.18s var(--ease);
+}
+.page-banner__steps p a:hover,
+.page-banner__steps p a:focus-visible { text-decoration-color: currentColor; }
+
 
 /* --- 18b. Photo banner (services, gallery, about) ----------------------- */
 /* Three of the four interior pages open on a photograph instead of on the
@@ -1831,6 +1797,67 @@ fieldset { margin: 0; padding: 0; border: 0; }
 .split__copy .textlink,
 .split > div > .textlink { margin-top: 1.4rem; }
 
+
+/* --- 19b. FAQ ------------------------------------------------------------
+   Eight <details> on the services page. Nothing here is required for the
+   content to be readable: with CSS off they are still eight questions with
+   eight answers, and with JavaScript off they still open, because <details>
+   was already the accordion and nobody needed to build one.
+
+   The cards are the same surface/radius/shadow as the pricing and add-on cards
+   rather than a bordered list, so the section reads as a sibling of the two
+   above it. Elevation is shadow, hairlines divide — the one hairline in here
+   sits between a question and its answer, which is dividing.
+
+   The chevron is a rotated corner rather than an SVG so it inherits colour and
+   costs no request. It uses --accent, which is ink on this cream ground: the
+   cyan is a fill here, never type, and a cyan chevron would break that. */
+.faq { display: grid; gap: 0.85rem; }
+.faq__item {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;      /* keeps the open body inside the rounded corner */
+}
+.faq__item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  padding: 1.35rem clamp(1.4rem, 3vw, 1.8rem);
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-size: 1.06rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: var(--text);
+  /* Both are needed: the pseudo-element is Safari's, list-style is everyone
+     else's, and leaving either in gives the row two markers. */
+  list-style: none;
+}
+.faq__item summary::-webkit-details-marker { display: none; }
+.faq__item summary::after {
+  content: '';
+  flex: none;
+  width: 9px; height: 9px;
+  border-right: 2px solid var(--accent);
+  border-bottom: 2px solid var(--accent);
+  transform: translateY(-3px) rotate(45deg);
+  transition: transform 0.2s var(--ease);
+}
+.faq__item[open] summary::after { transform: translateY(2px) rotate(-135deg); }
+.faq__item summary:hover { background: var(--surface-sunk); }
+.faq__body {
+  padding: 0 clamp(1.4rem, 3vw, 1.8rem) 1.45rem;
+  border-top: 1px solid var(--line-soft);
+  padding-top: 1.25rem;
+}
+.faq__body p { margin: 0; color: var(--muted); }
+.faq__foot { margin-top: 1.6rem; text-align: center; color: var(--muted); }
+/* The link is inline in a sentence here, so it needs the padding off or the
+   line it sits in grows taller than the ones around it. */
+.faq__foot .textlink { padding-block: 0; }
 
 /* --- 20b. Stepped quote form -------------------------------------------
    The steps are hidden with the hidden attribute from JS, so none of this
