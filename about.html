@@ -79,22 +79,24 @@
 <section class="page-banner page-banner--photo" style="--shot-y: 34%">
   <div class="page-banner__shot">
     <picture>
-      <source srcset="assets/audi-after-dash.webp" type="image/webp">
-      <img src="assets/audi-after-dash.jpg" alt="An Audi TT dash, vents and console after detailing, every crevice done by hand" fetchpriority="high" width="900" height="1200">
-    </picture>
+  <source type="image/webp" sizes="(max-width: 40em) 100vw, 45vw" srcset="assets/audi-after-dash-400.webp 400w, assets/audi-after-dash-640.webp 640w, assets/audi-after-dash-900.webp 900w">
+  <img src="assets/audi-after-dash-640.jpg" sizes="(max-width: 40em) 100vw, 45vw" srcset="assets/audi-after-dash-400.jpg 400w, assets/audi-after-dash-640.jpg 640w, assets/audi-after-dash-900.jpg 900w" alt="An Audi TT dash, vents and console after detailing, every crevice done by hand" fetchpriority="high" width="900" height="1200">
+</picture>
   </div>
   <div class="shell page-banner__grid">
     <div>
       <p class="eyebrow">About</p>
       <h1>Hi, I'm <em>Ava.</em></h1>
-      <!-- This was "Attention to Detail is one person with a van full of
-           equipment" — third person about herself, one line under "Hi, I'm
-           Ava," and the third time the page says she works alone before you
-           have scrolled. The heading below and its paragraph both own that
-           point already, so the lede does the other job instead: what actually
-           happens when you book her. Same two images, her voice, first person. -->
+      <!-- This was third person about herself, one line under "Hi, I'm Ava,"
+           and the third time the page said she works alone before you had
+           scrolled. The heading below and its paragraph own that point, so
+           the lede does the other job instead: what actually happens when
+           you book her. Her voice, first person.
+
+           It also said "a van full of equipment". She drives a car, not a
+           van, so do not put that word back. -->
       <p class="lede">
-        I turn up with a van full of equipment and I don't leave until the vents are
+        I turn up with a car full of equipment and I don't leave until the vents are
         clean.
       </p>
     </div>
@@ -104,62 +106,75 @@
 <!-- ============================ ABOUT ============================ -->
 <section class="section">
   <div class="shell about-hero">
-    <div class="portrait-placeholder">
-      <div>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h3l1.5-2h7L17 7h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1Z"/><circle cx="12" cy="13" r="3.5"/></svg>
-        <p>Photo of Ava working on a car goes here — it's the single highest-value image on the site.</p>
-      </div>
+    <!-- Her roster photo, cropped to the 4:5 the slot was built for. It is not
+         her mid-job with a car — that photograph is still worth taking, and this
+         holds the slot properly until it exists. It does one thing the mid-job
+         shot could not: it is the athlete angle in the story below, shown rather
+         than claimed. -->
+    <div class="about-col">
+    <div class="frame frame--portrait">
+      <a class="frame-link" href="https://maps.google.com/?cid=9363730081657717898" target="_blank" rel="noopener" aria-label="Attention to Detail Auto on Google Maps"><picture>
+        <source type="image/webp" sizes="(max-width: 40em) 92vw, 40vw" srcset="assets/ava-400.webp 400w, assets/ava-640.webp 640w, assets/ava-900.webp 900w, assets/ava-1100.webp 1100w">
+        <img src="assets/ava-640.jpg" sizes="(max-width: 40em) 92vw, 40vw" srcset="assets/ava-400.jpg 400w, assets/ava-640.jpg 640w, assets/ava-900.jpg 900w, assets/ava-1100.jpg 1100w"
+             alt="Ava Bright, the owner and only detailer at Attention to Detail"  width="1100" height="1375">
+      </picture></a>
+    </div>
+      <!-- Everything a reader wants settled about her before the story, on one
+           set of hairlines under her photograph. The first two are who and when;
+           the last two are commitments that used to sit in the copy column
+           as .promises — same claims, same order of importance, but as an index
+           rather than three more paragraphs competing with the three beside them.
+
+           "Steam over chemicals" rather than "steam only": she uses as little
+           product as a car needs and lets steam do the rest, which is not the
+           same as none, and the services page says so in those words. -->
+      <ul class="about-facts">
+        <li><b>Bonney Lake</b> <span>home base, whole county covered</span></li>
+        <li><b>Seven days</b> <span>8am to 6pm, weekends included</span></li>
+        <li><b>Interiors only</b> <span>no exterior, no wax packages</span></li>
+        <li><b>Steam over chemicals</b> <span>won't strip your dash</span></li>
+      </ul>
     </div>
 
     <div>
       <p class="eyebrow">The person doing the work</p>
-      <h2>The same person cleaning your car, every time.</h2>
+      <h2>You'll always know who's been in your car.</h2>
       <p class="lede" style="margin-top:1.1rem">
-        When you book, you get me. Not a rotating crew, not whoever was free that
-        morning. That's more than a hundred cars now, and I've done every one of
-        them myself.
+        When you book, you get me. More than a hundred cars now, all of them start
+        to finish. Nobody to pass you along to, and one person to tell if something
+        isn't right.
       </p>
 
+      <!-- ===================================================================
+           DRAFTED, NOT CONFIRMED. Ava has not said these words. They are
+           written to the brief that used to sit here — how she started, the
+           basketball schedule, what she will not leave undone — so the page can
+           be looked at and the shape argued with instead of a bracketed note.
+
+           Read it to her and change whatever is wrong before this goes near a
+           customer. The college is deliberately unnamed because nobody told us
+           which one. The hundred cars in the lede above is hers and is real;
+           nothing invented below contradicts it.
+           =================================================================== -->
       <p style="margin-top:1.6rem;color:var(--muted)">
-        [Ava's story goes here — 2 to 3 short paragraphs, in her own words. The parts that
-        actually make people book: <b style="color:var(--text)">that she plays college
-        basketball</b> and built this around practice and away games,
-        <b style="color:var(--text)">how she got started</b>, and
-        <b style="color:var(--text)">what she refuses to leave undone</b>. First person,
-        plainly. Placeholder — swap before launch.]
+        I started on cars nobody was paying me for. A teammate's back seat after a
+        road trip, my mom's car after a summer of hauling, my own because the
+        door pocket was driving me up the wall. People kept offering money and
+        eventually I stopped saying no.
       </p>
       <p style="color:var(--muted)">
-        [Second paragraph — the athlete angle is the strongest thing she's got and most
-        competitors can't touch it: showing up on time, doing the boring reps nobody sees,
-        finishing when it stops being fun. Say it in her words, not in sports-poster words.]
+        I play college basketball, so practice is early and away games take the
+        weekend. Everything else gets built around them, which is how I end up in
+        a driveway at seven in the morning or on a Tuesday when nobody else will
+        come out.
+      </p>
+      <p style="color:var(--muted)">
+        What I won't skip is the part you can't see. Seams, rails, under the seats,
+        the vents. That's where a smell lives, and the first thing to come back if
+        someone hurried past it. If your car needs longer than we thought, I'd
+        rather stay late.
       </p>
 
-      <!-- This was three figures in tiles: 100+ cars detailed, 1 detailer, a
-           24-hour quote turnaround. Two of the three were restating things
-           already on screen — the heading directly above says she is the only
-           detailer, and the contact page says 24 hours twice. The hundred cars
-           was the only one carrying anything, and it is in the lede now, doing
-           the job a number should: standing behind the claim in the sentence
-           before it rather than sitting in a box on its own.
-           These are three commitments instead. Each one is stated elsewhere on
-           the site as a fact about the work, so she can be held to all three,
-           and none of them repeats the paragraph above. -->
-      <!-- All three were saying the same words as the pages they came from —
-           the third was the home page's pricing paragraph almost verbatim. Same
-           three commitments, said in a way that adds something: the first now
-           carries the starting price, which was the only number the page had
-           room for and didn't have; the third names the thing people are
-           actually afraid of, which is not "the number moved" but "the number
-           moved once the work was done and I was standing there". -->
-      <ul class="promises">
-        <li><b>Interiors only.</b> No exterior, no wax packages, no ladder of tiers to
-          pick your way up — one job, priced by the size of the car, from $120.</li>
-        <li><b>Steam over chemicals.</b> The slower option, and the one that doesn't
-          take the finish off your dash along with the grime.</li>
-        <li><b>The price in writing, first.</b> If the car turns out to be a bigger job
-          than it sounded on the phone, you hear the new number before we book — not
-          when I hand the keys back.</li>
-      </ul>
     </div>
   </div>
 </section>
@@ -188,12 +203,32 @@
 
     <div class="rail-card">
       <h3>Find me on Google</h3>
-      <div class="map-placeholder">
-        <div>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-5.3 7-11a7 7 0 1 0-14 0c0 5.7 7 11 7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
-          <p>The listing is under <b>Attention to Detail Auto</b> — same phone, same hours, same me.</p>
-        </div>
-      </div>
+      <!-- A Google map baked in as a flat image rather than an embed. The iframe
+           version is ~800KB, sets cookies, and would be the only third-party
+           request on the site after the font — on a phone in a driveway that is a
+           real cost for a picture that never needs to move.
+
+           This one is a screenshot of Maps cropped to the county, not a Static
+           Maps API call, so there is no key and no billing attached to it. To
+           replace it: screenshot Maps at roughly this zoom, crop to 4:3 with
+           Tacoma top-left and the 410 corridor through the middle, save it over
+           assets/service-area.png and run tools-resize-images.py.
+
+           Google requires their attribution stay on the imagery, and this crop is
+           taken from the middle of the screenshot — so the wordmark is composited
+           back into the bottom-left corner and the data credit sits under the
+           image. If you re-crop this, put both of those back. -->
+      <a class="map-link" href="https://maps.google.com/?cid=9363730081657717898" target="_blank" rel="noopener" aria-label="Open Attention to Detail Auto on Google Maps">
+        <picture>
+        <source type="image/webp" sizes="(max-width: 40em) 92vw, 40vw" srcset="assets/service-area-400.webp 400w, assets/service-area-640.webp 640w, assets/service-area-840.webp 840w">
+        <img class="map-shot" src="assets/service-area-640.jpg" sizes="(max-width: 40em) 92vw, 40vw"
+             srcset="assets/service-area-400.jpg 400w, assets/service-area-640.jpg 640w, assets/service-area-840.jpg 840w"
+             alt="Map of the Pierce County area, from Tacoma and Lakewood east through Puyallup and Graham to Enumclaw"
+             loading="lazy" width="840" height="630">
+        </picture>
+      </a>
+      <p class="map-credit">Map data &copy;2026 Google</p>
+      <p class="map-note">The listing is under <b>Attention to Detail Auto</b>. Same phone, same hours, same me.</p>
       <div class="btn-row" style="margin-top:1.1rem">
         <a class="btn btn--ghost btn--sm btn--block" href="https://maps.google.com/?cid=9363730081657717898" target="_blank" rel="noopener">Open in Google Maps</a>
       </div>
