@@ -39,6 +39,12 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy('icon-512.png');
   eleventyConfig.addPassthroughCopy('icon-maskable-512.png');
 
+  /* Percent-encode a path for use inside the Image CDN's url= parameter.
+     encodeURI rather than encodeURIComponent, because it leaves the slashes
+     alone: Netlify's own examples pass a plain /assets/name.jpg, and a photo
+     Ava names "my car.jpg" still needs its space escaped. */
+  eleventyConfig.addFilter('imgSrc', (value) => encodeURI(String(value || '')));
+
   /* The admin panel's image field writes a path, like "assets/work-cargo-640.jpg"
      or "/assets/work-cargo.jpg", because that is what it knows about. The photo
      macro wants the stem. Rather than making Ava type "work-cargo" into a text
