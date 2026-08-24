@@ -44,11 +44,13 @@ module.exports = function (eleventyConfig) {
 
   return {
     dir: { input: '.', output: '_site', includes: '_includes', data: '_data' },
-    /* The pages are HTML and stay HTML. Liquid is off until a page actually
-       needs it: the JSON-LD blocks are full of braces and there is no reason to
-       let a template engine near them before there is something to template. */
+    /* Nunjucks, now that pages pull in includes. Its delimiters are {{ }} and
+       {% %}; the JSON-LD blocks use single braces on their own lines and never
+       double them, so they pass through untouched. The byte-diff against the
+       pre-conversion files is what actually proves that, and it is checked on
+       every page as it is converted. */
     templateFormats: ['html'],
-    htmlTemplateEngine: false,
+    htmlTemplateEngine: 'njk',
     markdownTemplateEngine: false,
   };
 };

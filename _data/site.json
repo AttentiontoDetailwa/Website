@@ -1,0 +1,24 @@
+{
+  "name": "Attention to Detail",
+  "tagline": "Any time, any place",
+  "phone": {
+    "display": "(206) 565-6741",
+    "tel": "+12065656741"
+  },
+  "email": "avabright2006@gmail.com",
+  "google": "https://maps.google.com/?cid=9363730081657717898",
+  "facebook": "https://www.facebook.com/ava.bright.378199",
+  "nav": [
+    { "key": "home",     "href": "index.html",    "label": "Home" },
+    { "key": "services", "href": "services.html", "label": "Services &amp; Pricing" },
+    { "key": "gallery",  "href": "gallery.html",  "label": "Gallery" },
+    { "key": "about",    "href": "about.html",    "label": "About" },
+    { "key": "contact",  "href": "contact.html",  "label": "Contact" }
+  ],
+  "areaLines": [
+    "All of Pierce County, WA",
+    "Bonney Lake &middot; Sumner &middot; Puyallup",
+    "Tacoma &middot; Orting &middot; Buckley",
+    "Enumclaw"
+  ]
+}

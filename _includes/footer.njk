@@ -1,0 +1,64 @@
+{#- The footer, once, instead of seven times. It was already identical on all
+    seven pages apart from four stray blank lines on the home page, so it takes
+    no parameters at all.
+
+    This is where the duplication was worst: her phone number was written out 55
+    times across the site and her email 18. Both now come from _data/site.json,
+    which is also what the admin panel will write to. -#}
+<footer class="site-footer">
+  <div class="shell">
+    <div class="footer-grid">
+      <div class="footer-col footer-brand">
+        <a class="brand" href="index.html">
+          <svg class="brand__mark" viewBox="0 0 64 34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M3 24h6M55 24h6M9 24c0-3 2.4-5.4 5.4-5.4S19.8 21 19.8 24 17.4 29.4 14.4 29.4 9 27 9 24Z"/>
+            <path d="M44 24c0-3 2.4-5.4 5.4-5.4S54.8 21 54.8 24s-2.4 5.4-5.4 5.4S44 27 44 24Z"/>
+            <path d="M19.8 24h24.4"/>
+            <path d="M4 21c1-5.5 3-8 6-8.6l9-5.2c2-1.2 4.3-1.6 6.6-1.2l14 2.6c2 .4 3.8 1.4 5.2 2.9l4.4 4.6 8 1.8c3 .7 4.8 2.5 4.8 5"/>
+            <path d="M17 12.4h13.6M33 8.2 36 15"/>
+          </svg>
+          <span class="brand__text">
+            <span class="brand__name">{{ site.name }}</span>
+            <span class="brand__tag">{{ site.tagline }}</span>
+          </span>
+        </a>
+        <p>Mobile interior auto detailing across Pierce County. Owned and operated by Ava Bright.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Pages</h4>
+        <ul>
+{%- for item in site.nav %}
+          <li><a href="{{ item.href }}">{{ item.label | safe }}</a></li>
+{%- endfor %}
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Service area</h4>
+        <ul>
+{%- for line in site.areaLines %}
+          <li><p>{{ line | safe }}</p></li>
+{%- endfor %}
+          <li><a href="contact.html">Somewhere else? Ask.</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Get in touch</h4>
+        <ul>
+          <li><a href="tel:{{ site.phone.tel }}">{{ site.phone.display }}</a></li>
+          <li><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
+          <li><a href="contact.html">Request a quote</a></li>
+          {# The Google listing is filed under "Attention to Detail Auto", the
+             name on the profile rather than the name on the site. Linking it
+             from every page is the one signal that ties the two together for
+             anyone checking she is real. #}
+          <li><a href="{{ site.google }}" target="_blank" rel="noopener">Find me on Google</a></li>
+          <li><a href="{{ site.facebook }}" target="_blank" rel="noopener">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 {{ site.name }} &middot; Interior Auto Detailing</p>
+      <p class="spacer">Site by Gaspar Web Co.</p>
+    </div>
+  </div>
+</footer>
