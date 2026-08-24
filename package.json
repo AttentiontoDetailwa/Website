@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Attention to Detail — mobile interior auto detailing, Pierce County WA",
   "scripts": {
-    "build": "eleventy",
-    "serve": "eleventy --serve --port=4188"
+    "build": "./node_modules/.bin/eleventy",
+    "serve": "./node_modules/.bin/eleventy --serve --port=4188"
   },
   "repository": {
     "type": "git",
