@@ -1,0 +1,23 @@
+{#- One <picture> macro for the whole site.
+
+    Each photo was six lines of near-identical markup with two long srcset
+    strings in it, twenty-eight times over. The widths, the fallback file and the
+    intrinsic dimensions all come from _data/photos.js, which reads them off the
+    files in assets/ — so the only things a page has to say are which photo, what
+    it shows, and how wide it will be drawn.
+
+      name    the stem, e.g. work-cargo, with no width or extension
+      alt     what the photograph shows. Never decorative on this site.
+      sizes   measured off the rendered page, not guessed. Phone value first.
+      eager   true for anything above the fold, which drops loading=lazy and
+              adds fetchpriority=high instead
+
+    width and height are always emitted. They are what stop the page shifting
+    under someone's thumb while the photos arrive. -#}
+{% macro picture(name, alt, sizes, eager=false, klass="") %}
+{%- set p = photos[name] -%}
+<picture>
+  <source type="image/webp" sizes="{{ sizes }}" srcset="{% for w in p.webp %}assets/{{ name }}-{{ w }}.webp {{ w }}w{{ ", " if not loop.last }}{% endfor %}">
+  <img{{ ' class="' + klass + '"' | safe if klass }} src="assets/{{ name }}-{{ p.fallback }}.jpg" sizes="{{ sizes }}" srcset="{% for w in p.widths %}assets/{{ name }}-{{ w }}.jpg {{ w }}w{{ ", " if not loop.last }}{% endfor %}" alt="{{ alt }}"{% if eager %} fetchpriority="high"{% else %} loading="lazy"{% endif %} width="{{ p.width }}" height="{{ p.height }}">
+</picture>
+{%- endmacro %}
