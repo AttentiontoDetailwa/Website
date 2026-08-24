@@ -1,0 +1,40 @@
+{#
+  Cloudflare Web Analytics.
+
+  The site shipped with no measurement of any kind, which meant there was no
+  answer to the only question Ava will ever ask about it: is it bringing me
+  work. This is the smallest thing that answers it — visits, referrers and
+  which pages get read.
+
+  Cookieless and aggregated on Cloudflare's side. It sets nothing on her
+  visitors' devices and stores nothing per person, which is why there is no
+  consent banner here and why this does not contradict the two decisions
+  already made on the same grounds: the Google Maps iframe was kept off the
+  page because it is ~800KB and sets cookies. A beacon that does neither is a
+  different trade.
+
+  What it cannot do is tell you who called. Most of her conversions are a tap
+  on a tel: link and those leave from the page without a pageview behind them,
+  so treat these numbers as traffic, not leads.
+
+  THE TOKEN LIVES HERE, NOT IN site.json, and that is deliberate. The admin
+  panel writes _data/site.json back with only the fields declared in
+  admin/config.yml, so a key it has never heard of is dropped the first time
+  Ava saves her hours — the beacon would go quiet weeks later with nothing to
+  point at. _data/analytics.json is not a CMS collection and nothing but a
+  deploy can touch it.
+
+  The token is public by design; it identifies the site to Cloudflare and is
+  visible in the HTML of every page. It is not a credential and does not need
+  hiding. Get it from Cloudflare's dashboard under Web Analytics, "Add a site",
+  attentiontodetailwa.com.
+
+  Empty token renders nothing at all, so a build before the token exists ships
+  a clean page rather than a beacon posting to nowhere.
+
+  `defer` and last in the body: this is the least important request on the
+  page and it should never be in front of a photo of a car.
+#}
+{%- if analytics.cloudflareToken %}
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "{{ analytics.cloudflareToken }}"}'></script>
+{%- endif -%}
