@@ -1,0 +1,16 @@
+# Netlify builds the site rather than serving the repo directly. Until now the
+# repo *was* the site; from here the repo is the source and _site is the site.
+#
+# Nothing about the published URLs changes: eleventy.config.js keeps the flat
+# about.html filenames rather than Eleventy's default about/index.html, so the
+# canonicals, the sitemap and the address bar still agree with each other.
+
+[build]
+  command = "npx @11ty/eleventy"
+  publish = "_site"
+
+[build.environment]
+  # Pin it. A site that builds today and fails in four months because Netlify
+  # moved its default Node version is the kind of thing that goes wrong while
+  # nobody is looking at it.
+  NODE_VERSION = "22"

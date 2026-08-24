@@ -1,0 +1,22 @@
+{
+  "name": "atd-client-website",
+  "version": "1.0.0",
+  "description": "Attention to Detail — mobile interior auto detailing, Pierce County WA",
+  "scripts": {
+    "build": "eleventy",
+    "serve": "eleventy --serve --port=4188"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Agaspar1321/atd-client-website.git"
+  },
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Agaspar1321/atd-client-website/issues"
+  },
+  "homepage": "https://github.com/Agaspar1321/atd-client-website#readme",
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.6"
+  },
+  "private": true
+}
