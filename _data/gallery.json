@@ -44,6 +44,11 @@
       "photo": "card",
       "alt": "Attention to Detail business card on a detailed leather seat",
       "caption": "Card left in every finished car"
+    },
+    {
+      "photo": "/assets/ava-1100.jpg",
+      "alt": "Ava Bright",
+      "caption": "Owner and sole employee"
     }
   ]
 }

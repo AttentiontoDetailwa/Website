@@ -12,9 +12,9 @@
   },
   "email": "avabright2006@gmail.com",
   "hours": {
+    "display": "8am to 6pm",
     "opens": "08:00",
     "closes": "18:00",
-    "display": "8am to 6pm",
     "days": [
       "Monday",
       "Tuesday",

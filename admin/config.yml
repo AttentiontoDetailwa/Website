@@ -25,12 +25,22 @@ backend:
   # keep running, and less to explain. Add base_url here if a second person ever
   # needs an account.
 
-# Save puts the change on a branch, which Netlify builds as a branch deploy for
-# nothing. Publish merges it, and that is the deploy that costs 15 credits. Ava
-# can therefore fiddle with her wording as many times as she likes and only pay
-# when she is actually finished, which she would not be able to do if every save
-# went straight to production.
+# Save puts the change on a branch and opens a pull request. Netlify builds a
+# deploy preview from it and reports the result back to GitHub, and the panel
+# reads that and shows Ava a link to look at her own change on a real page
+# before anyone else sees it. Publish then merges it.
+#
+# The costs are the point. A deploy preview is 0 credits and a production deploy
+# is 15, so she can look at a wording change five times and only pay once, at the
+# end, when she decides to keep it. Without editorial_workflow every save would
+# go straight to the live site and twenty typo fixes would be her whole month.
 publish_mode: editorial_workflow
+
+# Where the finished site lives. This is what lets the panel offer "view this
+# page" links, and it puts a way back to her own website in the header so the
+# panel is not a dead end.
+site_url: https://attentiontodetailwa.com
+display_url: https://attentiontodetailwa.com
 
 media_folder: assets
 public_folder: assets
@@ -38,6 +48,8 @@ public_folder: assets
 collections:
   - name: business
     label: Your details
+    editor:
+      preview: false
     files:
       - name: site
         label: Phone, hours and towns
