@@ -32,9 +32,12 @@
   Empty token renders nothing at all, so a build before the token exists ships
   a clean page rather than a beacon posting to nowhere.
 
-  `defer` and last in the body: this is the least important request on the
-  page and it should never be in front of a photo of a car.
+  A module script is deferred by definition, which is why there is no `defer`
+  here and why it can sit last in the body: this is the least important request
+  on the page and it should never be in front of a photo of a car. The tag is
+  worded the way Cloudflare's own dashboard hands it out, so comparing the two
+  turns up nothing to explain.
 #}
 {%- if analytics.cloudflareToken %}
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "{{ analytics.cloudflareToken }}"}'></script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "{{ analytics.cloudflareToken }}"}'></script>
 {%- endif -%}
