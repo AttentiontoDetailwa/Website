@@ -1,1 +1,23 @@
 .DS_Store
+
+# Build output. Eleventy writes the deployable site here; Netlify runs the same
+# build itself, so nothing in it belongs in the repo.
+_site/
+node_modules/
+
+# Internal, and this repo is public.
+#
+# These stay on disk because they only work from here: the option galleries link
+# to ../css/style.css and ../assets/, so moving them out of the project root
+# would break every one of them. Untracked is enough — the goal is that they are
+# not published, not that they are not on the machine.
+#
+# handoff/ is the exception and has moved out of the project entirely, to
+# ../ATD internal/handoff/. It is self-contained, it is a real deliverable, and
+# it carries her billing terms, so it should not be one .gitignore typo away
+# from being public.
+CLAUDE.md
+.claude/
+design-options/
+hero-options/
+mobile-options/

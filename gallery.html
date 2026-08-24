@@ -1,3 +1,9 @@
+---
+navCurrent: gallery
+---
+{#- "with context" matters: without it the macro cannot see the photos data,
+    and every srcset comes out empty. -#}
+{% import "photo.njk" as photo with context %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,41 +43,7 @@
 <body class="has-rail">
 <a class="skip-link" href="#main">Skip to content</a>
 
-<header class="site-header">
-  <div class="shell site-header__inner">
-    <a class="brand" href="index.html" aria-label="Attention to Detail, home">
-      <svg class="brand__mark" viewBox="0 0 64 34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M3 24h6M55 24h6M9 24c0-3 2.4-5.4 5.4-5.4S19.8 21 19.8 24 17.4 29.4 14.4 29.4 9 27 9 24Z"/>
-        <path d="M44 24c0-3 2.4-5.4 5.4-5.4S54.8 21 54.8 24s-2.4 5.4-5.4 5.4S44 27 44 24Z"/>
-        <path d="M19.8 24h24.4"/>
-        <path d="M4 21c1-5.5 3-8 6-8.6l9-5.2c2-1.2 4.3-1.6 6.6-1.2l14 2.6c2 .4 3.8 1.4 5.2 2.9l4.4 4.6 8 1.8c3 .7 4.8 2.5 4.8 5"/>
-        <path d="M17 12.4h13.6M33 8.2 36 15"/>
-      </svg>
-      <span class="brand__text">
-        <span class="brand__name">Attention to Detail</span>
-        <span class="brand__tag">Any time, any place</span>
-      </span>
-    </a>
-
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open menu">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-    </button>
-
-    <nav class="nav" id="primary-nav" data-open="false" aria-label="Main">
-      <a href="index.html">Home</a>
-      <a href="services.html">Services &amp; Pricing</a>
-      <a href="gallery.html" aria-current="page">Gallery</a>
-      <a href="about.html">About</a>
-      <a href="contact.html">Contact</a>
-      <a class="btn btn--primary btn--sm" href="contact.html">Get my free quote</a>
-    </nav>
-
-    <div class="header__cta">
-      <a class="header__phone" href="tel:+12065656741">(206) 565-6741</a>
-      <a class="btn btn--primary btn--sm" href="contact.html">Get my free quote</a>
-    </div>
-  </div>
-</header>
+{% include "header.njk" %}
 
 <main id="main">
 
@@ -203,69 +175,12 @@
     </div>
 
     <div class="gallery gallery--feature">
+{%- for item in gallery.items %}
       <figure>
-        <picture>
-  <source type="image/webp" sizes="(max-width: 40em) 40vw, 20vw" srcset="assets/work-chrysler-door-400.webp 400w, assets/work-chrysler-door-640.webp 640w, assets/work-chrysler-door-900.webp 900w">
-  <img src="assets/work-chrysler-door-640.jpg" sizes="(max-width: 40em) 40vw, 20vw" srcset="assets/work-chrysler-door-400.jpg 400w, assets/work-chrysler-door-640.jpg 640w, assets/work-chrysler-door-900.jpg 900w" alt="Cleaned Chrysler 300 passenger door panel, dash and seat" loading="lazy" width="900" height="1200">
-</picture>
-        <figcaption>Chrysler 300, passenger side</figcaption>
+        {{ photo.picture(item.photo | photoStem, item.alt, "(max-width: 40em) 40vw, 20vw") }}
+        <figcaption>{{ item.caption | safe }}</figcaption>
       </figure>
-      <figure>
-        <picture>
-  <source type="image/webp" sizes="(max-width: 40em) 40vw, 20vw" srcset="assets/work-f150-rear-400.webp 400w, assets/work-f150-rear-640.webp 640w, assets/work-f150-rear-900.webp 900w">
-  <img src="assets/work-f150-rear-640.jpg" sizes="(max-width: 40em) 40vw, 20vw" srcset="assets/work-f150-rear-400.jpg 400w, assets/work-f150-rear-640.jpg 640w, assets/work-f150-rear-900.jpg 900w" alt="Detailed rear leather seats and all-weather mats in a Ford F-150" loading="lazy" width="900" height="1200">
-</picture>
-        <figcaption>Ford F-150, rear cab</figcaption>
-      </figure>
-      <figure>
-        <picture>
-  <source type="image/webp" sizes="(max-width: 40em) 40vw, 20vw" srcset="assets/work-truck-seats-400.webp 400w, assets/work-truck-seats-640.webp 640w, assets/work-truck-seats-900.webp 900w">
-  <img src="assets/work-truck-seats-640.jpg" sizes="(max-width: 40em) 40vw, 20vw" srcset="assets/work-truck-seats-400.jpg 400w, assets/work-truck-seats-640.jpg 640w, assets/work-truck-seats-900.jpg 900w" alt="Detailed rear bench seat in a pickup truck" loading="lazy" width="900" height="1200">
-</picture>
-        <figcaption>Pickup, rear bench</figcaption>
-      </figure>
-      <figure>
-        <picture>
-  <source type="image/webp" sizes="(max-width: 40em) 40vw, 20vw" srcset="assets/work-truck-mats-400.webp 400w, assets/work-truck-mats-640.webp 640w, assets/work-truck-mats-900.webp 900w">
-  <img src="assets/work-truck-mats-640.jpg" sizes="(max-width: 40em) 40vw, 20vw" srcset="assets/work-truck-mats-400.jpg 400w, assets/work-truck-mats-640.jpg 640w, assets/work-truck-mats-900.jpg 900w" alt="Cleaned all-weather floor mats and rear vents in a truck" loading="lazy" width="900" height="1200">
-</picture>
-        <figcaption>Pickup, rear floor &amp; vents</figcaption>
-      </figure>
-      <figure>
-        <picture>
-  <source type="image/webp" sizes="(max-width: 40em) 40vw, 20vw" srcset="assets/work-truck-floor-400.webp 400w, assets/work-truck-floor-640.webp 640w, assets/work-truck-floor-900.webp 900w">
-  <img src="assets/work-truck-floor-640.jpg" sizes="(max-width: 40em) 40vw, 20vw" srcset="assets/work-truck-floor-400.jpg 400w, assets/work-truck-floor-640.jpg 640w, assets/work-truck-floor-900.jpg 900w" alt="Vacuumed rear floor and seats of a Ford F-150 crew cab" loading="lazy" width="900" height="1200">
-</picture>
-        <figcaption>F-150, crew cab floor</figcaption>
-      </figure>
-      <figure>
-        <picture>
-  <source type="image/webp" sizes="(max-width: 40em) 40vw, 20vw" srcset="assets/work-cargo-400.webp 400w, assets/work-cargo-640.webp 640w, assets/work-cargo-900.webp 900w">
-  <img src="assets/work-cargo-640.jpg" sizes="(max-width: 40em) 40vw, 20vw" srcset="assets/work-cargo-400.jpg 400w, assets/work-cargo-640.jpg 640w, assets/work-cargo-900.jpg 900w" alt="Vacuumed SUV cargo area and rear seat backs" loading="lazy" width="900" height="1200">
-</picture>
-        <figcaption>SUV, cargo area</figcaption>
-      </figure>
-      <figure>
-        <picture>
-  <source type="image/webp" sizes="(max-width: 40em) 40vw, 20vw" srcset="assets/audi-before-mat-400.webp 400w, assets/audi-before-mat-640.webp 640w, assets/audi-before-mat-900.webp 900w">
-  <img src="assets/audi-before-mat-640.jpg" sizes="(max-width: 40em) 40vw, 20vw" srcset="assets/audi-before-mat-400.jpg 400w, assets/audi-before-mat-640.jpg 640w, assets/audi-before-mat-900.jpg 900w" alt="Audi TT footwell and floor mat mid-detail" loading="lazy" width="900" height="1200">
-</picture>
-        <figcaption>Audi TT footwell, mid-job</figcaption>
-      </figure>
-      <figure>
-        <picture>
-  <source type="image/webp" sizes="(max-width: 40em) 40vw, 20vw" srcset="assets/audi-before-seats-400.webp 400w, assets/audi-before-seats-640.webp 640w, assets/audi-before-seats-900.webp 900w">
-  <img src="assets/audi-before-seats-640.jpg" sizes="(max-width: 40em) 40vw, 20vw" srcset="assets/audi-before-seats-400.jpg 400w, assets/audi-before-seats-640.jpg 640w, assets/audi-before-seats-900.jpg 900w" alt="Audi TT red leather seats and console mid-detail" loading="lazy" width="900" height="1200">
-</picture>
-        <figcaption>Audi TT seats &amp; console, mid-job</figcaption>
-      </figure>
-      <figure>
-        <picture>
-  <source type="image/webp" sizes="(max-width: 40em) 40vw, 20vw" srcset="assets/card-400.webp 400w, assets/card-532.webp 532w">
-  <img src="assets/card-532.jpg" sizes="(max-width: 40em) 40vw, 20vw" srcset="assets/card-400.jpg 400w, assets/card-532.jpg 532w" alt="Attention to Detail business card on a detailed leather seat" loading="lazy" width="532" height="313">
-</picture>
-        <figcaption>Card left in every finished car</figcaption>
-      </figure>
+{%- endfor %}
     </div>
 
     <!-- Fifteen photographs read as fifteen cars, which is the one wrong idea
@@ -295,66 +210,7 @@
 
 </main>
 
-<footer class="site-footer">
-  <div class="shell">
-    <div class="footer-grid">
-      <div class="footer-col footer-brand">
-        <a class="brand" href="index.html">
-          <svg class="brand__mark" viewBox="0 0 64 34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M3 24h6M55 24h6M9 24c0-3 2.4-5.4 5.4-5.4S19.8 21 19.8 24 17.4 29.4 14.4 29.4 9 27 9 24Z"/>
-            <path d="M44 24c0-3 2.4-5.4 5.4-5.4S54.8 21 54.8 24s-2.4 5.4-5.4 5.4S44 27 44 24Z"/>
-            <path d="M19.8 24h24.4"/>
-            <path d="M4 21c1-5.5 3-8 6-8.6l9-5.2c2-1.2 4.3-1.6 6.6-1.2l14 2.6c2 .4 3.8 1.4 5.2 2.9l4.4 4.6 8 1.8c3 .7 4.8 2.5 4.8 5"/>
-            <path d="M17 12.4h13.6M33 8.2 36 15"/>
-          </svg>
-          <span class="brand__text">
-            <span class="brand__name">Attention to Detail</span>
-            <span class="brand__tag">Any time, any place</span>
-          </span>
-        </a>
-        <p>Mobile interior auto detailing across Pierce County. Owned and operated by Ava Bright.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Pages</h4>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="services.html">Services &amp; Pricing</a></li>
-          <li><a href="gallery.html">Gallery</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Service area</h4>
-        <ul>
-          <li><p>All of Pierce County, WA</p></li>
-          <li><p>Bonney Lake &middot; Sumner &middot; Puyallup</p></li>
-          <li><p>Tacoma &middot; Orting &middot; Buckley</p></li>
-          <li><p>Enumclaw</p></li>
-          <li><a href="contact.html">Somewhere else? Ask.</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Get in touch</h4>
-        <ul>
-          <li><a href="tel:+12065656741">(206) 565-6741</a></li>
-          <li><a href="mailto:avabright2006@gmail.com">avabright2006@gmail.com</a></li>
-          <li><a href="contact.html">Request a quote</a></li>
-          <!-- The Google listing is filed under "Attention to Detail Auto" — the
-               name on the profile, not the name on the site. Linking it from
-               every page is the one signal that ties the two together for
-               anyone checking she is real. -->
-          <li><a href="https://maps.google.com/?cid=9363730081657717898" target="_blank" rel="noopener">Find me on Google</a></li>
-          <li><a href="https://www.facebook.com/ava.bright.378199" target="_blank" rel="noopener">Facebook</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2026 Attention to Detail &middot; Interior Auto Detailing</p>
-      <p class="spacer">Site by Gaspar Web Co.</p>
-    </div>
-  </div>
-</footer>
+{% include "footer.njk" %}
 
 <!-- Phone only. Same rail as the home page: once you have scrolled past the
      top of a page there is no way to call or quote without scrolling back. -->

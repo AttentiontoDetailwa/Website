@@ -1,0 +1,55 @@
+{#- The LocalBusiness record, built from the same _data/site.json the pages use.
+
+    This is the half of the site nobody looks at and everybody relies on: it is
+    what Google reads for her hours, her number and where she works. Keeping it
+    hand-written next to a panel that lets Ava change her hours would have meant
+    the page saying one thing and the structured data saying another, with
+    nothing to catch it — the whole point of a data file is that both come from
+    the same line.
+
+    AutoWash, not AutoDetailing: the latter is not in the schema.org vocabulary
+    at all, and while it was there the entire block was being discarded.
+
+    Note tojson on every string. It quotes and escapes, so an apostrophe in her
+    description or a stray quote in a town name cannot break the JSON. -#}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AutoWash",
+  "@id": "{{ site.url }}#business",
+  "name": {{ site.name | dump | safe }},
+  "alternateName": {{ site.alternateName | dump | safe }},
+  "url": {{ site.url | dump | safe }},
+  "image": {{ site.schemaImage | dump | safe }},
+  "logo": {{ site.schemaLogo | dump | safe }},
+  "description": {{ site.description | dump | safe }},
+  "telephone": {{ site.phone.tel | dump | safe }},
+  "email": {{ site.email | dump | safe }},
+  "founder": { "@type": "Person", "name": {{ site.owner | dump | safe }} },
+  "priceRange": {{ site.priceRange | dump | safe }},
+  "currenciesAccepted": {{ site.currency | dump | safe }},
+  "address": {
+    "@type": "PostalAddress",
+    "addressRegion": {{ site.area.region | dump | safe }},
+    "addressCountry": "US"
+  },
+  "hasMap": {{ site.google | dump | safe }},
+  "sameAs": [
+    {{ site.google | dump | safe }},
+    {{ site.facebook | dump | safe }}
+  ],
+  "openingHoursSpecification": {
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": {{ site.hours.days | dump | safe }},
+    "opens": {{ site.hours.opens | dump | safe }},
+    "closes": {{ site.hours.closes | dump | safe }}
+  },
+  "areaServed": [
+    { "@type": "AdministrativeArea", "name": {{ site.area.county | dump | safe }}, "addressRegion": {{ site.area.region | dump | safe }} }
+{%- for city in site.area.cities %},
+    { "@type": "City", "name": {{ city | dump | safe }}, "addressRegion": {{ site.area.region | dump | safe }} }
+{%- endfor %}
+  ],
+  "slogan": {{ site.slogan | dump | safe }}
+}
+</script>

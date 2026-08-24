@@ -1,0 +1,79 @@
+{
+  "name": "Attention to Detail",
+  "alternateName": "Attention to Detail Auto",
+  "tagline": "Any time, any place",
+  "slogan": "Any time, any place.",
+  "description": "Mobile interior auto detailing serving all of Pierce County, Washington. Steam cleaning in every job.",
+  "url": "https://attentiontodetailwa.com/",
+  "owner": "Ava Bright",
+  "phone": {
+    "display": "(206) 565-6741",
+    "tel": "+12065656741"
+  },
+  "email": "avabright2006@gmail.com",
+  "hours": {
+    "display": "8am to 6pm",
+    "opens": "08:00",
+    "closes": "18:00",
+    "days": [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday"
+    ]
+  },
+  "area": {
+    "county": "Pierce County",
+    "region": "WA",
+    "cities": [
+      "Bonney Lake",
+      "Sumner",
+      "Puyallup",
+      "Tacoma",
+      "Orting",
+      "Buckley",
+      "Enumclaw"
+    ],
+    "alsoServed": [
+      "Lakewood",
+      "Graham",
+      "Spanaway"
+    ]
+  },
+  "priceRange": "$50-$200",
+  "currency": "USD",
+  "google": "https://maps.google.com/?cid=9363730081657717898",
+  "facebook": "https://www.facebook.com/ava.bright.378199",
+  "schemaImage": "https://attentiontodetailwa.com/assets/ba-driver.jpg",
+  "schemaLogo": "https://attentiontodetailwa.com/assets/logo-banner.jpg",
+  "nav": [
+    {
+      "key": "home",
+      "href": "index.html",
+      "label": "Home"
+    },
+    {
+      "key": "services",
+      "href": "services.html",
+      "label": "Services &amp; Pricing"
+    },
+    {
+      "key": "gallery",
+      "href": "gallery.html",
+      "label": "Gallery"
+    },
+    {
+      "key": "about",
+      "href": "about.html",
+      "label": "About"
+    },
+    {
+      "key": "contact",
+      "href": "contact.html",
+      "label": "Contact"
+    }
+  ]
+}

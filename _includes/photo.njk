@@ -1,0 +1,47 @@
+{#- One <picture> macro for the whole site.
+
+    Each photo was six lines of near-identical markup with two long srcset
+    strings in it, twenty-eight times over. The widths, the fallback file and the
+    intrinsic dimensions all come from _data/photos.js, which reads them off the
+    files in assets/ — so the only things a page has to say are which photo, what
+    it shows, and how wide it will be drawn.
+
+      name    the stem, e.g. work-cargo, with no width or extension
+      alt     what the photograph shows. Never decorative on this site.
+      sizes   measured off the rendered page, not guessed. Phone value first.
+      eager   true for anything above the fold, which drops loading=lazy and
+              adds fetchpriority=high instead
+
+    width and height are always emitted. They are what stop the page shifting
+    under someone's thumb while the photos arrive. -#}
+{% macro picture(name, alt, sizes, eager=false, klass="") %}
+{%- set p = photos[name] -%}
+{%- if not p or not p.widths.length -%}
+{#- A photo uploaded through the admin panel. It has no -400/-640 variants,
+    because those are made by a script that runs on a laptop and Ava does not
+    have one — she has a phone, and what comes off a phone is four megabytes.
+
+    So these go through Netlify's Image CDN, which resizes on request. Same
+    width ladder as everything else, so a phone still pulls roughly 400px of
+    photo rather than the whole thing. It costs nothing extra: transformed
+    images are billed as ordinary bandwidth and requests, and they are smaller
+    than the file they replace.
+
+    One <img>, no <picture>. Asked for a width and nothing else, Netlify picks
+    the format itself from what the browser says it accepts, which means AVIF
+    where AVIF is understood and JPEG where it is not. Pinning fm=webp in a
+    <source> would have thrown away the better of those two.
+
+    The curated photos deliberately do not use this. They already have real
+    variants that work in any local preview, and routing them through a URL that
+    only resolves once deployed would mean the site could no longer be checked
+    properly before it went out. -#}
+{%- set src = ("/assets/" + (p.original if p else name)) | imgSrc -%}
+<img{{ ' class="' + klass + '"' | safe if klass }} src="/.netlify/images?url={{ src }}&amp;w=640" sizes="{{ sizes }}" srcset="{% for w in [400, 640, 900] %}/.netlify/images?url={{ src }}&amp;w={{ w }} {{ w }}w{{ ", " if not loop.last }}{% endfor %}" alt="{{ alt }}"{% if eager %} fetchpriority="high"{% else %} loading="lazy"{% endif %}{% if p and p.width %} width="{{ p.width }}" height="{{ p.height }}"{% endif %}>
+{%- else -%}
+<picture>
+  <source type="image/webp" sizes="{{ sizes }}" srcset="{% for w in p.webp %}assets/{{ name }}-{{ w }}.webp {{ w }}w{{ ", " if not loop.last }}{% endfor %}">
+  <img{{ ' class="' + klass + '"' | safe if klass }} src="assets/{{ name }}-{{ p.fallback }}.jpg" sizes="{{ sizes }}" srcset="{% for w in p.widths %}assets/{{ name }}-{{ w }}.jpg {{ w }}w{{ ", " if not loop.last }}{% endfor %}" alt="{{ alt }}"{% if eager %} fetchpriority="high"{% else %} loading="lazy"{% endif %} width="{{ p.width }}" height="{{ p.height }}">
+</picture>
+{%- endif -%}
+{%- endmacro %}

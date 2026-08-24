@@ -1,0 +1,149 @@
+# What Ava sees when she opens /admin.
+#
+# Every field here writes to a file in _data/, which is what the pages and the
+# structured data are both built from. That is the whole reason the build exists:
+# her phone number used to be written out in 55 places, and a panel that let her
+# fix one of them and leave the other 54 wrong would have been worse than no
+# panel at all.
+#
+# Labels are written for her, not for us. No field says "slug" or "widget" or
+# "collection", and every hint says what the thing does on the page rather than
+# what it is called in the code.
+
+backend:
+  name: github
+  repo: AttentiontoDetailwa/Website
+  branch: main
+  # No base_url. That option points at an OAuth helper, and one is only needed
+  # for the "Sign in with GitHub" button — Netlify removed its own OAuth
+  # provider from the dashboard in July 2025, so using that button would mean
+  # running a proxy of our own on Cloudflare Workers.
+  #
+  # Ava signs in with a personal access token instead. It is one fine-grained
+  # token, scoped to this repository and nothing else, pasted once and kept in
+  # her browser. For one person editing one site that is less to build, less to
+  # keep running, and less to explain. Add base_url here if a second person ever
+  # needs an account.
+
+# Save puts the change on a branch and opens a pull request. Netlify builds a
+# deploy preview from it and reports the result back to GitHub, and the panel
+# reads that and shows Ava a link to look at her own change on a real page
+# before anyone else sees it. Publish then merges it.
+#
+# The costs are the point. A deploy preview is 0 credits and a production deploy
+# is 15, so she can look at a wording change five times and only pay once, at the
+# end, when she decides to keep it. Without editorial_workflow every save would
+# go straight to the live site and twenty typo fixes would be her whole month.
+publish_mode: editorial_workflow
+
+# Where the finished site lives. This is what lets the panel offer "view this
+# page" links, and it puts a way back to her own website in the header so the
+# panel is not a dead end.
+site_url: https://attentiontodetailwa.com
+display_url: https://attentiontodetailwa.com
+
+media_folder: assets
+public_folder: assets
+
+collections:
+  - name: business
+    label: Your details
+    editor:
+      preview: false
+    files:
+      - name: site
+        label: Phone, hours and towns
+        file: _data/site.json
+        description: >-
+          Change something here and it updates everywhere it appears on the
+          site, including the details Google reads.
+        fields:
+          - { name: name, label: Business name, widget: string }
+          - { name: alternateName, label: Name on your Google listing, widget: string,
+              hint: "Leave this as it is unless you rename the listing itself." }
+          - { name: tagline, label: Line under the name in the header, widget: string }
+          - { name: slogan, label: Slogan, widget: string }
+          - { name: description, label: One-line description of the business, widget: text,
+              hint: "This is what Google shows under your name in search results." }
+          - { name: url, label: Website address, widget: string }
+          - { name: owner, label: Your name, widget: string }
+
+          - name: phone
+            label: Phone number
+            widget: object
+            fields:
+              - { name: display, label: How it is written on the page, widget: string,
+                  hint: "For example (206) 565-6741" }
+              - { name: tel, label: What the call button dials, widget: string,
+                  hint: "Digits only with the country code, like +12065656741. No spaces or brackets." }
+
+          - { name: email, label: Email address, widget: string }
+
+          - name: hours
+            label: Hours
+            widget: object
+            fields:
+              - { name: display, label: How the hours are written on the page, widget: string,
+                  hint: "For example 8am to 6pm" }
+              - { name: opens, label: Opening time, widget: string, hint: "24-hour, like 08:00" }
+              - { name: closes, label: Closing time, widget: string, hint: "24-hour, like 18:00" }
+              - { name: days, label: Days you work, widget: list }
+
+          - name: area
+            label: Where you work
+            widget: object
+            fields:
+              - { name: county, label: County, widget: string }
+              - { name: region, label: State, widget: string, hint: "Two letters, like WA" }
+              - { name: cities, label: Towns you list on the site, widget: list,
+                  hint: "These show in the footer, in the quote form, and in what Google reads." }
+              - { name: alsoServed, label: Towns you will also drive to, widget: list,
+                  hint: "These only show in the quote form's list, not in the footer." }
+
+          - { name: priceRange, label: Price range, widget: string, hint: "For example $50-$200" }
+          - { name: currency, label: Currency, widget: string }
+          - { name: google, label: Link to your Google listing, widget: string }
+          - { name: facebook, label: Link to your Facebook page, widget: string }
+          - { name: schemaImage, label: Picture shown when the site is shared, widget: string }
+          - { name: schemaLogo, label: Logo address, widget: string }
+          - { name: nav, label: Menu, widget: list, collapsed: true,
+              fields: [
+                { name: key, label: Internal name, widget: string },
+                { name: href, label: Page, widget: string },
+                { name: label, label: What the menu says, widget: string },
+              ] }
+
+      - name: faq
+        label: Questions and answers
+        file: _data/faq.json
+        description: >-
+          The questions at the bottom of the Services page. These are also what
+          Google reads, so a change here updates both.
+        fields:
+          - name: items
+            label: Questions
+            widget: list
+            summary: "{{fields.q}}"
+            fields:
+              - { name: q, label: Question, widget: string }
+              - { name: a, label: Answer, widget: text,
+                  hint: "If you write {hours} it is replaced by your opening hours, so they can never go out of date. Leave it in unless you mean to." }
+              - { name: open, label: Show this one already open, widget: boolean, default: false,
+                  hint: "Usually only the first one." }
+
+      - name: gallery
+        label: Photos of finished work
+        file: _data/gallery.json
+        description: >-
+          The grid of finished cars on the Gallery page. Drag to reorder.
+        fields:
+          - name: items
+            label: Photos
+            widget: list
+            summary: "{{fields.caption}}"
+            fields:
+              - { name: photo, label: Photo, widget: image,
+                  hint: "Pick one that is already here, or upload a new one." }
+              - { name: alt, label: What the photo shows, widget: string,
+                  hint: "Written for someone who cannot see it. Describe the car and the state it is in." }
+              - { name: caption, label: Caption under the photo, widget: string }

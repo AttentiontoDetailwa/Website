@@ -1,0 +1,54 @@
+{#- The header, once, instead of seven times.
+
+    It varied across the pages in exactly three ways and nothing else: which nav
+    link carries aria-current, where the quote button points, and what the two
+    quote buttons say. Everything else was identical down to the whitespace, so
+    everything else is fixed here.
+
+    Pages set these in their front matter and inherit the defaults otherwise:
+
+      navCurrent   which nav key is the current page, or omitted for none
+      ctaHref      where both quote buttons point       (default contact.html)
+      ctaPhone     true to turn both buttons into her number instead
+
+    thanks.html and 404.html set ctaPhone: neither has a form to send anyone to,
+    so both buttons become the phone, the drawer says the number in full and the
+    bar says "Call instead". The number itself comes from the data file rather
+    than from their front matter, so changing it in one place changes it here
+    too. -#}
+{%- set quoteHref = ("tel:" + site.phone.tel) if ctaPhone else (ctaHref | default("contact.html")) -%}
+{%- set quoteNav  = ("Call " + site.phone.display) if ctaPhone else "Get my free quote" -%}
+{%- set quoteBar  = "Call instead" if ctaPhone else "Get my free quote" -%}
+<header class="site-header">
+  <div class="shell site-header__inner">
+    <a class="brand" href="index.html" aria-label="{{ site.name }}, home">
+      <svg class="brand__mark" viewBox="0 0 64 34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 24h6M55 24h6M9 24c0-3 2.4-5.4 5.4-5.4S19.8 21 19.8 24 17.4 29.4 14.4 29.4 9 27 9 24Z"/>
+        <path d="M44 24c0-3 2.4-5.4 5.4-5.4S54.8 21 54.8 24s-2.4 5.4-5.4 5.4S44 27 44 24Z"/>
+        <path d="M19.8 24h24.4"/>
+        <path d="M4 21c1-5.5 3-8 6-8.6l9-5.2c2-1.2 4.3-1.6 6.6-1.2l14 2.6c2 .4 3.8 1.4 5.2 2.9l4.4 4.6 8 1.8c3 .7 4.8 2.5 4.8 5"/>
+        <path d="M17 12.4h13.6M33 8.2 36 15"/>
+      </svg>
+      <span class="brand__text">
+        <span class="brand__name">{{ site.name }}</span>
+        <span class="brand__tag">{{ site.tagline }}</span>
+      </span>
+    </a>
+
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+
+    <nav class="nav" id="primary-nav" data-open="false" aria-label="Main">
+{%- for item in site.nav %}
+      <a href="{{ item.href }}"{% if item.key == navCurrent %} aria-current="page"{% endif %}>{{ item.label | safe }}</a>
+{%- endfor %}
+      <a class="btn btn--primary btn--sm" href="{{ quoteHref }}">{{ quoteNav }}</a>
+    </nav>
+
+    <div class="header__cta">
+      <a class="header__phone" href="tel:{{ site.phone.tel }}">{{ site.phone.display }}</a>
+      <a class="btn btn--primary btn--sm" href="{{ quoteHref }}">{{ quoteBar }}</a>
+    </div>
+  </div>
+</header>

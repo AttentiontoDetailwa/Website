@@ -11,4 +11,9 @@ Allow: /
 # that actually keeps it out. A Disallow line would also publish the paths, and
 # robots.txt is the first file anyone curious types.
 
+# The admin panel. Nothing here is useful to a search engine and the login screen
+# is not a page anyone should land on from a result. It carries its own noindex
+# too, since a crawler that ignores this file should still be told no.
+Disallow: /admin/
+
 Sitemap: https://attentiontodetailwa.com/sitemap.xml

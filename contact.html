@@ -1,3 +1,7 @@
+---
+navCurrent: contact
+ctaHref: "#quote-form"
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,41 +41,7 @@
 <body class="has-rail">
 <a class="skip-link" href="#main">Skip to content</a>
 
-<header class="site-header">
-  <div class="shell site-header__inner">
-    <a class="brand" href="index.html" aria-label="Attention to Detail, home">
-      <svg class="brand__mark" viewBox="0 0 64 34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <path d="M3 24h6M55 24h6M9 24c0-3 2.4-5.4 5.4-5.4S19.8 21 19.8 24 17.4 29.4 14.4 29.4 9 27 9 24Z"/>
-        <path d="M44 24c0-3 2.4-5.4 5.4-5.4S54.8 21 54.8 24s-2.4 5.4-5.4 5.4S44 27 44 24Z"/>
-        <path d="M19.8 24h24.4"/>
-        <path d="M4 21c1-5.5 3-8 6-8.6l9-5.2c2-1.2 4.3-1.6 6.6-1.2l14 2.6c2 .4 3.8 1.4 5.2 2.9l4.4 4.6 8 1.8c3 .7 4.8 2.5 4.8 5"/>
-        <path d="M17 12.4h13.6M33 8.2 36 15"/>
-      </svg>
-      <span class="brand__text">
-        <span class="brand__name">Attention to Detail</span>
-        <span class="brand__tag">Any time, any place</span>
-      </span>
-    </a>
-
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open menu">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-    </button>
-
-    <nav class="nav" id="primary-nav" data-open="false" aria-label="Main">
-      <a href="index.html">Home</a>
-      <a href="services.html">Services &amp; Pricing</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="about.html">About</a>
-      <a href="contact.html" aria-current="page">Contact</a>
-      <a class="btn btn--primary btn--sm" href="#quote-form">Get my free quote</a>
-    </nav>
-
-    <div class="header__cta">
-      <a class="header__phone" href="tel:+12065656741">(206) 565-6741</a>
-      <a class="btn btn--primary btn--sm" href="#quote-form">Get my free quote</a>
-    </div>
-  </div>
-</header>
+{% include "header.njk" %}
 
 <main id="main">
 
@@ -196,16 +166,17 @@
           <label for="city">City or town <span class="req">*</span></label>
           <select class="select" id="city" name="city" required>
             <option value="">Select your city…</option>
-            <option>Bonney Lake</option>
-            <option>Sumner</option>
-            <option>Puyallup</option>
-            <option>Tacoma</option>
-            <option>Lakewood</option>
-            <option>Orting</option>
-            <option>Graham</option>
-            <option>Spanaway</option>
-            <option>Buckley</option>
-            <option>Enumclaw</option>
+{#- The seven she markets, then the three this form has always quietly also
+    offered. One place to add a town, and it lands here, in the footer and in
+    the structured data at the same time. The order changes slightly: the
+    headline towns now come first and the other three follow, where before
+    they were interleaved. -#}
+{%- for city in site.area.cities %}
+            <option>{{ city }}</option>
+{%- endfor %}
+{%- for city in site.area.alsoServed %}
+            <option>{{ city }}</option>
+{%- endfor %}
             <option>Somewhere else in Pierce County</option>
             <option>Somewhere else nearby</option>
           </select>
@@ -269,14 +240,14 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1.1 1A16 16 0 0 1 4 5.1 1 1 0 0 1 5 4Z"/></svg>
             <div>
               <span>Call or text</span>
-              <a href="tel:+12065656741">(206) 565-6741</a>
+              <a href="tel:{{ site.phone.tel }}">{{ site.phone.display }}</a>
             </div>
           </li>
           <li>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
             <div>
               <span>Email</span>
-              <a href="mailto:avabright2006@gmail.com">avabright2006@gmail.com</a>
+              <a href="mailto:{{ site.email }}">{{ site.email }}</a>
             </div>
           </li>
           <li>
@@ -315,66 +286,7 @@
 
 </main>
 
-<footer class="site-footer">
-  <div class="shell">
-    <div class="footer-grid">
-      <div class="footer-col footer-brand">
-        <a class="brand" href="index.html">
-          <svg class="brand__mark" viewBox="0 0 64 34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M3 24h6M55 24h6M9 24c0-3 2.4-5.4 5.4-5.4S19.8 21 19.8 24 17.4 29.4 14.4 29.4 9 27 9 24Z"/>
-            <path d="M44 24c0-3 2.4-5.4 5.4-5.4S54.8 21 54.8 24s-2.4 5.4-5.4 5.4S44 27 44 24Z"/>
-            <path d="M19.8 24h24.4"/>
-            <path d="M4 21c1-5.5 3-8 6-8.6l9-5.2c2-1.2 4.3-1.6 6.6-1.2l14 2.6c2 .4 3.8 1.4 5.2 2.9l4.4 4.6 8 1.8c3 .7 4.8 2.5 4.8 5"/>
-            <path d="M17 12.4h13.6M33 8.2 36 15"/>
-          </svg>
-          <span class="brand__text">
-            <span class="brand__name">Attention to Detail</span>
-            <span class="brand__tag">Any time, any place</span>
-          </span>
-        </a>
-        <p>Mobile interior auto detailing across Pierce County. Owned and operated by Ava Bright.</p>
-      </div>
-      <div class="footer-col">
-        <h4>Pages</h4>
-        <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="services.html">Services &amp; Pricing</a></li>
-          <li><a href="gallery.html">Gallery</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Service area</h4>
-        <ul>
-          <li><p>All of Pierce County, WA</p></li>
-          <li><p>Bonney Lake &middot; Sumner &middot; Puyallup</p></li>
-          <li><p>Tacoma &middot; Orting &middot; Buckley</p></li>
-          <li><p>Enumclaw</p></li>
-          <li><a href="contact.html">Somewhere else? Ask.</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>Get in touch</h4>
-        <ul>
-          <li><a href="tel:+12065656741">(206) 565-6741</a></li>
-          <li><a href="mailto:avabright2006@gmail.com">avabright2006@gmail.com</a></li>
-          <li><a href="contact.html">Request a quote</a></li>
-          <!-- The Google listing is filed under "Attention to Detail Auto" — the
-               name on the profile, not the name on the site. Linking it from
-               every page is the one signal that ties the two together for
-               anyone checking she is real. -->
-          <li><a href="https://maps.google.com/?cid=9363730081657717898" target="_blank" rel="noopener">Find me on Google</a></li>
-          <li><a href="https://www.facebook.com/ava.bright.378199" target="_blank" rel="noopener">Facebook</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2026 Attention to Detail &middot; Interior Auto Detailing</p>
-      <p class="spacer">Site by Gaspar Web Co.</p>
-    </div>
-  </div>
-</footer>
+{% include "footer.njk" %}
 
 <!-- Phone only. This page is the quote form, so the rail carries the other
      way of reaching her rather than a button pointing at the page it is on. -->
