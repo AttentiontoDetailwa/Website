@@ -1,7 +1,5 @@
 ---
-ctaHref: "tel:+12065656741"
-ctaNavLabel: "Call (206) 565-6741"
-ctaBarLabel: "Call instead"
+ctaPhone: true
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -79,11 +77,11 @@ ctaBarLabel: "Call instead"
            is already being wasted. Said here, the mechanism is the phone
            they are already looking at. -->
       <p>
-        I'm on the phone between 8am and 6pm, seven days a week, and I can
+        I'm on the phone between {{ site.hours.display | replace(' to ', ' and ') }}, seven days a week, and I can
         usually tell you there and then whether a day is open. If a link on my
         own site is what sent you here, tell me which one and I'll fix it.
       </p>
-      <a class="textlink" href="tel:+12065656741">Call (206) 565-6741 &rarr;</a>
+      <a class="textlink" href="tel:{{ site.phone.tel }}">Call {{ site.phone.display }} &rarr;</a>
       <p>
         And if none of those three was what you came for, everything I do
         starts on the home page.

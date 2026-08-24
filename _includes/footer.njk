@@ -35,8 +35,12 @@
       <div class="footer-col">
         <h4>Service area</h4>
         <ul>
-{%- for line in site.areaLines %}
-          <li><p>{{ line | safe }}</p></li>
+          <li><p>All of {{ site.area.county }}, {{ site.area.region }}</p></li>
+{#- The towns were a second hand-written list sitting next to the one the schema
+    uses. Same seven names, batched three to a line, so there is one place to
+    add a town and it lands in the footer and the structured data together. -#}
+{%- for row in site.area.cities | batch(3) %}
+          <li><p>{{ row | join(" &middot; ") | safe }}</p></li>
 {%- endfor %}
           <li><a href="contact.html">Somewhere else? Ask.</a></li>
         </ul>

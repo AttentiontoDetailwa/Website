@@ -37,68 +37,22 @@ navCurrent: services
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/lightbox.css">
 
+{#- Generated from the same _data/faq.json as the questions above. It used to be
+    a hand-written copy kept in step by re-running a script after every edit,
+    which works right up until the once it is forgotten. -#}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "FAQPage",
-  "@id": "https://attentiontodetailwa.com/services#faq",
+  "@id": "{{ site.url }}services#faq",
   "mainEntity": [
+{%- for item in faq %}
     {
       "@type": "Question",
-      "name": "How long does it take?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Two to three hours for most cars. A three-row, heavy dog hair, or a car that's had a rough year takes longer, and I'll tell you how much longer when I confirm the time, so you can plan the day around it."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do I need to be home while you work?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "No. If I can reach the car and get into it, you can be at work, asleep or out; plenty of people leave the keys and come back to it done. I turn up with my own power and water, so there's nothing to plug me into and nothing to lend me."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How do I pay, and when?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Cash, Venmo or Zelle, once the car is done and you've had a look at it. Nothing is due when you book and I don't take a deposit. Cards are the one thing I can't take, so it's worth sorting before I arrive."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do you wash the outside too?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "No, interiors only. Most places hurry through the inside on the way to the paint, and the inside is the part you actually sit in."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What if the car is worse than I described?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Then the price moves, and you see the new number in writing before anything is booked. I'd rather have that conversation over a message than in your driveway with the vacuum already running."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Do you come to my town?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Anywhere in Pierce County: Bonney Lake, Sumner, Puyallup, Tacoma, Orting, Buckley and Enumclaw are the usual ones. If you're a reasonable drive past the county line, ask anyway. It's usually a yes."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How soon can you get to me?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Send the form and I'll come back within 24 hours with a confirmation and a final price. If you're in a hurry, call instead. I'm on the phone from 8am to 6pm, seven days a week, and I can usually tell you on the spot whether a day is open."
-      }
-    }
+      "name": {{ item.q | dump | safe }},
+      "acceptedAnswer": { "@type": "Answer", "text": {{ item.a | replace("{hours}", site.hours.display) | dump | safe }} }
+    }{% if not loop.last %},{% endif %}
+{%- endfor %}
   ]
 }
 </script>
@@ -397,83 +351,16 @@ navCurrent: services
     </div>
 
     <div class="faq">
-      <details class="faq__item" open>
-        <summary>How long does it take?</summary>
+{%- for item in faq %}
+      <details class="faq__item"{% if item.open %} open{% endif %}>
+        <summary>{{ item.q | safe }}</summary>
         <div class="faq__body">
           <p>
-            Two to three hours for most cars. A three-row, heavy dog hair, or a car
-            that's had a rough year takes longer, and I'll tell you how much longer
-            when I confirm the time, so you can plan the day around it.
+            {{ item.a | replace("{hours}", site.hours.display) | safe }}
           </p>
         </div>
       </details>
-
-      <details class="faq__item">
-        <summary>Do I need to be home while you work?</summary>
-        <div class="faq__body">
-          <p>
-            No. If I can reach the car and get into it, you can be at work, asleep
-            or out; plenty of people leave the keys and come back to it done. I turn
-            up with my own power and water, so there's nothing to plug me into and
-            nothing to lend me.
-          </p>
-        </div>
-      </details>
-
-      <details class="faq__item">
-        <summary>How do I pay, and when?</summary>
-        <div class="faq__body">
-          <p>
-            Cash, Venmo or Zelle, once the car is done and you've had a look at it.
-            Nothing is due when you book and I don't take a deposit. Cards are the one
-            thing I can't take, so it's worth sorting before I arrive.
-          </p>
-        </div>
-      </details>
-
-      <details class="faq__item">
-        <summary>Do you wash the outside too?</summary>
-        <div class="faq__body">
-          <p>
-            No, interiors only. Most places hurry through the inside on the way to
-            the paint, and the inside is the part you actually sit in.
-          </p>
-        </div>
-      </details>
-
-      <details class="faq__item">
-        <summary>What if the car is worse than I described?</summary>
-        <div class="faq__body">
-          <p>
-            Then the price moves, and you see the new number in writing before
-            anything is booked. I'd rather have that conversation over a message
-            than in your driveway with the vacuum already running.
-          </p>
-        </div>
-      </details>
-
-      <details class="faq__item">
-        <summary>Do you come to my town?</summary>
-        <div class="faq__body">
-          <p>
-            Anywhere in Pierce County: Bonney Lake, Sumner, Puyallup, Tacoma,
-            Orting, Buckley and Enumclaw are the usual ones. If you're a reasonable
-            drive past the county line, ask anyway. It's usually a yes.
-          </p>
-        </div>
-      </details>
-
-      <details class="faq__item">
-        <summary>How soon can you get to me?</summary>
-        <div class="faq__body">
-          <p>
-            Send the form and I'll come back within 24 hours with a confirmation and
-            a final price. If you're in a hurry, call instead. I'm on the phone from
-            8am to 6pm, seven days a week, and I can usually tell you on the spot
-            whether a day is open.
-          </p>
-        </div>
-      </details>
+{%- endfor %}
     </div>
 
     <p class="faq__foot">
@@ -495,7 +382,7 @@ navCurrent: services
     <p class="lede">I'll come back within 24 hours with the time and the final price.</p>
     <div class="btn-row">
       <a class="btn btn--primary" href="contact.html">Get my free quote</a>
-      <a class="btn btn--ghost" href="tel:+12065656741">Call (206) 565-6741</a>
+      <a class="btn btn--ghost" href="tel:{{ site.phone.tel }}">Call {{ site.phone.display }}</a>
     </div>
   </div>
 </section>

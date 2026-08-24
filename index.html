@@ -37,51 +37,7 @@ navCurrent: home
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/lightbox.css">
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "AutoWash",
-  "@id": "https://attentiontodetailwa.com/#business",
-  "name": "Attention to Detail",
-  "alternateName": "Attention to Detail Auto",
-  "url": "https://attentiontodetailwa.com/",
-  "image": "https://attentiontodetailwa.com/assets/ba-driver.jpg",
-  "logo": "https://attentiontodetailwa.com/assets/logo-banner.jpg",
-  "description": "Mobile interior auto detailing serving all of Pierce County, Washington. Steam cleaning in every job.",
-  "telephone": "+1-206-565-6741",
-  "email": "avabright2006@gmail.com",
-  "founder": { "@type": "Person", "name": "Ava Bright" },
-  "priceRange": "$50-$200",
-  "currenciesAccepted": "USD",
-  "address": {
-    "@type": "PostalAddress",
-    "addressRegion": "WA",
-    "addressCountry": "US"
-  },
-  "hasMap": "https://maps.google.com/?cid=9363730081657717898",
-  "sameAs": [
-    "https://maps.google.com/?cid=9363730081657717898",
-    "https://www.facebook.com/ava.bright.378199"
-  ],
-  "openingHoursSpecification": {
-    "@type": "OpeningHoursSpecification",
-    "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-    "opens": "08:00",
-    "closes": "18:00"
-  },
-  "areaServed": [
-    { "@type": "AdministrativeArea", "name": "Pierce County", "addressRegion": "WA" },
-    { "@type": "City", "name": "Bonney Lake", "addressRegion": "WA" },
-    { "@type": "City", "name": "Sumner", "addressRegion": "WA" },
-    { "@type": "City", "name": "Puyallup", "addressRegion": "WA" },
-    { "@type": "City", "name": "Tacoma", "addressRegion": "WA" },
-    { "@type": "City", "name": "Orting", "addressRegion": "WA" },
-    { "@type": "City", "name": "Buckley", "addressRegion": "WA" },
-    { "@type": "City", "name": "Enumclaw", "addressRegion": "WA" }
-  ],
-  "slogan": "Any time, any place."
-}
-</script>
+{% include "schema-business.njk" %}
 </head>
 <body class="home has-rail has-price-tabs">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -441,7 +397,7 @@ navCurrent: home
     </p>
     <div class="btn-row">
       <a class="btn btn--primary" href="contact.html">Get my free quote</a>
-      <a class="btn btn--ghost" href="tel:+12065656741">Call (206) 565-6741</a>
+      <a class="btn btn--ghost" href="tel:{{ site.phone.tel }}">Call {{ site.phone.display }}</a>
     </div>
   </div>
 </section>

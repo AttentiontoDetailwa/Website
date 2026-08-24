@@ -9,12 +9,16 @@
 
       navCurrent   which nav key is the current page, or omitted for none
       ctaHref      where both quote buttons point       (default contact.html)
-      ctaNavLabel  the label inside the drawer          (default Get my free quote)
-      ctaBarLabel  the label out on the bar             (default Get my free quote)
+      ctaPhone     true to turn both buttons into her number instead
 
-    thanks.html and 404.html are the reason the labels are separate: neither has
-    a form to send anyone to, so both buttons become the phone number, and the
-    drawer says it in full while the bar says "Call instead". -#}
+    thanks.html and 404.html set ctaPhone: neither has a form to send anyone to,
+    so both buttons become the phone, the drawer says the number in full and the
+    bar says "Call instead". The number itself comes from the data file rather
+    than from their front matter, so changing it in one place changes it here
+    too. -#}
+{%- set quoteHref = ("tel:" + site.phone.tel) if ctaPhone else (ctaHref | default("contact.html")) -%}
+{%- set quoteNav  = ("Call " + site.phone.display) if ctaPhone else "Get my free quote" -%}
+{%- set quoteBar  = "Call instead" if ctaPhone else "Get my free quote" -%}
 <header class="site-header">
   <div class="shell site-header__inner">
     <a class="brand" href="index.html" aria-label="{{ site.name }}, home">
@@ -39,12 +43,12 @@
 {%- for item in site.nav %}
       <a href="{{ item.href }}"{% if item.key == navCurrent %} aria-current="page"{% endif %}>{{ item.label | safe }}</a>
 {%- endfor %}
-      <a class="btn btn--primary btn--sm" href="{{ ctaHref | default('contact.html') }}">{{ ctaNavLabel | default('Get my free quote') }}</a>
+      <a class="btn btn--primary btn--sm" href="{{ quoteHref }}">{{ quoteNav }}</a>
     </nav>
 
     <div class="header__cta">
       <a class="header__phone" href="tel:{{ site.phone.tel }}">{{ site.phone.display }}</a>
-      <a class="btn btn--primary btn--sm" href="{{ ctaHref | default('contact.html') }}">{{ ctaBarLabel | default('Get my free quote') }}</a>
+      <a class="btn btn--primary btn--sm" href="{{ quoteHref }}">{{ quoteBar }}</a>
     </div>
   </div>
 </header>

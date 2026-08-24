@@ -1,7 +1,5 @@
 ---
-ctaHref: "tel:+12065656741"
-ctaNavLabel: "Call (206) 565-6741"
-ctaBarLabel: "Call instead"
+ctaPhone: true
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -75,10 +73,10 @@ ctaBarLabel: "Call instead"
       <p class="form-sent__label">While you wait</p>
       <h2>If it's urgent, calling is faster than the form.</h2>
       <p>
-        I'm on the phone between 8am and 6pm, seven days a week, and I can
+        I'm on the phone between {{ site.hours.display | replace(' to ', ' and ') }}, seven days a week, and I can
         usually tell you there and then whether a day is open.
       </p>
-      <a class="textlink" href="tel:+12065656741">Call (206) 565-6741 &rarr;</a>
+      <a class="textlink" href="tel:{{ site.phone.tel }}">Call {{ site.phone.display }} &rarr;</a>
       <!-- The payment answer lives on the services page, but this is the
            moment it matters: the person who has just asked for a day is the
            one who still expects to hand me a card in the driveway. It leads
@@ -86,7 +84,7 @@ ctaBarLabel: "Call instead"
       <p>
         When the day comes I take cash, Venmo or Zelle rather than card, which
         is handy to know before I turn up. My reply comes from
-        avabright2006@gmail.com, which lands in junk often enough to be worth
+        {{ site.email }}, which lands in junk often enough to be worth
         a look if you haven't heard from me by this time tomorrow.
       </p>
       <a class="textlink" href="gallery.html">See the before and afters &rarr;</a>
