@@ -1,37 +1,39 @@
-[
-  {
-    "open": true,
-    "q": "How long does it take?",
-    "a": "Two to three hours for most cars. A three-row, heavy dog hair, or a car that's had a rough year takes longer, and I'll tell you how much longer when I confirm the time, so you can plan the day around it."
-  },
-  {
-    "open": false,
-    "q": "Do I need to be home while you work?",
-    "a": "No. If I can reach the car and get into it, you can be at work, asleep or out; plenty of people leave the keys and come back to it done. I turn up with my own power and water, so there's nothing to plug me into and nothing to lend me."
-  },
-  {
-    "open": false,
-    "q": "How do I pay, and when?",
-    "a": "Cash, Venmo or Zelle, once the car is done and you've had a look at it. Nothing is due when you book and I don't take a deposit. Cards are the one thing I can't take, so it's worth sorting before I arrive."
-  },
-  {
-    "open": false,
-    "q": "Do you wash the outside too?",
-    "a": "No, interiors only. Most places hurry through the inside on the way to the paint, and the inside is the part you actually sit in."
-  },
-  {
-    "open": false,
-    "q": "What if the car is worse than I described?",
-    "a": "Then the price moves, and you see the new number in writing before anything is booked. I'd rather have that conversation over a message than in your driveway with the vacuum already running."
-  },
-  {
-    "open": false,
-    "q": "Do you come to my town?",
-    "a": "Anywhere in Pierce County: Bonney Lake, Sumner, Puyallup, Tacoma, Orting, Buckley and Enumclaw are the usual ones. If you're a reasonable drive past the county line, ask anyway. It's usually a yes."
-  },
-  {
-    "open": false,
-    "q": "How soon can you get to me?",
-    "a": "Send the form and I'll come back within 24 hours with a confirmation and a final price. If you're in a hurry, call instead. I'm on the phone from {hours}, seven days a week, and I can usually tell you on the spot whether a day is open."
-  }
-]
+{
+  "items": [
+    {
+      "open": true,
+      "q": "How long does it take?",
+      "a": "Two to three hours for most cars. A three-row, heavy dog hair, or a car that's had a rough year takes longer, and I'll tell you how much longer when I confirm the time, so you can plan the day around it."
+    },
+    {
+      "open": false,
+      "q": "Do I need to be home while you work?",
+      "a": "No. If I can reach the car and get into it, you can be at work, asleep or out; plenty of people leave the keys and come back to it done. I turn up with my own power and water, so there's nothing to plug me into and nothing to lend me."
+    },
+    {
+      "open": false,
+      "q": "How do I pay, and when?",
+      "a": "Cash, Venmo or Zelle, once the car is done and you've had a look at it. Nothing is due when you book and I don't take a deposit. Cards are the one thing I can't take, so it's worth sorting before I arrive."
+    },
+    {
+      "open": false,
+      "q": "Do you wash the outside too?",
+      "a": "No, interiors only. Most places hurry through the inside on the way to the paint, and the inside is the part you actually sit in."
+    },
+    {
+      "open": false,
+      "q": "What if the car is worse than I described?",
+      "a": "Then the price moves, and you see the new number in writing before anything is booked. I'd rather have that conversation over a message than in your driveway with the vacuum already running."
+    },
+    {
+      "open": false,
+      "q": "Do you come to my town?",
+      "a": "Anywhere in Pierce County: Bonney Lake, Sumner, Puyallup, Tacoma, Orting, Buckley and Enumclaw are the usual ones. If you're a reasonable drive past the county line, ask anyway. It's usually a yes."
+    },
+    {
+      "open": false,
+      "q": "How soon can you get to me?",
+      "a": "Send the form and I'll come back within 24 hours with a confirmation and a final price. If you're in a hurry, call instead. I'm on the phone from {hours}, seven days a week, and I can usually tell you on the spot whether a day is open."
+    }
+  ]
+}

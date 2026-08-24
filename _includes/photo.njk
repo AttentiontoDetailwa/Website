@@ -16,8 +16,15 @@
     under someone's thumb while the photos arrive. -#}
 {% macro picture(name, alt, sizes, eager=false, klass="") %}
 {%- set p = photos[name] -%}
+{%- if not p or not p.widths.length -%}
+{#- A photo uploaded through the admin panel, before tools-resize-images.py has
+    been run over it. No variants exist yet, so it is served whole rather than
+    the page breaking. It will pick up its srcset the next time the script runs. -#}
+<img{{ ' class="' + klass + '"' | safe if klass }} src="assets/{{ p.original if p else name }}" alt="{{ alt }}"{% if eager %} fetchpriority="high"{% else %} loading="lazy"{% endif %}{% if p and p.width %} width="{{ p.width }}" height="{{ p.height }}"{% endif %}>
+{%- else -%}
 <picture>
   <source type="image/webp" sizes="{{ sizes }}" srcset="{% for w in p.webp %}assets/{{ name }}-{{ w }}.webp {{ w }}w{{ ", " if not loop.last }}{% endfor %}">
   <img{{ ' class="' + klass + '"' | safe if klass }} src="assets/{{ name }}-{{ p.fallback }}.jpg" sizes="{{ sizes }}" srcset="{% for w in p.widths %}assets/{{ name }}-{{ w }}.jpg {{ w }}w{{ ", " if not loop.last }}{% endfor %}" alt="{{ alt }}"{% if eager %} fetchpriority="high"{% else %} loading="lazy"{% endif %} width="{{ p.width }}" height="{{ p.height }}">
 </picture>
+{%- endif -%}
 {%- endmacro %}

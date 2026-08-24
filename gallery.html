@@ -175,9 +175,9 @@ navCurrent: gallery
     </div>
 
     <div class="gallery gallery--feature">
-{%- for item in gallery %}
+{%- for item in gallery.items %}
       <figure>
-        {{ photo.picture(item.photo, item.alt, "(max-width: 40em) 40vw, 20vw") }}
+        {{ photo.picture(item.photo | photoStem, item.alt, "(max-width: 40em) 40vw, 20vw") }}
         <figcaption>{{ item.caption | safe }}</figcaption>
       </figure>
 {%- endfor %}

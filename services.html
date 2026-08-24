@@ -46,7 +46,7 @@ navCurrent: services
   "@type": "FAQPage",
   "@id": "{{ site.url }}services#faq",
   "mainEntity": [
-{%- for item in faq %}
+{%- for item in faq.items %}
     {
       "@type": "Question",
       "name": {{ item.q | dump | safe }},
@@ -351,7 +351,7 @@ navCurrent: services
     </div>
 
     <div class="faq">
-{%- for item in faq %}
+{%- for item in faq.items %}
       <details class="faq__item"{% if item.open %} open{% endif %}>
         <summary>{{ item.q | safe }}</summary>
         <div class="faq__body">

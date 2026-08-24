@@ -42,12 +42,23 @@ module.exports = function () {
   if (!fs.existsSync(ASSETS)) return photos;
 
   for (const file of fs.readdirSync(ASSETS)) {
-    const m = file.match(/^(.+)-(\d+)\.(jpg|webp)$/);
-    if (!m) continue;
-    const [, stem, width, ext] = m;
-    const p = (photos[stem] ||= { stem, widths: [], webp: [] });
-    if (ext === 'jpg') p.widths.push(Number(width));
-    else p.webp.push(Number(width));
+    const sized = file.match(/^(.+)-(\d+)\.(jpg|webp)$/);
+    if (sized) {
+      const [, stem, width, ext] = sized;
+      const p = (photos[stem] ||= { stem, widths: [], webp: [] });
+      if (ext === 'jpg') p.widths.push(Number(width));
+      else p.webp.push(Number(width));
+      continue;
+    }
+    /* An unsuffixed master. Mostly these are the originals the variants were
+       generated from, but it is also what a photo uploaded through the admin
+       panel looks like before anyone has run the resize script over it. Record
+       the filename so such a photo still renders, at full size, rather than
+       breaking the page. */
+    const plain = file.match(/^(.+)\.(jpg|jpeg|png|webp)$/i);
+    if (!plain) continue;
+    const p = (photos[plain[1]] ||= { stem: plain[1], widths: [], webp: [] });
+    p.original ||= file;
   }
 
   for (const p of Object.values(photos)) {
@@ -60,7 +71,10 @@ module.exports = function () {
        hand a 900px file to anything that ignores srcset. */
     p.fallback = p.widths.find((w) => w >= 640) ?? p.max;
 
-    const size = jpegSize(path.join(ASSETS, `${p.stem}-${p.max}.jpg`));
+    const measure = p.max
+      ? `${p.stem}-${p.max}.jpg`
+      : (p.original && /\.jpe?g$/i.test(p.original) ? p.original : null);
+    const size = measure ? jpegSize(path.join(ASSETS, measure)) : null;
     if (size) { p.width = size.width; p.height = size.height; }
   }
 

@@ -19,6 +19,13 @@
 module.exports = function (eleventyConfig) {
   /* Everything that is already a finished file goes across untouched. Eleventy
      only copies what it is told to, and none of this needs processing. */
+  /* The admin panel is two static files and is not a page. Copy it, and tell
+     Eleventy not to also treat the HTML as a template: the config it sits next
+     to is full of {{fields.q}} placeholders that belong to the CMS, and there is
+     no reason to let a template engine anywhere near either of them. */
+  eleventyConfig.addPassthroughCopy('admin');
+  eleventyConfig.ignores.add('admin/**');
+
   eleventyConfig.addPassthroughCopy('css');
   eleventyConfig.addPassthroughCopy('js');
   eleventyConfig.addPassthroughCopy('assets');
@@ -31,6 +38,18 @@ module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy('icon-192.png');
   eleventyConfig.addPassthroughCopy('icon-512.png');
   eleventyConfig.addPassthroughCopy('icon-maskable-512.png');
+
+  /* The admin panel's image field writes a path, like "assets/work-cargo-640.jpg"
+     or "/assets/work-cargo.jpg", because that is what it knows about. The photo
+     macro wants the stem. Rather than making Ava type "work-cargo" into a text
+     box and hoping, this takes whatever she picked and reduces it: drop the
+     folder, drop any -640 the file already carries, drop the extension. */
+  eleventyConfig.addFilter('photoStem', (value) =>
+    String(value || '')
+      .replace(/^\/?assets\//, '')
+      .replace(/\.(jpe?g|png|webp)$/i, '')
+      .replace(/-\d+$/, '')
+  );
 
   /* Eleventy's default would turn about.html into about/index.html, which
      serves at /about/ with a trailing slash. Every canonical on this site says
