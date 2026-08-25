@@ -63,6 +63,73 @@ ctaPhone: true
   </div>
 </section>
 
+<!-- ===================== ADD-ONS ===================== -->
+<!-- These three were checkboxes in step two of the quote form. Moved here on
+     purpose: before the booking they are three decisions in the way, after it
+     they are a question somebody who has already said yes can answer in two
+     taps. The booking is banked either way, which is the whole point - nothing
+     on this page can cost Ava the job. -->
+<section class="section section--tight">
+  <div class="shell">
+    <div class="form-sent">
+      <p class="form-sent__label">Want anything else done</p>
+      <h2>Add these now and I'll bring what I need.</h2>
+      <p>
+        Tick anything that applies and it goes on the same visit. Nothing is
+        charged until the work is done, and you can still change your mind when
+        I get there.
+      </p>
+
+      <form name="quote-addons" method="POST" action="thanks.html"
+            data-netlify="true" data-netlify-honeypot="_gotcha" data-addons>
+        <input type="hidden" name="form-name" value="quote-addons">
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <input type="hidden" name="name" value="">
+        <input type="hidden" name="phone" value="">
+        <input type="hidden" name="email" value="">
+
+        <div class="option-grid">
+          <label class="option">
+            <input type="checkbox" name="addons" value="shampoo">
+            <span class="option__body">
+              <span class="option__label">Carpet shampoo &amp; stain removal</span>
+              <span class="option__price">+$20</span>
+            </span>
+          </label>
+          <label class="option">
+            <input type="checkbox" name="addons" value="dog-hair">
+            <span class="option__body">
+              <span class="option__label">Dog hair removal</span>
+              <span class="option__price">+$10</span>
+            </span>
+          </label>
+          <label class="option">
+            <input type="checkbox" name="addons" value="uv">
+            <span class="option__body">
+              <span class="option__label">UV protectant</span>
+              <span class="option__price">+$10</span>
+            </span>
+          </label>
+        </div>
+
+        <!-- Only shown when sessionStorage has nothing, which means this page
+             was reached without submitting the form in this tab. -->
+        <div class="field" data-addons-ask hidden>
+          <label class="label" for="addons-phone">The number on your request</label>
+          <input class="input" id="addons-phone" name="phone_fallback" type="tel"
+                 inputmode="tel" placeholder="(206) 555-0148">
+        </div>
+
+        <p class="price-note" data-addons-note hidden>Pick at least one first.</p>
+
+        <div class="form-foot">
+          <button class="btn btn--primary" type="submit">Add these to my appointment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
 <section class="section section--tight">
   <div class="shell">
     <!-- Links sit at the end of the sentence that earned them rather than
@@ -108,6 +175,7 @@ ctaPhone: true
 
 <script src="js/nav.js"></script>
 <script src="js/reveal.js"></script>
+<script src="js/addons.js"></script>
 {% include "analytics.njk" %}
 </body>
 </html>

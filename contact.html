@@ -94,6 +94,26 @@ ctaHref: "#quote-form"
       <input type="hidden" name="form-name" value="quote">
       <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
 
+      <!-- Netlify discovers forms by parsing the deployed HTML, so a form that
+           only ever exists as a sendBeacon POST has to be declared somewhere as
+           real markup or the submission comes back 404. That is all this is:
+           never displayed, never interacted with, and the only reason
+           "quote-partial" is a form Netlify will accept.
+
+           Its own name on purpose. Partials landing in the same pile as real
+           bookings would make the pile useless. -->
+      <div hidden aria-hidden="true">
+        <form name="quote-partial" data-netlify="true" netlify-honeypot="_gotcha">
+          <input type="hidden" name="form-name" value="quote-partial">
+          <input type="text" name="name"><input type="text" name="phone">
+          <input type="text" name="email"><input type="text" name="vehicle">
+          <input type="text" name="date"><input type="text" name="time">
+          <input type="text" name="address"><input type="text" name="city">
+          <input type="text" name="notes"><input type="text" name="reached">
+          <input type="text" name="_gotcha">
+        </form>
+      </div>
+
       <!-- One page, no stepper, no length switch. A lot of Ava's customers are
            older and a long form is where they give up, so this asks only for
            what she needs to price the job and turn up at the right driveway.
@@ -188,32 +208,15 @@ ctaHref: "#quote-form"
           <textarea class="textarea" id="notes" name="notes" placeholder="Dog hair, a spill in the back seat, a smell you can't find, a gate code."></textarea>
         </div>
 
-        <fieldset>
-          <legend class="fieldset__legend">Add-ons (optional)</legend>
-          <div class="option-grid option-grid--3">
-            <label class="option">
-              <input type="checkbox" name="addons" value="shampoo">
-              <span class="option__body">
-                <span class="option__label">Carpet shampoo &amp; stain removal</span>
-                <span class="option__price">+$20</span>
-              </span>
-            </label>
-            <label class="option">
-              <input type="checkbox" name="addons" value="dog-hair">
-              <span class="option__body">
-                <span class="option__label">Dog hair removal</span>
-                <span class="option__price">+$10</span>
-              </span>
-            </label>
-            <label class="option">
-              <input type="checkbox" name="addons" value="uv">
-              <span class="option__body">
-                <span class="option__label">UV protectant</span>
-                <span class="option__price">+$10</span>
-              </span>
-            </label>
-          </div>
-        </fieldset>
+        <!-- The three add-ons used to live here, as a checkbox group inside step
+             two. They are on thanks.html now, offered after the appointment is
+             requested rather than before.
+
+             They were three decisions standing between somebody and the thing
+             they came to do. Nobody abandons a booking over a $10 upsell, but
+             they do stall on it, and a stall in the last field of a nine-field
+             form is where people leave. Asked afterwards the booking is already
+             banked and the question costs nothing. -->
 
         </div>
       </div>
@@ -321,6 +324,7 @@ ctaHref: "#quote-form"
 <script src="js/nav.js"></script>
 <script src="js/reveal.js"></script>
 <script src="js/quote-form.js"></script>
+<script src="js/partial-capture.js"></script>
 {% include "analytics.njk" %}
 </body>
 </html>
