@@ -65,14 +65,6 @@ ctaHref: "#quote-form"
         Steam cleaning is in every one of them.
       </p>
     </div>
-    <div class="page-banner__next">
-      <p class="page-banner__next-label">What happens next</p>
-      <ol class="page-banner__steps">
-        <li><b aria-hidden="true">&rarr;</b><p>You send this form</p></li>
-        <li><b aria-hidden="true">&rarr;</b><p>I send your price within 24 hours</p></li>
-        <li><b aria-hidden="true">&rarr;</b><p>I come to you. You pay when it's done</p></li>
-      </ol>
-    </div>
   </div>
 </section>
 
@@ -277,6 +269,25 @@ ctaHref: "#quote-form"
           In a hurry, calling beats the form. I can usually tell you there and
           then whether a day is open.
         </p>
+      </div>
+
+      <!-- "What happens next" used to sit beside the headline, which meant
+           that on a phone — where the two banner columns stack — a visitor
+           read three steps about what would happen before reaching the thing
+           that makes any of it happen. The form is the ask on this page and
+           it should be the first thing under the headline.
+
+           Moved into the rail rather than deleted or duplicated. The rail sits
+           beside the form on a desktop, so the steps are still visible without
+           scrolling there, and stacks under it on a phone, which is exactly
+           the order that was wanted. One copy of the markup, no media query. -->
+      <div class="rail-card">
+        <h3>What happens next</h3>
+        <ol class="next-steps">
+          <li><b aria-hidden="true">&rarr;</b><p>You send this form</p></li>
+          <li><b aria-hidden="true">&rarr;</b><p>I send your price within 24 hours</p></li>
+          <li><b aria-hidden="true">&rarr;</b><p>I come to you. You pay when it's done</p></li>
+        </ol>
       </div>
 
       <div class="rail-card">

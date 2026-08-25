@@ -1683,26 +1683,32 @@ fieldset { margin: 0; padding: 0; border: 0; }
   font-size: 0.85rem; font-weight: 600; letter-spacing: 0; text-transform: none;
   color: var(--accent);
 }
-.page-banner__steps {
+.page-banner__steps,
+.next-steps {
   list-style: none; margin: 0;
   padding: 0.4rem 1.6rem;
   background: var(--surface);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
 }
-.page-banner__steps li {
+.page-banner__steps li,
+.next-steps li {
   display: flex; align-items: baseline; gap: 0.9rem;
   padding-block: 1.1rem;
   border-top: 1px solid var(--line);
 }
-.page-banner__steps li:first-child { border-top: 0; }
-.page-banner__steps li:last-child { border-bottom: 0; }
-.page-banner__steps b {
+.page-banner__steps li:first-child,
+.next-steps li:first-child { border-top: 0; }
+.page-banner__steps li:last-child,
+.next-steps li:last-child { border-bottom: 0; }
+.page-banner__steps b,
+.next-steps b {
   flex: none;
   font-size: 1rem; font-weight: 700;
   color: var(--accent);
 }
-.page-banner__steps p {
+.page-banner__steps p,
+.next-steps p {
   margin: 0;
   font-family: var(--font-display);
   font-size: 1.06rem; font-weight: 600; letter-spacing: -0.01em;
@@ -1715,7 +1721,8 @@ fieldset { margin: 0; padding: 0; border: 0; }
    fill rather than a type colour, which rules out the usual move of colouring
    them. That leaves an underline, which is the honest one anyway: these three
    are the whole point of that page. */
-.page-banner__steps p a {
+.page-banner__steps p,
+.next-steps p a {
   color: inherit;
   text-decoration: underline;
   text-decoration-thickness: 2px;
@@ -1723,8 +1730,10 @@ fieldset { margin: 0; padding: 0; border: 0; }
   text-decoration-color: var(--line-strong);
   transition: text-decoration-color 0.18s var(--ease);
 }
-.page-banner__steps p a:hover,
-.page-banner__steps p a:focus-visible { text-decoration-color: currentColor; }
+.page-banner__steps p,
+.next-steps p a:hover,
+.page-banner__steps p,
+.next-steps p a:focus-visible { text-decoration-color: currentColor; }
 
 
 /* --- 18b. Photo banner (services, gallery, about) ----------------------- */
@@ -2819,3 +2828,11 @@ fieldset { margin: 0; padding: 0; border: 0; }
   font-weight: 700;
   white-space: nowrap;
 }
+
+
+/* --- What happens next, in the rail ---
+   The list came out of the page banner so the form could sit directly under
+   the headline. Inside a rail card it has a heading above it and a border
+   around it already, so it drops the top rule the banner version needed to
+   separate itself from the headline beside it. */
+.rail-card .next-steps { margin-top: 0.75rem; }
