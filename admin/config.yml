@@ -25,6 +25,18 @@ backend:
   # keep running, and less to explain. Add base_url here if a second person ever
   # needs an account.
 
+# Sveltia only honours this when the panel is served from localhost, so it ships
+# to the live site and does nothing there. What it buys locally is a panel that
+# reads and writes the files in this folder through the browser's file-system
+# API: no GitHub token, no proxy server, no branch, no deploy preview, and no
+# way to touch the client repo by accident.
+#
+# That is the version to open when the question is "what does Ava see" — for a
+# demo, or for checking a change to this config before she meets it. Click
+# "Work with Local Repository" on the sign-in screen and pick this project
+# folder. Chromium browsers only; the API does not exist in Safari or Firefox.
+local_backend: true
+
 # Save puts the change on a branch and opens a pull request. Netlify builds a
 # deploy preview from it and reports the result back to GitHub, and the panel
 # reads that and shows Ava a link to look at her own change on a real page
