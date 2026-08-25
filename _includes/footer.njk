@@ -63,6 +63,14 @@
     <div class="footer-bottom">
       <p>&copy; 2026 {{ site.name }} &middot; Interior Auto Detailing</p>
       <p class="spacer">Site by Gaspar Web Co.</p>
+      {#- Rendered only while GA4 is switched on, so the sentence is never
+          on the page claiming something the page is not doing. Before this
+          the site set nothing at all and said nothing, which was also true.
+          A line, not a policy page: one plain sentence a customer can read
+          in three seconds beats a thousand words nobody opens. -#}
+      {%- if analytics.ga4MeasurementId %}
+      <p class="spacer">Visits and calls are counted with Google Analytics.</p>
+      {%- endif %}
     </div>
   </div>
 </footer>

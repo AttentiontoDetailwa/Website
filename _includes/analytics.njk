@@ -1,43 +1,66 @@
 {#
-  Cloudflare Web Analytics.
+  Measurement, in one file, included last in the body of every page.
 
-  The site shipped with no measurement of any kind, which meant there was no
-  answer to the only question Ava will ever ask about it: is it bringing me
-  work. This is the smallest thing that answers it — visits, referrers and
-  which pages get read.
+  The site shipped with none of this and the only question Ava will ever ask
+  about her website is whether it is bringing her work. Two things answer it:
+  how many people arrive, and how many of them do something.
 
-  Cookieless and aggregated on Cloudflare's side. It sets nothing on her
-  visitors' devices and stores nothing per person, which is why there is no
-  consent banner here and why this does not contradict the two decisions
-  already made on the same grounds: the Google Maps iframe was kept off the
-  page because it is ~800KB and sets cookies. A beacon that does neither is a
-  different trade.
+  THE TOKENS LIVE IN _data/analytics.json, NOT site.json, and that is
+  deliberate. The admin panel writes site.json back with only the fields
+  admin/config.yml declares, so a key it has never heard of is dropped the
+  first time Ava saves her hours — the tracking would go quiet weeks later
+  with nothing obvious to point at. analytics.json is not a CMS collection
+  and nothing but a deploy can touch it.
 
-  What it cannot do is tell you who called. Most of her conversions are a tap
-  on a tel: link and those leave from the page without a pageview behind them,
-  so treat these numbers as traffic, not leads.
+  Both blocks render nothing when their value is empty, so a build made
+  before an ID exists ships a clean page rather than a beacon posting to
+  nowhere.
+#}
 
-  THE TOKEN LIVES HERE, NOT IN site.json, and that is deliberate. The admin
-  panel writes _data/site.json back with only the fields declared in
-  admin/config.yml, so a key it has never heard of is dropped the first time
-  Ava saves her hours — the beacon would go quiet weeks later with nothing to
-  point at. _data/analytics.json is not a CMS collection and nothing but a
-  deploy can touch it.
+{#
+  Cloudflare Web Analytics — traffic.
 
-  The token is public by design; it identifies the site to Cloudflare and is
-  visible in the HTML of every page. It is not a credential and does not need
-  hiding. Get it from Cloudflare's dashboard under Web Analytics, "Add a site",
-  attentiontodetailwa.com.
+  Cookieless and aggregated on Cloudflare's side: it sets nothing on her
+  visitors' devices. Kept alongside GA4 rather than replaced by it because
+  it is the honest number for "how many people came", it costs one small
+  request, and it keeps reporting if the GA property is ever misconfigured.
 
-  Empty token renders nothing at all, so a build before the token exists ships
-  a clean page rather than a beacon posting to nowhere.
-
-  A module script is deferred by definition, which is why there is no `defer`
-  here and why it can sit last in the body: this is the least important request
-  on the page and it should never be in front of a photo of a car. The tag is
-  worded the way Cloudflare's own dashboard hands it out, so comparing the two
-  turns up nothing to explain.
+  Public by design; the token identifies the site to Cloudflare and is
+  visible in the HTML of every page. It is not a credential.
 #}
 {%- if analytics.cloudflareToken %}
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "{{ analytics.cloudflareToken }}"}'></script>
+{%- endif -%}
+
+{#
+  Google Analytics 4 — conversions.
+
+  Added for one reason Cloudflare cannot do: events. Cloudflare Web Analytics
+  has no event model at all, so a tap on a tel: link was uncountable, and the
+  phone is how most of Ava's customers actually book. GA4 counts it.
+
+  This one DOES set cookies, and that is a real change to what this site was:
+  it used to carry no third-party state at all, which is why there is no
+  consent banner. No US federal law requires one here and this business is
+  far below every CCPA threshold, so the banner is still not required — but
+  the claim "this site sets nothing" is no longer true, and the privacy line
+  in the footer says so rather than leaving the old comment lying.
+
+  Measurement ID, not a secret: it is in the HTML of every page by design.
+#}
+{%- if analytics.ga4MeasurementId %}
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ analytics.ga4MeasurementId }}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '{{ analytics.ga4MeasurementId }}');
+</script>
+{#
+  Loaded only when GA4 is on, because it has nothing to report to otherwise.
+  It lives in js/ rather than inline here so it follows the same rule as
+  every other script on this site: one IIFE per file, progressive, and
+  harmless when the thing it depends on is missing.
+#}
+<script src="/js/call-tracking.js"></script>
 {%- endif -%}
