@@ -2804,3 +2804,18 @@ fieldset { margin: 0; padding: 0; border: 0; }
   }
   .action-rail__bar a:active { filter: brightness(0.94); }
 }
+
+
+/* --- Price anchor on the contact banner ---
+   A second lede, one step down in size and carrying the numbers. Bold on the
+   figures only: the sentence around them is scannable, the three prices are
+   what the eye is actually hunting for. Not a table — a table here would read
+   as a pricing page and this is a form page that happens to say the price. */
+.lede--price {
+  margin-top: 0.75rem;
+  font-size: 0.95em;
+}
+.lede--price b {
+  font-weight: 700;
+  white-space: nowrap;
+}
