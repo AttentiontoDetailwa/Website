@@ -94,26 +94,6 @@ ctaHref: "#quote-form"
       <input type="hidden" name="form-name" value="quote">
       <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
 
-      <!-- Netlify discovers forms by parsing the deployed HTML, so a form that
-           only ever exists as a sendBeacon POST has to be declared somewhere as
-           real markup or the submission comes back 404. That is all this is:
-           never displayed, never interacted with, and the only reason
-           "quote-partial" is a form Netlify will accept.
-
-           Its own name on purpose. Partials landing in the same pile as real
-           bookings would make the pile useless. -->
-      <div hidden aria-hidden="true">
-        <form name="quote-partial" data-netlify="true" netlify-honeypot="_gotcha">
-          <input type="hidden" name="form-name" value="quote-partial">
-          <input type="text" name="name"><input type="text" name="phone">
-          <input type="text" name="email"><input type="text" name="vehicle">
-          <input type="text" name="date"><input type="text" name="time">
-          <input type="text" name="address"><input type="text" name="city">
-          <input type="text" name="notes"><input type="text" name="reached">
-          <input type="text" name="_gotcha">
-        </form>
-      </div>
-
       <!-- One page, no stepper, no length switch. A lot of Ava's customers are
            older and a long form is where they give up, so this asks only for
            what she needs to price the job and turn up at the right driveway.
@@ -306,6 +286,34 @@ ctaHref: "#quote-form"
 
   </div>
 </section>
+
+<!-- Netlify discovers forms by parsing the deployed HTML, so a form that only
+     ever exists as a sendBeacon POST has to be declared somewhere as real
+     markup or the submission comes back 404. That is all this is: never
+     displayed, never interacted with, and the only reason "quote-partial" is a
+     form Netlify will accept.
+
+     Its own name on purpose. Partials landing in the same pile as real bookings
+     would make the pile useless.
+
+     It sits out here, after the section, and must never move back inside the
+     quote form. Nested forms are invalid HTML: the parser throws away the inner
+     opening tag, adopts these inputs into the outer form, and then reads the
+     inner closing tag as the close of the *real* one. That leaves every visible
+     field and the submit button orphaned outside the form — the page still
+     looks nearly right, so it reads as a CSS bug, and the form silently accepts
+     nothing. It shipped that way once. -->
+<div hidden aria-hidden="true">
+  <form name="quote-partial" data-netlify="true" netlify-honeypot="_gotcha">
+    <input type="hidden" name="form-name" value="quote-partial">
+    <input type="text" name="name"><input type="text" name="phone">
+    <input type="text" name="email"><input type="text" name="vehicle">
+    <input type="text" name="date"><input type="text" name="time">
+    <input type="text" name="address"><input type="text" name="city">
+    <input type="text" name="notes"><input type="text" name="reached">
+    <input type="text" name="_gotcha">
+  </form>
+</div>
 
 </main>
 
