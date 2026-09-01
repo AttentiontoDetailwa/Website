@@ -1807,12 +1807,19 @@ fieldset { margin: 0; padding: 0; border: 0; }
   padding: 0;
   color: var(--accent);
   gap: 0.55rem;
+  /* About's eyebrow is a sentence now, not a page name, and it runs to two
+     lines on a phone. The pill variant never wrapped, so centring the dot was
+     free; here centring drifts it into the gap between the lines where it
+     bullets neither of them. Pin it to the first line instead. */
+  align-items: flex-start;
 }
 .page-banner--photo .eyebrow::before {
   content: "";
   width: 6px; height: 6px; flex: none;
   border-radius: 50%;
   background: currentColor;
+  /* Half the cap height, near enough, so it sits on the middle of line one. */
+  margin-top: 0.52em;
 }
 
 /* Services — the three figures the white card used to carry, as one line on a
