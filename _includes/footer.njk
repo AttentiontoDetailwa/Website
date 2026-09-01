@@ -51,17 +51,18 @@
           <li><a href="tel:{{ site.phone.tel }}">{{ site.phone.display }}</a></li>
           <li><a href="mailto:{{ site.email }}">{{ site.email }}</a></li>
           <li><a href="contact.html">Request a quote</a></li>
-          {# The Google listing is filed under "Attention to Detail Auto", the
-             name on the profile rather than the name on the site. Linking it
-             from every page is the one signal that ties the two together for
-             anyone checking she is real. #}
+          {# The listing and the site read the same name from August 2026 on;
+             before that the profile said "Attention to Detail Auto" and the
+             site said "Attention to Detail", and this link was what tied the
+             two together. It stays for the other reason: a Maps link on every
+             page is the cheapest proof to a stranger that she is real. #}
           <li><a href="{{ site.google }}" target="_blank" rel="noopener">Find me on Google</a></li>
           <li><a href="{{ site.facebook }}" target="_blank" rel="noopener">Facebook</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2026 {{ site.name }} &middot; Interior Auto Detailing</p>
+      <p>&copy; 2026 {{ site.name }}</p>
       <p class="spacer">Site by Gaspar Web Co.</p>
       {#- Rendered only while GA4 is switched on, so the sentence is never
           on the page claiming something the page is not doing. Before this

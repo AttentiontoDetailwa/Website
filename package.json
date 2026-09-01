@@ -1,7 +1,7 @@
 {
   "name": "atd-client-website",
   "version": "1.0.0",
-  "description": "Attention to Detail — mobile interior auto detailing, Pierce County WA",
+  "description": "Bright Detailing — mobile interior auto detailing, Pierce County WA",
   "scripts": {
     "build": "./node_modules/.bin/eleventy",
     "serve": "./node_modules/.bin/eleventy --serve --port=4188"

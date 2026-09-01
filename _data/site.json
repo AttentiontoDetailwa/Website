@@ -1,10 +1,10 @@
 {
-  "name": "Attention to Detail",
-  "alternateName": "Attention to Detail Auto",
+  "name": "Bright Detailing",
+  "alternateName": "Attention to Detail",
   "tagline": "Any time, any place",
   "slogan": "Any time, any place.",
   "description": "Mobile interior auto detailing serving all of Pierce County, Washington. Steam cleaning in every job.",
-  "url": "https://attentiontodetailwa.com/",
+  "url": "https://brightdetailingwa.com/",
   "owner": "Ava Bright",
   "phone": {
     "display": "(206) 565-6741",
@@ -47,8 +47,8 @@
   "currency": "USD",
   "google": "https://maps.google.com/?cid=9363730081657717898",
   "facebook": "https://www.facebook.com/ava.bright.378199",
-  "schemaImage": "https://attentiontodetailwa.com/assets/ba-driver.jpg",
-  "schemaLogo": "https://attentiontodetailwa.com/assets/logo-banner.jpg",
+  "schemaImage": "https://brightdetailingwa.com/assets/ba-driver.jpg",
+  "schemaLogo": "https://brightdetailingwa.com/assets/logo-banner.jpg",
   "nav": [
     {
       "key": "home",
