@@ -16,4 +16,4 @@ Allow: /
 # too, since a crawler that ignores this file should still be told no.
 Disallow: /admin/
 
-Sitemap: https://brightdetailingwa.com/sitemap.xml
+Sitemap: https://brightdetailswa.com/sitemap.xml

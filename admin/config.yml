@@ -51,8 +51,8 @@ publish_mode: editorial_workflow
 # Where the finished site lives. This is what lets the panel offer "view this
 # page" links, and it puts a way back to her own website in the header so the
 # panel is not a dead end.
-site_url: https://brightdetailingwa.com
-display_url: https://brightdetailingwa.com
+site_url: https://brightdetailswa.com
+display_url: https://brightdetailswa.com
 
 media_folder: assets
 public_folder: assets
