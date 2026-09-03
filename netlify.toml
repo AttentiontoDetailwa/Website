@@ -19,3 +19,29 @@
   # moved its default Node version is the kind of thing that goes wrong while
   # nobody is looking at it.
   NODE_VERSION = "22"
+
+# The old domain is paid up until August 2027 and still points here, so anyone
+# holding an old business card, an old link, or the URL Google still has
+# indexed lands somewhere real rather than on a dead name.
+#
+# It needs these rules to actually redirect. Netlify serves a domain alias
+# directly instead of redirecting it, which leaves the identical site
+# reachable at two addresses — duplicate content, and whatever link equity the
+# old name earned stranded on a domain nobody is meant to use any more. A 301
+# hands that across to the new name instead, which is the whole reason for
+# keeping the registration alive.
+#
+# force = true is the part that matters. Without it the alias wins: Netlify
+# finds a real file at that path, serves it, and never reaches the rule.
+
+[[redirects]]
+  from = "https://attentiontodetailwa.com/*"
+  to = "https://brightdetailswa.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.attentiontodetailwa.com/*"
+  to = "https://brightdetailswa.com/:splat"
+  status = 301
+  force = true
